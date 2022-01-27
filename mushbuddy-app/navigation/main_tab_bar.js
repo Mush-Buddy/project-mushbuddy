@@ -1,14 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-import About from '../components/about';
 
-const SearchTab = (props) => {
-    return <View style={{ flex: 1, justifyContent: 'center' }}><Text>Search</Text></View>;
-};
+import Profile from '../components/profile';
+import Map from '../components/map';
+import Catalog from '../components/catalog';
+import Community from '../components/community';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +20,7 @@ const MainTabBar = () => {
                     tabBarIcon: ({ focused }) => {
                         let iconName;
 
-                        if (route.name === 'About') {
+                        if (route.name === 'Profile') {
                             iconName = 'info-circle';
                         }
 
@@ -29,8 +28,10 @@ const MainTabBar = () => {
                     },
                 })}
             >
-                <Tab.Screen name="Search" component={SearchTab} />
-                <Tab.Screen name="About" component={About} />
+                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen name="Map" component={Map} />
+                <Tab.Screen name="Catalog" component={Catalog} />
+                <Tab.Screen name="Community" component={Community} />
             </Tab.Navigator>
         </NavigationContainer>
     );
