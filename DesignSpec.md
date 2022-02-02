@@ -2,11 +2,12 @@
 _Emphasizing collecting, community, and most importantly safety, when it comes to mushroom foraging._
 
 ## Team Members and their roles currently
-Emilie Hopkinson, *mushroom cataloger*
-Michelle Chen, *UI/UX designer*
-Jacob Chen, *Location Servicer*
-Bibaswan Khadka, *Database Manager*
-Anshul Barnwal, *Userintereface backend*
+
+- Emilie Hopkinson, *mushroom cataloger*
+- Michelle Chen, *UI/UX designer*
+- Jacob Chen, *Location Servicer*
+- Bibaswan Khadka, *Database Manager*
+- Anshul Barnwal, *Userintereface backend*
 
 ## What is Mush-buddy at its core
 Mush-buddy will be multiplatform app that will allow users to look up mushrooms to help identify it, have their own personal collection of mushrooms in a digital library, and be more social by allowing community interactions
@@ -96,7 +97,6 @@ Below are a few privacy concerns so far to keep in mind throughout the design pr
 - how are we going to build the communities/sub communities
 - how to post
 - profile creation
-
 
 
 
