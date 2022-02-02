@@ -4,7 +4,7 @@ _Emphasizing collecting, community, and most importantly safety, when it comes t
 ## Team Members and their roles currently
 
 - Emilie Hopkinson, *Mushroom cataloger*
-- Michelle Chen, *UI/UX designer*
+- Michelle Chen, *Frontend, UI/UX *
 - Jacob Chen, *Location Servicer*
 - Bibaswan Khadka, *Backend*
 - Anshul Barnwal, *Frontend*
