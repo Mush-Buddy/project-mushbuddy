@@ -2,6 +2,7 @@
 _Emphasizing collecting, community, and most importantly safety, when it comes to mushroom foraging._
 
 ## Team Members and their roles currently
+
 -Emilie Hopkinson, *mushroom cataloger*
 -Michelle Chen, *UI/UX designer*
 -Jacob Chen, *Location Servicer*
