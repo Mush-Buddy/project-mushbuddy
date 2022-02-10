@@ -5,45 +5,81 @@ const dimensions = Dimensions.get('window');
 export default StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        backgroundColor: 'white',
       },
-      header: {
-        backgroundColor: "#00BFFF",
-        height: 200,
+      text: {
+        color: '#222222',
       },
-      body: {
-        marginTop: 40,
+      upperContainer: {
+        flexDirection: 'column',
+        width: '100%',
+        height: 250,
       },
-      bodyContent: {
+      headerBackgroundImage: {
         flex: 1,
-        alignItems: 'center',
-        padding: 30,
+        justifyContent: "center",
       },
-      userName: {
-        fontSize: 22,
-        color: "#222222",
-        fontWeight: '600',
+      upperNavigation: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 24,
+        marginHorizontal: 16,
       },
-      userHandle: {
-        fontSize: 14,
-        color: "#6C6C6C",
-        marginTop: 10,
-      },
-      userLocation: {
-        fontSize: 14,
-        color: "#6C6C6C",
-        marginTop: 10,
-      },
-      buttonContainer: {
-        marginTop: 10,
-        height: 45,
+      profileStripContainer: {
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20,
-        width: 250,
-        borderRadius: 30,
-        backgroundColor: "#00BFFF",
+        width: '100%',
+        height: '20%',
+        paddingLeft: 0,
+        //backgroundColor: '#F0ECE8',
+      },
+      profileImageContainer: {
+        height: 120,
+        width: 120,
+        borderRadius: 60,
+        borderColor: 'white',
+        borderWidth: 4,
+        overflow: 'hidden',
+        backgroundColor: '#F0ECE8',
+      },
+      profileImage: {
+        width: '70%',
+        height: '70%',
+        flex: 1,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
+      userInfoContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        marginTop: 150,
+        paddingLeft: 30,
+      },
+      headerText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      subheaderText: {
+        fontSize: 14,
+        color: "#6C6C6C",
+        marginTop: 3,
+      },
+      locationLine: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: 5,
+      },
+      buttonGroupContainer: {
+        flex: 1,
+        width: '100%',
+        height: 25,
+        marginTop: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
 });

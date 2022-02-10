@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Profile from '../components/profile';
 import Map from '../components/map';
@@ -17,21 +17,31 @@ const MainTabBar = () => {
             <Tab.Navigator
                 initialRouteName="Search"
                 screenOptions={({ route }) => ({
+                    tabBarLabel:() => {return null},
                     tabBarIcon: ({ focused }) => {
                         let iconName;
 
                         if (route.name === 'Profile') {
-                            iconName = 'info-circle';
+                            iconName = 'person';
+                        }
+                        else if (route.name === 'Community') {
+                            iconName = 'chatbubbles';
+                        }
+                        else if (route.name === 'Map') {
+                            iconName = 'map';
+                        }
+                        else {
+                            iconName = 'newspaper';
                         }
 
-                        return <Ionicons name={iconName} size={26} color={focused ? '#58AADA' : 'grey'} />;
+                        return <Icon name={iconName} size={26} color={focused ? '#FFAA60' : '#F1CC96'} />;
                     },
                 })}
             >
                 <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen name="Community" component={Community} />
                 <Tab.Screen name="Map" component={Map} />
                 <Tab.Screen name="Catalog" component={Catalog} />
-                <Tab.Screen name="Community" component={Community} />
             </Tab.Navigator>
         </NavigationContainer>
     );
