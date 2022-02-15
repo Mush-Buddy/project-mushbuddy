@@ -10,7 +10,7 @@ export default StyleSheet.create({
     catalogEntryContainer: {
         flex: 1,
         flexDirection: 'row',
-        width: '100%',
+        width: '90%',
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,6 +23,7 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderColor: 'transparent',
         overflow: 'hidden',
+        marginLeft: 5,
         marginRight: 30,
     },
     image: {
@@ -34,19 +35,19 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         width: '100%',
-        height: '70%',
+        height: '50%',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginLeft: 10,
     },
     headerLine: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center',
+        alignItems: 'flex-end',
+        marginBottom: 2.5,
     },
     headerText: {
-        fontSize: 15,
+        fontSize: 17.5,
         color: '#222222',
     },
     italicizedHeaderText: {
@@ -56,7 +57,17 @@ export default StyleSheet.create({
         fontStyle: 'italic',
     },
     descriptionText: {
+        flex: 1,
         fontSize: 10,
         color: '#222222',
+    },
+    filterPress: {
+        fontSize: 12,
+    },
+    topNavigation: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
 });
