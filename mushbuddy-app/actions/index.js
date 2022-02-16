@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGQyYzAwMGUwNjBkZmRkNDg3OGFlZCIsImlhdCI6MTY0NTAzMDQxNywiZXhwIjoxNjQ1MTE2ODE3fQ.R3rAUf6nAeJ3HSiaZaBjzCmTA0iMyW8LaTEXqoBPWvA';
 
@@ -37,7 +37,7 @@ export function getUserByID() {
         axios.get(`${ROOT_URL}/users/${TEST_USERID}`, {
             headers: { token: TOKEN },
         }).then((response) => {
-            console.log(`Testing getUserByID: ${response}`);
+            console.log(`Testing getUserByID RESPONSE DATA: ${response.data.user.username}`);
             dispatch({
                 type: ActionTypes.GET_USER_BY_ID,
                 payload: response.data,
@@ -47,20 +47,6 @@ export function getUserByID() {
         });
     };
 }
-
-// export function getUserByID() {
-//     return (dispatch) => {
-//         axios.get(`${ROOT_URL}/users/${TEST_USERID}`).user.then((response) => {
-//             console.log(`Testing getUserByID: ${response}`);
-//             dispatch({
-//                 type: ActionTypes.GET_USER_BY_ID,
-//                 payload: response.data,
-//             });
-//         }).catch((e) => {
-//             console.log(`Error getting user name: ${e}`);
-//         });
-//     };
-// }
 
 // export function getAllPosts(userID) {
 //     return (dispatch) => {

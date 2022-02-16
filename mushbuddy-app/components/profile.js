@@ -20,7 +20,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIndex: 2
+      selectedIndex: 0
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -29,31 +29,120 @@ class Profile extends Component {
     this.props.getUserByID();
   }
 
-  renderName = () => {
-    if (this.props.user.username && this.props.user.username !== '') {
-      console.log(this.props.user.username);
-    }
-  }
-
   updateIndex = (selectedIndex) => {
     this.setState({ selectedIndex });
   }
 
+  getUserName = () => {
+    if (this.props.user.user) {
+      console.log("can access this.props.user.user");
+      console.log(this.props.user.user.username);
+      return this.props.user.user.username;
+    }
+    else {
+      console.log("can't access this.props.user.user");
+    }
+  }
+
+  // Render methods
+
+  renderProfileImage = () => {
+    return (
+      <View style={styles.profileImageContainer}>
+        <Image
+          source={defaultIcon}
+          style={styles.profileImage}
+          resizeMode='center'
+        />
+      </View>
+    );
+  }
+
+  // Modular profile info renderers
+
+  renderUserName = () => {
+    return (
+      <Text style={styles.headerText}>
+        {this.getUserName()}
+        {/* Aleskander Zitko */}
+      </Text>
+    );
+  }
+
+  renderUserHandle = () => {
+    return (
+      <Text style={styles.subheaderText}>
+        @ aleks_ko
+      </Text>
+    );
+  }
+
+  renderUserLocation = () => {
+    return (
+      <View style={styles.locationLine}>
+        <Icon name='location' size={14} color='#FFAA60' />
+        <Text> Portland, OR</Text>
+      </View>
+    );
+  }
+
+  renderProfileInfo = () => {
+    return (
+      <View style={styles.userInfoContainer}>
+        {this.renderUserName()}
+        {this.renderUserHandle()}
+        {this.renderUserLocation()}
+      </View>
+    );
+  }
+
+  renderButtonGroup = (buttonOptions) => {
+    return (
+      <View style={styles.buttonGroupContainer}>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={this.state.selectedIndex}
+          buttons={buttonOptions}
+          textStyle={{
+            fontSize: 12,
+            color: '#BDBDBD',
+          }}
+          containerStyle={{
+            width: '90%',
+            height: 30,
+            borderColor: 'transparent',
+            backgroundColor: 'transparent',
+          }}
+          buttonContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor: 'transparent',
+          }}
+          innerBorderStyle={{ color: '#BDBDBD' }}
+          selectedButtonStyle={{
+            backgroundColor: 'transparent',
+          }}
+          selectedTextStyle={{ color: '#6C6C6C', fontWeight: 'bold' }}
+        />
+      </View>
+    );
+  }
+
   renderSubComponent = () => {
-    if (this.state.selectedIndex === 1) {
+    if (this.state.selectedIndex === 0) {
       return (
-        <History />
+        <Badges />
       );
     } else {
       return (
-        <Badges />
+        <History />
       );
     }
   }
 
   render() {
     const buttons = ['Badges', 'History'];
-    const { selectedIndex } = this.state;
+    //const { selectedIndex } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -68,61 +157,14 @@ class Profile extends Component {
               </View>
 
               <View style={styles.profileStripContainer}>
-
-                <View style={styles.profileImageContainer}>
-                  <Image
-                    source={defaultIcon}
-                    style={styles.profileImage}
-                    resizeMode='center'
-                  />
-                </View>
-
-                <View style={styles.userInfoContainer}>
-                  <Text style={styles.headerText}>
-                    {/* {this.renderName()} */}
-                    Aleskander Zitko
-                  </Text>
-                  <Text style={styles.subheaderText}>
-                    @ aleks_ko
-                  </Text>
-                  <View style={styles.locationLine}>
-                    <Icon name='location' size={14} color='#FFAA60' />
-                    <Text> Portland, OR</Text>
-                  </View>
-                </View>
-
+                {this.renderProfileImage()}
+                {this.renderProfileInfo()}
               </View>
+
             </ImageBackground>
           </View>
 
-          <View style={styles.buttonGroupContainer}>
-            <ButtonGroup
-              onPress={this.updateIndex}
-              selectedIndex={selectedIndex}
-              buttons={buttons}
-              textStyle={{
-                fontSize: 12,
-                color: '#BDBDBD',
-              }}
-              containerStyle={{ 
-                width: '90%',
-                height: 30,
-                borderColor: 'transparent',
-                backgroundColor: 'transparent',
-              }}
-              buttonContainerStyle={{ 
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderColor: 'transparent',
-              }}
-              innerBorderStyle={{ color: '#BDBDBD' }}
-              selectedButtonStyle={{
-                backgroundColor: 'transparent',
-              }}
-              selectedTextStyle={{ color: '#6C6C6C', fontWeight: 'bold' }}
-            />
-          </View>
-
+          {this.renderButtonGroup(buttons)}
           {this.renderSubComponent()}
 
         </ScrollView>
