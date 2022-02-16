@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { getUserByID } from '../actions';
+
 import { View, Text, TouchableOpacity, SafeAreaView, Image, ImageBackground, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import defaultIcon from '../assets/icon_default.png';
@@ -19,6 +23,16 @@ class Profile extends Component {
       selectedIndex: 2
     };
     this.updateIndex = this.updateIndex.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getUserByID();
+  }
+
+  renderName = () => {
+    if (this.props.user.username && this.props.user.username !== '') {
+      console.log(this.props.user.username);
+    }
   }
 
   updateIndex = (selectedIndex) => {
@@ -65,7 +79,8 @@ class Profile extends Component {
 
                 <View style={styles.userInfoContainer}>
                   <Text style={styles.headerText}>
-                    Alexksander Zitko
+                    {/* {this.renderName()} */}
+                    Aleskander Zitko
                   </Text>
                   <Text style={styles.subheaderText}>
                     @ aleks_ko
@@ -116,4 +131,11 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = (reduxState) => ({
+  user: reduxState.user.userObject,
+});
+
+//export default Profile;
+export default connect(mapStateToProps, {
+  getUserByID,
+})(Profile);
