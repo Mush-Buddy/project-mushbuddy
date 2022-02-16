@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getUserByID } from '../actions';
+import { getUserByID } from '../../actions';
 
 import { View, Text, TouchableOpacity, SafeAreaView, Image, ImageBackground, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import defaultIcon from '../assets/icon_default.png';
 
 import { ButtonGroup } from 'react-native-elements';
 
-import styles from './stylesheets/profile_style.js';
+import styles from '../stylesheets/profile_styles/profile_style.js';
 
-import headerBackground from '../assets/profile_assets/header_background2.png';
+import headerBackground from '../../assets/profile_assets/header_background2.png';
+import defaultIcon from '../../assets/profile_assets/icon_default.png';
 
 import Badges from './badges.js';
 import History from './history.js';
@@ -35,12 +35,12 @@ class Profile extends Component {
 
   getUserName = () => {
     if (this.props.user.user) {
-      console.log("can access this.props.user.user");
-      console.log(this.props.user.user.username);
+      // console.log("can access this.props.user.user");
+      // console.log(this.props.user.user.username);
       return this.props.user.user.username;
     }
     else {
-      console.log("can't access this.props.user.user");
+      console.log("this.props.user.user temporarily unavaiable (still loading)");
     }
   }
 
@@ -142,7 +142,6 @@ class Profile extends Component {
 
   render() {
     const buttons = ['Badges', 'History'];
-    //const { selectedIndex } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -177,7 +176,6 @@ const mapStateToProps = (reduxState) => ({
   user: reduxState.user.userObject,
 });
 
-//export default Profile;
 export default connect(mapStateToProps, {
   getUserByID,
 })(Profile);
