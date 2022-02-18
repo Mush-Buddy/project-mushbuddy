@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Profile from '../components/profile';
+import Profile from '../components/profile_components/profile';
 import Map from '../components/map';
 import Catalog from '../components/catalog';
 import Community from '../components/community';

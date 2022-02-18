@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, Image, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, Image, SafeAreaView, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
 import styles from './stylesheets/catalog_style.js';
 
-import SamplePhoto1 from '../assets/profile_assets/mushrooms/king_bolete.png';
-import SamplePhoto2 from '../assets/profile_assets/mushrooms/chanterelle.png';
-import SamplePhoto3 from '../assets/profile_assets/mushrooms/morel.jpeg';
+// import SamplePhoto1 from '../assets/profile_assets/mushrooms/king_bolete.png';
+// import SamplePhoto2 from '../assets/profile_assets/mushrooms/chanterelle.png';
+// import SamplePhoto3 from '../assets/profile_assets/mushrooms/morel.jpeg';
+
+import catalogData from '../assets/mushroomDict.json';
 
 class Catalog extends Component {
 
@@ -51,43 +53,75 @@ class Catalog extends Component {
         );
     }
 
+    renderCatalogImageWithURL = (link) => {
+        return (
+            <View style={styles.imageContainer}>
+                <Image
+                    source={{uri: link}}
+                    style={styles.image}
+                />
+            </View>
+        );
+    }
+
     renderCatalogInfo = (name, scientificName, description) => {
         return (
             <View style={styles.infoContainer}>
-                {/* <Text style={styles.headerText}>
-                    {name} ({scientificName})
-                </Text> */}
                 <View style={styles.headerLine}>
                     <Text style={styles.headerText}>
                         {name}
                     </Text>
                     <Text style={styles.italicizedHeaderText}>
-                        {scientificName}
+                        ({scientificName})
                     </Text>
                 </View>
-                <Text style={styles.descriptionText}>
+                <Text numberOfLines={2} ellipsizeMode='tail' style={styles.descriptionText}>
                     {description}
                 </Text>
             </View>
         );
     }
 
-    renderCatalogEntry = (name, scientificName, description, photo) => {
+    // renderCatalogEntry = (name, scientificName, description, photo) => {
+    //     return (
+    //         <View style={styles.catalogEntryContainer}>
+    //             {this.renderCatalogImage(photo)}
+    //             {this.renderCatalogInfo(name, scientificName, description)}
+    //         </View>
+    //     );
+    // }
+
+    renderCatalogEntry = (entry) => {
         return (
             <View style={styles.catalogEntryContainer}>
-                {this.renderCatalogImage(photo)}
-                {this.renderCatalogInfo(name, scientificName, description)}
+                {this.renderCatalogImageWithURL(entry.images)}
+                {this.renderCatalogInfo(entry.nameCommon, entry.nameScientific, entry.description)}
             </View>
         );
     }
 
+    onPressFilter = () => {
+        console.log("Attempting to filter");
+    }
+
+    renderFilterButton = () => {
+        return (
+            <TouchableOpacity
+                style={styles.filterPress}
+                onPress={this.onPressFilter}
+            >
+                <Text>Filter</Text>
+            </TouchableOpacity>
+        );
+    }
+
     render() {
-        const names = ['King Bolete', 'Chanterelle', 'Morel'];
-        const scientificNames = ['Boletus edulis', 'Cantharellus', 'Morchella esculenta'];
-        const photos = [SamplePhoto1, SamplePhoto2, SamplePhoto3];
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView>
+                <View style={styles.topNavigation}>
+                    {this.renderFilterButton()}
+                </View>
+                {/* <ScrollView>
                     {this.renderCatalogEntry(names[0], scientificNames[0], 'this is a sample description', photos[0])}
                     {this.renderCatalogEntry(names[1], scientificNames[1], 'this is a sample description', photos[1])}
                     {this.renderCatalogEntry(names[2], scientificNames[2], 'this is a sample description', photos[2])}
@@ -97,7 +131,13 @@ class Catalog extends Component {
                     {this.renderCatalogEntry(names[0], scientificNames[0], 'this is a sample description', photos[0])}
                     {this.renderCatalogEntry(names[1], scientificNames[1], 'this is a sample description', photos[1])}
                     {this.renderCatalogEntry(names[2], scientificNames[2], 'this is a sample description', photos[2])}
-                </ScrollView>
+                </ScrollView> */}
+                <FlatList
+                    data={catalogData}
+                    renderItem={({ item }) => { return this.renderCatalogEntry(item); }}
+                    keyExtractor={(item, index) => index}
+                    ItemSeparatorComponent={() => <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222'}} />}
+                />
             </SafeAreaView>
         );
     }
