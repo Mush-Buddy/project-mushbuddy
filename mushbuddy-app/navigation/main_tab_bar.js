@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const MainTabBar = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
             <Tab.Navigator
                 initialRouteName="Search"
                 screenOptions={({ route }) => ({

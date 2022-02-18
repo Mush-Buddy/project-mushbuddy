@@ -8,20 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const SignIn = () => {
+const SignUp = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const navigation = useNavigation();
 
-    const onSignInPressed = () => {
+    const signedUp = () => {
         //TODO: validate user
         navigation.navigate('Main');
-    }
-
-    const onSignUpPressed = () => {
-        //TODO: validate user
-        navigation.navigate('Signup');
     }
 
     return (
@@ -38,13 +33,8 @@ const SignIn = () => {
                 placeholder='password'
                 secureTextEntry={true} >
             </CustomInput>
-
-            <Pressable style={styles.buttonContainer} onPress={onSignInPressed}
-            navigation={navigation}>
-                <Text>log in</Text>
-            </Pressable>
             
-            <Pressable style={styles.buttonContainer} onPress={onSignUpPressed}
+            <Pressable style={styles.buttonContainer} onPress={signedUp}
             navigation={navigation}>
                 <Text>sign up</Text>
             </Pressable>
@@ -52,4 +42,4 @@ const SignIn = () => {
     )
 }
 
-export default SignIn;
+export default SignUp;
