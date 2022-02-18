@@ -6,6 +6,7 @@ const Stack = createNativeStackNavigator();
 import MainTabBar from './main_tab_bar';
 import SignIn from './signin';
 import SignUp from './signup';
+//to use navigation in any component, add the screen here and use useNavigation
 
 const Navigation = () => {
     return (
