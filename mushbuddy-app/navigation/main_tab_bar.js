@@ -4,16 +4,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Profile from '../components/profile_components/profile';
+import Profile from '../newcomponents/profile/profile';
 import Map from '../components/map';
 import Catalog from '../components/catalog';
 import Community from '../components/community';
+import Search from '../newcomponents/search';
+import MushroomCatalog from '../newcomponents/MushroomCatalog'
 
 const Tab = createBottomTabNavigator();
 
 const MainTabBar = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
             <Tab.Navigator
                 initialRouteName="Search"
                 screenOptions={({ route }) => ({
@@ -39,9 +41,9 @@ const MainTabBar = () => {
                 })}
             >
                 <Tab.Screen name="Profile" component={Profile} />
-                <Tab.Screen name="Community" component={Community} />
+                <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Map" component={Map} />
-                <Tab.Screen name="Catalog" component={Catalog} />
+                <Tab.Screen name="Catalog" component={MushroomCatalog} />
             </Tab.Navigator>
         </NavigationContainer>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getUserByID } from '../../actions';
+// import { getUserByID } from '../../actions';
 
 import { View, Text, TouchableOpacity, SafeAreaView, Image, ImageBackground, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -172,6 +172,7 @@ class Profile extends Component {
   }
 }
 
+/*
 const mapStateToProps = (reduxState) => ({
   user: reduxState.user.userObject,
 });
@@ -179,3 +180,6 @@ const mapStateToProps = (reduxState) => ({
 export default connect(mapStateToProps, {
   getUserByID,
 })(Profile);
+*/
+
+export default Profile

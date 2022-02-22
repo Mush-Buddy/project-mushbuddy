@@ -1,24 +1,26 @@
-import React from 'react';
 import MainTabBar from './navigation/main_tab_bar';
+import Register from './navigation/register'
+import Index from './index'
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk';
-import reducers from './reducers';
-import { ActionTypes } from './actions';
+import rootReducer from './redux/reducers/index'
 
 // import { LogBox } from 'react-native';
 
 // disable really annoying in app warnings
 // LogBox.ignoreAllLogs();
 
-const store = createStore(reducers, {}, compose(
-  applyMiddleware(thunk),
+const store = createStore(
+  rootReducer, 
+  composeWithDevTools(applyMiddleware(thunk)
 ));
 
-const App = (props) => {
+const App = () => {
   return (
     <Provider store={store}>
-      <MainTabBar />
+      <Index />
     </Provider>
   );
   //return <MainTabBar />;
