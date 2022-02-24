@@ -1,25 +1,69 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ColorPropType } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import Markers from './markers.js'
+import { useEffect, useState } from 'react'
 
 const Map = () => {
-    return (
-      // working mapview.
-      <View style={styles.container}>
-        <MapView 
-          style={styles.map}
-          initialRegion={{
-            latitude: 43.700859,
-            longitude: -72.289398,
-            latitudeDelta: 0.0,
-            longitudeDelta: 0.0,
-          }}  
-        >
-        
-        <Marker title = {"mushroom is here"} description = {"here is some information about the mushroom"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
-        </MapView>
-      </View>
-    );
+  // testing markers we use for testing purposes. This will be a backend call at some point
+  const [testMarkers, setMarkers] = useState([
+    {
+      title: "Chicago Mushroom",
+      description: "This mushroom was found near Chicago",
+      coordinate: {latitude: 42.03, longitude: -93.58},
+    },
+    {
+      title: "Dartmouth Mushroom",
+      description: "This mushroom was found near Dartmouth",
+      coordinate: {latitude: 43.700859, longitude: -72.289398},
+    },
+    {
+      title: "Around Dartmouth Mushroom",
+      description: "This mushroom was found near Around Dartmouth",
+      coordinate: {latitude: 44.700859, longitude: -75.289398},
+    },
+    {
+      title: "Los Angeles Mushroom",
+      description: "This mushroom was found near Los Angeles",
+      coordinate: {latitude: 34, longitude: -118},
+    }
+  ])
+
+  // Add a marker to the map.
+  // currently offers no input fields, add those later.
+  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
+  const addMarker = (event) => {
+    console.log("new marker to be placed at:")
+    console.log(event.coordinate)
+    const newMarker = {title: "title", description: "description", coordinate: event.coordinate}
+    setMarkers([...testMarkers, newMarker])
+  }
+
+  return (
+    // first, render the map
+    <View style={styles.container}>
+      {<MapView 
+        style={styles.map}
+        initialRegion={{
+          latitude: 43.700859,
+          longitude: -72.289398,
+          latitudeDelta: 0.0,
+          longitudeDelta: 0.0,
+        }}
+        // temporary. a UI entry field will be used later to add markers
+        onPress={e => addMarker(e.nativeEvent)} 
+      >
+
+      {/* next, render all markers */}
+      <Markers markers={testMarkers} />
+
+      {/* some past lines that worked */}
+      {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
+      {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
+      <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
+      </MapView>}
+    </View>
+  );
 }
 
 // map stylesheet
