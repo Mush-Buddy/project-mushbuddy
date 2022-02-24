@@ -20,7 +20,7 @@ export default StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 25,
-        borderColor: 'white',
+        borderColor: '#F1CC96',
         borderWidth: 6,
         overflow: 'hidden',
     },

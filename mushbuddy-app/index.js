@@ -11,21 +11,26 @@ import { View } from 'react-native';
 const Tab = createBottomTabNavigator();
 
 function Index() {
-    const { auth } = useSelector(state => state)
-    const dispatch = useDispatch()
-
+    const { auth } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const renderElement = () => {
         if (auth.token) {
-            return (<MainTabBar/>)
+            return (
+                <NavigationContainer>
+                    <MainTabBar />
+                </NavigationContainer>
+            );
         }
-        else{
-            return (<NavigationContainer>
-                <Tab.Navigator>
-                    <Tab.Screen name = "Register" component ={Register}/>
-                    <Tab.Screen name = "Login" component ={Login}/>
-                </Tab.Navigator>
-            </NavigationContainer>)
+        else {
+            return (
+                <NavigationContainer>
+                    <Tab.Navigator>
+                        <Tab.Screen name="Register" component={Register} />
+                        <Tab.Screen name="Login" component={Login} />
+                    </Tab.Navigator>
+                </NavigationContainer>
+            );
         }
     }
 
