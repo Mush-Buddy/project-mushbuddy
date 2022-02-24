@@ -6,10 +6,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Profile from '../newcomponents/profile/profile';
 import Map from '../components/map';
-import Catalog from '../components/catalog';
-import Community from '../components/community';
+//import Catalog from '../components/catalog';
+//import Community from '../components/community';
 import Search from '../newcomponents/search';
-import MushroomCatalog from '../newcomponents/MushroomCatalog'
+//import MushroomCatalog from '../newcomponents/MushroomCatalog';
+import CatalogNavigator from '../newcomponents/catalog_navigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const MainTabBar = () => {
                 <Tab.Screen name="Profile" component={Profile} />
                 <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Map" component={Map} />
-                <Tab.Screen name="Catalog" component={MushroomCatalog} />
+                <Tab.Screen name="Catalog" component={CatalogNavigator} />
             </Tab.Navigator>
         </NavigationContainer>
     );

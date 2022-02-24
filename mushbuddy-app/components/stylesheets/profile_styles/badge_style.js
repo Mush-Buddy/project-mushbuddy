@@ -3,17 +3,18 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // flexDirection: 'column',
     },
     badgeRowContainer: {
         flex: 1,
         flexDirection: 'row',
         width: '100%',
-        height: 100,
+        //height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        //marginTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
     },

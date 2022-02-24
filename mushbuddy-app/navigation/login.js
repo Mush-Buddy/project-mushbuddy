@@ -14,7 +14,6 @@ const Login = () => {
         dispatch(login(userData))
     }
 
-
     return (
         <View style={{ justifyContent: "center", alignItems: "center",flex:1}}>
             <View>

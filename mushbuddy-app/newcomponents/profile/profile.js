@@ -1,27 +1,91 @@
-import Info from '../info'
-import { useSelector, useDispatch } from 'react-redux'
-import Posts from '../posts'
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
-import { getProfileUsers } from '../../redux/actions/profileAction'
+import Info from '../info';
+import { useSelector, useDispatch } from 'react-redux';
+import Posts from '../posts';
+import React, { useEffect, useState } from 'react';
+import { View, SafeAreaView, Text } from 'react-native';
+import { getProfileUsers } from '../../redux/actions/profileAction';
+
+import { ButtonGroup } from 'react-native-elements';
+
+import { ScrollView } from 'react-native-gesture-handler';
+
+import Badges from '../../components/profile_components/badges.js';
+
+import styles from '../../components/stylesheets/profile_styles/profile_style.js';
 
 const Profile = () => {
-    const { profile, auth } = useSelector(state => state)
-    const dispatch = useDispatch()
+    const { profile, auth } = useSelector(state => state);
+    const dispatch = useDispatch();
 
-    const id  = auth.user._id
+    const id = auth.user._id;
     useEffect(() => {
-        if(profile.ids.every(item => item !== id)){
-            dispatch(getProfileUsers({id, auth}))
+        if (profile.ids.every(item => item !== id)) {
+            dispatch(getProfileUsers({ id, auth }))
         }
-    },[id, auth, dispatch, profile.ids])
+    }, [id, auth, dispatch, profile.ids]);
+
+    const buttons = ['Badges', 'History'];
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const renderButtonGroup = (buttonOptions) => {
+        return (
+            <View style={styles.buttonGroupContainer}>
+                <ButtonGroup
+                    onPress={(value) => {
+                        setSelectedIndex(value);
+                    }}
+                    selectedIndex={selectedIndex}
+                    buttons={buttonOptions}
+                    textStyle={{
+                        fontSize: 12,
+                        color: '#BDBDBD',
+                    }}
+                    containerStyle={{
+                        width: '90%',
+                        height: 30,
+                        borderColor: 'transparent',
+                        backgroundColor: 'transparent',
+                    }}
+                    buttonContainerStyle={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderColor: 'transparent',
+                    }}
+                    innerBorderStyle={{ color: '#BDBDBD' }}
+                    selectedButtonStyle={{
+                        backgroundColor: 'transparent',
+                    }}
+                    selectedTextStyle={{ color: '#6C6C6C', fontWeight: 'bold' }}
+                />
+            </View>
+        );
+    }
+
+    const renderSubComponent = () => {
+        if (selectedIndex === 0) {
+            return (
+                <Badges />
+            );
+        } else {
+            return (
+                // <History />
+                <Posts auth={auth} id={id} dispatch={dispatch} profile={profile} />
+            );
+        }
+    }
 
     return (
-        <View>
-            <Info auth={auth} id={id} dispatch = {dispatch} profile = {profile}/>
-            <Posts auth={auth} id={id} dispatch = {dispatch} profile={profile} />
-        </View>
-    )
+        <SafeAreaView style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
+                <Info auth={auth} id={id} dispatch={dispatch} profile={profile} />
+                {renderButtonGroup(buttons)}
+            </ScrollView>
+            {renderSubComponent()}
+        </SafeAreaView>
+    );
 }
 
-export default Profile
+export default Profile;

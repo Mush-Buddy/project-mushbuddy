@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import { getUserByID } from '../../actions';
+import { getProfileUsers } from '../../redux/actions/profileAction.js';
 
 import { View, Text, TouchableOpacity, SafeAreaView, Image, ImageBackground, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,6 +28,7 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.getUserByID();
+    //this.props.getProfileUsers();
   }
 
   updateIndex = (selectedIndex) => {
@@ -35,8 +37,6 @@ class Profile extends Component {
 
   getUserName = () => {
     if (this.props.user.user) {
-      // console.log("can access this.props.user.user");
-      // console.log(this.props.user.user.username);
       return this.props.user.user.username;
     }
     else {
@@ -182,4 +182,4 @@ export default connect(mapStateToProps, {
 })(Profile);
 */
 
-export default Profile
+export default Profile;

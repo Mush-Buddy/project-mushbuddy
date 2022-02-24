@@ -5,7 +5,13 @@ const dimensions = Dimensions.get('window');
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        flexDirection: 'column',
+        backgroundColor: '#F0ECE8',
+      },
+      scrollView: {
+        // flex: 1,
+        // width: '100%',
+        height: 20,
       },
       text: {
         color: '#222222',
@@ -77,8 +83,8 @@ export default StyleSheet.create({
       buttonGroupContainer: {
         flex: 1,
         width: '100%',
-        height: 25,
-        marginTop: 15,
+        height: 40,
+        marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
       },
