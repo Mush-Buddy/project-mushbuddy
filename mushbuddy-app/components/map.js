@@ -32,10 +32,11 @@ const Map = () => {
   // Add a marker to the map.
   // currently offers no input fields, add those later.
   // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
-  const addMarker = (event) => {
+  // TODO: coordinate is from location services, title and description must be linked up to input fields.
+  const addMarker = (event, title, description) => {
     console.log("new marker to be placed at:")
     console.log(event.coordinate)
-    const newMarker = {title: "title", description: "description", coordinate: event.coordinate}
+    const newMarker = {title: title, description: description, coordinate: event.coordinate}
     setMarkers([...testMarkers, newMarker])
   }
 
@@ -51,7 +52,8 @@ const Map = () => {
           longitudeDelta: 0.0,
         }}
         // temporary. a UI entry field will be used later to add markers
-        onPress={e => addMarker(e.nativeEvent)} 
+        onPress={e => addMarker(e.nativeEvent, "marker title", "marker description")} 
+        showsUserLocation={true}
       >
 
       {/* next, render all markers */}
