@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -196,8 +196,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginLeft: 20,
         marginRight: 20,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         marginBottom: 15,
     },
     headerContainer: {

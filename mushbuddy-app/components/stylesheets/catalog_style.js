@@ -14,7 +14,7 @@ export default StyleSheet.create({
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 5,
+        //marginTop: 5,
         paddingLeft: 20,
     },
     imageContainer: {
@@ -47,27 +47,36 @@ export default StyleSheet.create({
         marginBottom: 2.5,
     },
     headerText: {
-        fontSize: 17.5,
+        fontSize: 15,
         color: '#222222',
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
     },
     italicizedHeaderText: {
         fontSize: 12,
         color: '#666666',
         marginLeft: 5,
         fontStyle: 'italic',
+        letterSpacing: 0.15,
     },
     descriptionText: {
         flex: 1,
         fontSize: 10,
         color: '#222222',
+        letterSpacing: 0.1,
     },
-    filterPress: {
-        fontSize: 12,
+    filterButtonText: {
+        fontSize: 13.5,
+        color: '#222222',
+        fontWeight: 'bold',
+        letterSpacing: 0.75,
     },
-    topNavigation: {
+    topBar: {
         flex: 1,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
+        width: '95%',
     },
 });
