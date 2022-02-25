@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableHighlight, FlatList } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableHighlight, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../components/stylesheets/catalog_style.js';
 import { getDataAPI } from '../utils/fetchData';
 import { useSelector } from 'react-redux';
@@ -29,6 +29,8 @@ const MushroomCatalog = ({ navigation }) => {
             setPage(page + 1)
         }
     }
+
+    // Render methods
 
     const renderCatalogImageWithURL = (link) => {
         return (
@@ -76,6 +78,21 @@ const MushroomCatalog = ({ navigation }) => {
         );
     }
 
+    const renderFilterButton = () => {
+        return (
+            <View style={styles.topBar}>
+                <TouchableOpacity
+                    onPress={() => { }}
+                // style={styles.filterButton}
+                >
+                    <Text style={styles.filterButtonText}>
+                        Filter
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
@@ -83,7 +100,9 @@ const MushroomCatalog = ({ navigation }) => {
                 renderItem={({ item }) => { return renderCatalogEntry(item); }}
                 onEndReached={handleLoadMore}
                 keyExtractor={(item, index) => index}
-                ItemSeparatorComponent={() => <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222' }} />}
+                ItemSeparatorComponent={() => <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222' }}/>}
+                ListHeaderComponent={renderFilterButton()}
+                stickyHeaderIndices={[0]}
             />
         </SafeAreaView>
     );
