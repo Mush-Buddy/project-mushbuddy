@@ -57,8 +57,6 @@ const Info = ({ id, auth, dispatch }) => {
     }
 
     const renderProfileInfo = (userName, userHandle, userLocation) => {
-        console.log("attempting to render profile info");
-        console.log("user name:" + userName);
         return (
             <View style={styles.userInfoContainer}>
                 {renderUserName(userName)}

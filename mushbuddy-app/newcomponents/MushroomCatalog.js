@@ -17,16 +17,16 @@ const MushroomCatalog = ({ navigation }) => {
             setCatalog(newData);
             setPage(page + 1);
         }
-    }, [navigation]);
+    }, []);
 
     const handleLoadMore = async () => {
         const res = await getDataAPI(`catalog/?page=${page}`, auth.token);
         const newData = res.data.catalog;
         if (newData.length > 0) {
             setCatalog((c) => {
-                return c.concat(newData)
+                return c.concat(newData);
             });
-            setPage(page + 1)
+            setPage(page + 1);
         }
     }
 
@@ -95,6 +95,7 @@ const MushroomCatalog = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            {/* {console.log(catalog)} */}
             <FlatList
                 data={catalog}
                 renderItem={({ item }) => { return renderCatalogEntry(item); }}

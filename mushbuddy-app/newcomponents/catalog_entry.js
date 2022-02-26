@@ -1,10 +1,16 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import ReadMore from '@fawazahmed/react-native-read-more';
-
 import { StyleSheet } from 'react-native';
+
+// Platform-specific import:
+// ReadMore module isn't compatible with Expo's web simulator, so only import (and use) it
+// if platform is iOS/Android.
+// let ReadMore;
+// if (Platform.OS !== 'web') {
+//     ReadMore = require('@fawazahmed/react-native-read-more').default;
+// }
 
 const CatalogEntry = ({ route, navigation }) => {
     const currentEntry = route.params.entry;
@@ -18,7 +24,7 @@ const CatalogEntry = ({ route, navigation }) => {
         return (
             <View style={styles.upperBar}>
                 <TouchableOpacity
-                    style={styles.roundedButton}
+                    // style={styles.roundedButton}
                     onPress={() => { returnToMainCatalog(); }}
                 >
                     <Icon name='arrow-back' size={30} color='black' />
@@ -42,25 +48,32 @@ const CatalogEntry = ({ route, navigation }) => {
 
     // read more
     const renderDescription = (description) => {
-        return (
-            <View style={styles.descriptionContainer}>
-                {/* <Text style={styles.bodyText}>
-                    {description}
-                </Text> */}
-                <ReadMore
-                    numberOfLines={3}
-                    style={styles.bodyText}
-                    seeMoreText={'Expand description'}
-                    seeLessText={'Collapse description'}
-                    seeMoreStyle={styles.readMoreText}
-                    seeLessStyle={styles.readMoreText}
-                    animate={true}
-                    ellipsis={' '}
-                >
-                    {description}
-                </ReadMore>
-            </View>
-        );
+        // if (Platform.OS !== 'web') {
+        //     return (
+        //         <View style={styles.descriptionContainer}>
+        //             <ReadMore
+        //                 numberOfLines={3}
+        //                 style={styles.bodyText}
+        //                 seeMoreText={'Expand description'}
+        //                 seeLessText={'Collapse description'}
+        //                 seeMoreStyle={styles.readMoreText}
+        //                 seeLessStyle={styles.readMoreText}
+        //                 animate={true}
+        //                 ellipsis={' '}
+        //             >
+        //                 {description}
+        //             </ReadMore>
+        //         </View>
+        //     );
+        // } else {
+            return (
+                <View style={styles.descriptionContainer}>
+                    <Text style={styles.bodyText}>
+                        {description}
+                    </Text>
+                </View>
+            );
+        // }
     }
 
     const renderHeader = (commonName, scientificName) => {
