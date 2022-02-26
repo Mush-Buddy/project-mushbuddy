@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Profile from '../newcomponents/profile/profile';
-import Map from '../components/map';
+import MapNavigator from '../components/map_navigator';
 //import Catalog from '../components/catalog';
 //import Community from '../components/community';
 import Search from '../newcomponents/search';
@@ -43,7 +43,7 @@ const MainTabBar = () => {
             >
                 <Tab.Screen name="Profile" component={Profile} />
                 <Tab.Screen name="Search" component={Search} />
-                <Tab.Screen name="Map" component={Map} />
+                <Tab.Screen name="Map" component={MapNavigator} />
                 <Tab.Screen name="Catalog" component={CatalogNavigator} />
             </Tab.Navigator>
         </NavigationContainer>
