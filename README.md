@@ -8,7 +8,7 @@ A mobile application for mushroom identification.
 * **Jacob Chen**
 * **Michelle Chen**: Frontend development, UI/UX
 * **Emilie Hopkinson**
-* **Bibaswan Khadka**: Backend
+* **Bibaswan Khadka**: Backend, Frontend
 
 ## Technologies
 
