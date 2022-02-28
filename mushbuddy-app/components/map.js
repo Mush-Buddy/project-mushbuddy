@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import SampleMarkerIcon from '../assets/favicon.png';
 
-const Map = () => {
+const Map = ( { navigation } ) => {
   // testing markers we use for testing purposes. This will be a backend call at some point
   const [testMarkers, setMarkers] = useState([
     {
@@ -44,8 +44,6 @@ const Map = () => {
     const newMarker = {title: title, description: description, coordinate: event.coordinate}
     setMarkers([...testMarkers, newMarker])
   }
-
-  const Map = ({ navigation }) => {
 
   const moveToNewPost = () => {
     navigation.navigate('Post', {});
@@ -85,12 +83,12 @@ const Map = () => {
       {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
       {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
       {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
-      <Marker
+      {/* <Marker
           title={"Mushroom name"}
           description={"Mushroom description"}
           image={SampleMarkerIcon}
           coordinate={{ latitude: 42.03, longitude: -93.58 }}
-      />
+      /> */}
         
       </MapView>}
     </View>
