@@ -74,6 +74,7 @@ const Map = ( { navigation } ) => {
 
       {/* next, render all markers */}
       <Markers markers={testMarkers} />
+      </MapView>}
         
       <Callout style={styles.buttonCallout}>
         {renderAddPostButton()}
@@ -89,8 +90,7 @@ const Map = ( { navigation } ) => {
           image={SampleMarkerIcon}
           coordinate={{ latitude: 42.03, longitude: -93.58 }}
       /> */}
-        
-      </MapView>}
+
     </View>
   );
 }
