@@ -1,7 +1,6 @@
 import { GLOBALTYPES } from './globalTypes'
 import { getDataAPI } from '../../utils/fetchData'
 
-
 export const PROFILE_TYPES = {
     LOADING: 'LOADING_PROFILE',
     GET_USER: 'GET_PROFILE_USER',
@@ -9,11 +8,10 @@ export const PROFILE_TYPES = {
     GET_POSTS: 'GET_PROFILE_POSTS'
 }
 
-
 export const getProfileUsers = ({id, auth}) => async (dispatch) => {
     dispatch({type: PROFILE_TYPES.GET_ID, payload: id})
 
-    console.log(id)
+    //console.log(id)
     try {
         dispatch({type: PROFILE_TYPES.LOADING, payload: true})
         const res = getDataAPI(`users/${id}`, auth.token)
@@ -22,7 +20,7 @@ export const getProfileUsers = ({id, auth}) => async (dispatch) => {
         const users = await res;
         const posts = await res1;
 
-        console.log(posts)
+        //console.log(posts)
         dispatch({
             type: PROFILE_TYPES.GET_USER,
             payload: users.data
@@ -41,5 +39,4 @@ export const getProfileUsers = ({id, auth}) => async (dispatch) => {
             payload: {error: err.response.data.msg}
         })
     }
-    
 }

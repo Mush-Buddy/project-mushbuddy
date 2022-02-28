@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, ColorPropType } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, View, Text, Dimensions, ColorPropType, TouchableOpacity } from 'react-native';
+
+import MapView, { Callout, Marker } from 'react-native-maps';
 import Markers from './markers.js'
 import { useEffect, useState } from 'react'
+
+// sample custom markers
+import Icon from 'react-native-vector-icons/Ionicons';
+import SampleMarkerIcon from '../assets/favicon.png';
 
 const Map = () => {
   // testing markers we use for testing purposes. This will be a backend call at some point
@@ -40,10 +45,23 @@ const Map = () => {
     setMarkers([...testMarkers, newMarker])
   }
 
+  const Map = ({ navigation }) => {
+
+  const moveToNewPost = () => {
+    navigation.navigate('Post', {});
+  }
+
+  const renderAddPostButton = () => {
+    return (
+      <TouchableOpacity onPress={() => { moveToNewPost(); }}>
+        <Icon name='add-circle' size={45} color='#D85000' />
+      </TouchableOpacity>
+    );
+  }
+
   return (
-    // first, render the map
     <View style={styles.container}>
-      {<MapView 
+    {<MapView
         style={styles.map}
         initialRegion={{
           latitude: 43.700859,
@@ -58,11 +76,22 @@ const Map = () => {
 
       {/* next, render all markers */}
       <Markers markers={testMarkers} />
+        
+      <Callout style={styles.buttonCallout}>
+        {renderAddPostButton()}
+      </Callout>
 
       {/* some past lines that worked */}
       {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
       {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
-      <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
+      {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
+      <Marker
+          title={"Mushroom name"}
+          description={"Mushroom description"}
+          image={SampleMarkerIcon}
+          coordinate={{ latitude: 42.03, longitude: -93.58 }}
+      />
+        
       </MapView>}
     </View>
   );
@@ -79,6 +108,23 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  buttonCallout: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 15,
+    bottom: 10,
+    // justifyContent: 'space-between',
+    // alignSelf: 'center',
+    backgroundColor: 'transparent',
+    // shadowOffset: {
+    //   width: 2.5,
+    //   height: 2.5,
+    // },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 3,
+    // shadowColor: '#3A1C00',
   },
 });
 

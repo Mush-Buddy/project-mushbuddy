@@ -14,13 +14,10 @@ const Register = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
 
-    
-
     const handleSubmit = () => {
         let userData = {email, username, password, firstName, lastName, city, state }
         dispatch(register(userData))
     }
-
 
     return (
         <View style={{ justifyContent: "center", alignItems: "center",flex:1}}>
