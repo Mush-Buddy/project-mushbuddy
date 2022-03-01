@@ -151,7 +151,7 @@ const MapPost = ({ navigation }) => {
                         Mushroom name
                     </Text>
                     {renderInputField()}
-                    {/* {renderCatalogDropdown()} */}
+                    {renderCatalogDropdown()}
                 </View>
 
                 <View style={styles.inputFieldIndividual}>

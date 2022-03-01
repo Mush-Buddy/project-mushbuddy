@@ -1,85 +1,41 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableHighlight, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../components/stylesheets/catalog_style.js';
 import { getDataAPI } from '../utils/fetchData';
 import { useSelector } from 'react-redux';
+import RenderCatalogEntry from './renderCatalogEntry'
 
 const MushroomCatalog = ({ navigation }) => {
     const { auth } = useSelector(state => state);
     const [catalog, setCatalog] = useState([]);
-    const [limit, setLimit] = useState(9);
+    const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
+    const [shouldFetch, setShouldFetch] = useState(true);
 
-    useEffect(async () => {
-        const res = await getDataAPI(`catalog/?page=${page}&limit=${limit}`, auth.token);
-        const newData = res.data.catalog;
-        if (newData.length > 0) {
-            setCatalog(newData);
+    useEffect(() => {
+        if (!shouldFetch) {
+            return;
+        }
+        const get_data = async () => {
+            const res = await getDataAPI(`catalog/?page=${page}&limit=${limit}`, auth.token);
+            console.log('called',page)
+            console.log(res.data)
+            const newData = res.data.catalog;
+            setShouldFetch(false);
+            setCatalog(oldData => [...oldData, ...newData]);
             setPage(page + 1);
         }
-    }, []);
+        get_data()
+    }, [page,shouldFetch]);
 
-    const handleLoadMore = async () => {
-        const res = await getDataAPI(`catalog/?page=${page}`, auth.token);
-        const newData = res.data.catalog;
-        if (newData.length > 0) {
-            setCatalog((c) => {
-                return c.concat(newData);
-            });
-            setPage(page + 1);
-        }
-    }
+    const handleLoadMore =  useCallback (() =>  setShouldFetch(true), [])
 
-    // Render methods
-
-    const renderCatalogImageWithURL = (link) => {
-        return (
-            <View style={styles.imageContainer}>
-                <Image
-                    source={{ uri: link }}
-                    style={styles.image}
-                />
-            </View>
-        );
-    }
-
-    const renderCatalogInfo = (name, scientificName, description) => {
-        return (
-            <View style={styles.infoContainer}>
-                <View style={styles.headerLine}>
-                    <Text style={styles.headerText}>
-                        {name}
-                    </Text>
-                    <Text style={styles.italicizedHeaderText}>
-                        ({scientificName})
-                    </Text>
-                </View>
-                <Text numberOfLines={2} ellipsizeMode='tail' style={styles.descriptionText}>
-                    {description}
-                </Text>
-            </View>
-        );
-    }
-
-    // pass in entry to display
-    const showCatalogEntryDetail = (entry) => {
-        //console.log(entry);
-        navigation.navigate('Detail', { entry });
-    }
-
-    const renderCatalogEntry = (entry) => {
-        return (
-            <TouchableHighlight onPress={() => { showCatalogEntryDetail(entry); }} underlayColor="transparent">
-                <View style={styles.catalogEntryContainer}>
-                    {renderCatalogImageWithURL(entry.images)}
-                    {renderCatalogInfo(entry.nameCommon, entry.nameScientific, entry.description)}
-                </View>
-            </TouchableHighlight>
-        );
-    }
 
     const renderFilterButton = () => {
-        return (
+        if (shouldFetch) {
+            return (<Text>Loading...Loading...Loading...Loading...</Text>)
+        }
+        return ( 
             <View style={styles.topBar}>
                 <TouchableOpacity
                     onPress={() => { }}
@@ -93,17 +49,35 @@ const MushroomCatalog = ({ navigation }) => {
         );
     }
 
+    const seperator = () => {
+        return (
+            <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222' }}/>
+        )
+    }
+
+    const renderItem = ({ item }) => (<RenderCatalogEntry item={item} navigation = {navigation}/>)
+
+    const getItemLayout = (data, index) => (
+        {length: 100, offset: 100 * index, index}
+      );
+
     return (
         <SafeAreaView style={styles.container}>
-            {/* {console.log(catalog)} */}
             <FlatList
                 data={catalog}
-                renderItem={({ item }) => { return renderCatalogEntry(item); }}
                 onEndReached={handleLoadMore}
-                keyExtractor={(item, index) => index}
-                ItemSeparatorComponent={() => <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222' }}/>}
-                ListHeaderComponent={renderFilterButton()}
+                onEndReachedThreshold = {0.5}
+                ItemSeparatorComponent={seperator}
+                ListHeaderComponent={renderFilterButton}
                 stickyHeaderIndices={[0]}
+                keyExtractor = {item => item._id}
+                // Optimizations
+                removeClippedSubviews = {true}
+                initialNumToRender = {8}
+                maxToRenderPerBatch = {8}
+                windowSize = {11}
+                getItemLayout = {getItemLayout}
+                renderItem={renderItem}
             />
         </SafeAreaView>
     );

@@ -13,7 +13,7 @@ import { StyleSheet } from 'react-native';
 // }
 
 const CatalogEntry = ({ route, navigation }) => {
-    const currentEntry = route.params.entry;
+    const currentEntry = route.params.item;
 
     const returnToMainCatalog = () => {
         navigation.navigate('MushroomCatalog');
