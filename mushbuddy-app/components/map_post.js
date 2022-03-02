@@ -33,6 +33,8 @@ const MapPost = ({ navigation }) => {
         if (newData.length > 0) {
             setData(newData);
             setPage(page + 1);
+
+            // TODO: DROPDOWNPICKER -- CHECK THIS
             setItems(loadDataIntoItems(newData));
         }
     }, []); // this empty array (second arg.) prevents getDataAPI from being called every time a component updates
@@ -94,6 +96,7 @@ const MapPost = ({ navigation }) => {
                 searchable={true}
                 searchablePlaceholder="Search..."
                 searchableError="No existing entries match your search."
+                maxHeight={200}
             />
         );
     }
