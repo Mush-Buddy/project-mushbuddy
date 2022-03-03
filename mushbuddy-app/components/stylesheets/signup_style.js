@@ -107,4 +107,12 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 1,
     },
+    passwordField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    toggleButton: {
+        position: 'absolute',
+        right: 10,
+    },
 });

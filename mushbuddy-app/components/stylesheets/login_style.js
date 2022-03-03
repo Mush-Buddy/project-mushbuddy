@@ -68,11 +68,23 @@ export default StyleSheet.create({
         height: 45,
         borderRadius: 12.5,
         backgroundColor: COLORS.GREEN,
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowColor: COLORS.TEXT_GREEN,
+        shadowOffset: {width: 2, height: 2},
     },
     buttonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
         letterSpacing: 1,
+    },
+    passwordField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    toggleButton: {
+        position: 'absolute',
+        right: 10,
     },
 });
