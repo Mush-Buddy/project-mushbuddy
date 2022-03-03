@@ -153,20 +153,20 @@ const MapPost = ({ navigation }) => {
                     <Text style={styles.subheaderText}>
                         Mushroom name
                     </Text>
-                    {renderInputField()}
+                    {/* {renderInputField()} */}
                     {renderCatalogDropdown()}
                 </View>
 
-                <View style={styles.inputFieldIndividual}>
+                {/* <View style={styles.inputFieldIndividual}>
                     <Text style={styles.subheaderText}>
                         Location found
                     </Text>
-                </View>
+                </View> */}
 
             </View>
 
             <View style={styles.footerContainer}>
-                    {renderUploadButton()}
+                    {/* {renderUploadButton()} */}
             </View>
         </View>
     );

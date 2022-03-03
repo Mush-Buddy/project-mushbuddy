@@ -33,7 +33,9 @@ const MushroomCatalog = ({ navigation }) => {
 
     const renderFilterButton = () => {
         if (shouldFetch) {
-            return (<Text>Loading...Loading...Loading...Loading...</Text>)
+            return (
+                <Text>Loading...</Text>
+            );
         }
         return ( 
             <View style={styles.topBar}>
@@ -52,7 +54,7 @@ const MushroomCatalog = ({ navigation }) => {
     const seperator = () => {
         return (
             <View style={{ marginLeft: 17.5, width: '90%', height: 0.5, backgroundColor: '#222222' }}/>
-        )
+        );
     }
 
     const renderItem = ({ item }) => (<RenderCatalogEntry item={item} navigation = {navigation}/>)
