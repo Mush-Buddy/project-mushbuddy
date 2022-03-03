@@ -57,7 +57,9 @@ const MushroomCatalog = ({ navigation }) => {
         );
     }
 
-    const renderItem = ({ item }) => (<RenderCatalogEntry item={item} navigation = {navigation}/>)
+    const renderListItem = ({ item }) => (
+        <RenderCatalogEntry item={item} navigation={navigation}/>
+    )
 
     const getItemLayout = (data, index) => (
         {length: 100, offset: 100 * index, index}
@@ -74,12 +76,12 @@ const MushroomCatalog = ({ navigation }) => {
                 stickyHeaderIndices={[0]}
                 keyExtractor = {item => item._id}
                 // Optimizations
-                removeClippedSubviews = {true}
-                initialNumToRender = {8}
-                maxToRenderPerBatch = {8}
-                windowSize = {11}
-                getItemLayout = {getItemLayout}
-                renderItem={renderItem}
+                removeClippedSubviews={true}
+                initialNumToRender={8}
+                maxToRenderPerBatch={8}
+                windowSize={11}
+                getItemLayout={getItemLayout}
+                renderItem={renderListItem}
             />
         </SafeAreaView>
     );

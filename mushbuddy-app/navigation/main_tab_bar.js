@@ -5,11 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Profile from '../newcomponents/profile/profile';
-import MapNavigator from '../components/map_navigator';
-//import Catalog from '../components/catalog';
-//import Community from '../components/community';
 import Search from '../newcomponents/search';
-//import MushroomCatalog from '../newcomponents/MushroomCatalog';
+import MapNavigator from '../components/map_navigator';
 import CatalogNavigator from '../newcomponents/catalog_navigator';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +15,7 @@ const MainTabBar = () => {
     return (
         <NavigationContainer independent={true}>
             <Tab.Navigator
-                initialRouteName="Search"
+                initialRouteName="Profile"
                 screenOptions={({ route }) => ({
                     tabBarLabel:() => {return null},
                     tabBarIcon: ({ focused }) => {
