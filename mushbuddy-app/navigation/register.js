@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { register } from '../redux/actions/authAction';
 import { Button, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from '../components/stylesheets/signup_style';
 
@@ -17,9 +18,21 @@ const Register = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
 
+    const [passwordVisibility, setPasswordVisibility] = useState(true);
+    const [rightIcon, setRightIcon] = useState('eye-outline');
+
     const handleSubmit = () => {
         let userData = { email, username, password, firstName, lastName, city, state };
         dispatch(register(userData));
+    }
+
+    const handlePasswordVisibility = () => {
+        if (rightIcon === 'eye-outline') {
+            setRightIcon('eye-off-outline');
+        } else if (rightIcon === 'eye-off-outline') {
+            setRightIcon('eye-outline');
+        }
+        setPasswordVisibility(!passwordVisibility);
     }
 
     const renderHeader = () => {
@@ -178,14 +191,23 @@ const Register = () => {
                     Password
                 </Text>
 
-                <TextInput
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={(password) => setPassword(password)}
-                    placeholderTextColor='#BDBDBD'
-                />
+                <View style={styles.passwordField}>
+                    <TextInput
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={(password) => setPassword(password)}
+                        placeholderTextColor='#BDBDBD'
+                        secureTextEntry={passwordVisibility}
+                    />
+                    <TouchableOpacity
+                        onPress={handlePasswordVisibility}
+                        style={styles.toggleButton}
+                    >
+                        <Icon name={rightIcon} size={18} color='black' />
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
