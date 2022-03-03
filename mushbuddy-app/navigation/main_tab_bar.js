@@ -27,7 +27,7 @@ const MainTabBar = () => {
                         if (route.name === 'Profile') {
                             iconName = 'person';
                         }
-                        else if (route.name === 'Community') {
+                        else if (route.name === 'Search') {
                             iconName = 'chatbubbles';
                         }
                         else if (route.name === 'Map') {
