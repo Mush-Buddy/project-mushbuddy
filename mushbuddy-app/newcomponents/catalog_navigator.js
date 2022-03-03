@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import MushroomCatalog from './MushroomCatalog';
+import CatalogFilter from './catalog_filter';
 import CatalogEntry from './catalog_entry';
 
 const Stack = createStackNavigator();
@@ -18,6 +19,16 @@ const CatalogNavigator = () => {
                 component={MushroomCatalog}
                 options={{
                     title: 'Catalog',
+                    headerStyle: {
+                        backgroundColor: 'transparent',
+                    },
+                }}
+            />
+            <Stack.Screen
+                name="Filter"
+                component={CatalogFilter}
+                options={{
+                    title: 'Catalog: Filter',
                     headerStyle: {
                         backgroundColor: 'transparent',
                     },

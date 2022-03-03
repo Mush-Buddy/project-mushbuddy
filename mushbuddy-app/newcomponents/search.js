@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GLOBALTYPES } from '../redux/actions/globalTypes';
 import { getDataAPI } from '../utils/fetchData';
-import { View, TextInput, FlatList, Text, Button, StyleSheet, SafeAreaView } from 'react-native';
+import { View, TextInput, FlatList, Text, Button, StyleSheet, SafeAreaView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { COLORS } from '../components/stylesheets/colors';
@@ -25,6 +25,10 @@ const Search = () => {
                 type: GLOBALTYPES.ALERT, payload: { error: err.response.data.msg }
             });
         }
+    }
+
+    const capitalizeFirstLetterOf = (nameString) => {
+        return nameString.charAt(0).toUpperCase() + nameString.slice(1);
     }
 
     const renderSearchBar = () => {
@@ -57,9 +61,7 @@ const Search = () => {
     const renderHeaderContainer = () => {
         return (
             <View style={styles.headerContainer}>
-                {/* {renderHeader()} */}
                 {renderSearchBar()}
-                {/* {renderSearchButton()} */}
             </View>
         );
     }
@@ -79,6 +81,45 @@ const Search = () => {
         );
     }
 
+    const renderUserAvatar = (imgUri) => {
+        return (
+            <View style={styles.profileImageContainer}>
+                <Image
+                    source={{ uri: imgUri }}
+                    style={styles.profileImage}
+                    resizeMode='center'
+                />
+            </View>
+        );
+    }
+
+    const renderNameAndHandle = (firstName, lastName, username) => {
+        if (typeof firstName === 'undefined' || typeof lastName === 'undefined') {
+            return (
+                <View style={styles.userInfo}>
+                    <Text style={styles.unnamedText}>
+                        (Unnamed user)
+                    </Text>
+                    <Text style={styles.usernameText}>
+                        @{username}
+                    </Text>
+                </View>
+            );
+        }
+        else {
+            return (
+                <View style={styles.userInfo}>
+                    <Text style={styles.fullnameText}>
+                        {capitalizeFirstLetterOf(firstName)} {capitalizeFirstLetterOf(lastName)}
+                    </Text>
+                    <Text style={styles.usernameText}>
+                        @{username}
+                    </Text>
+                </View>
+            );
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -89,12 +130,13 @@ const Search = () => {
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
                     // TODO - Navigate to other user's profile
-                    <TouchableOpacity onPress={() => console.log("pressed")}>
+                    <TouchableOpacity onPress={() => console.log(item)}>
+                        
                         <View style={styles.listItem}>
-                            <Text style={styles.listText}>
-                                {item.username}
-                            </Text>
+                            {renderUserAvatar(item.avatar)}
+                            {renderNameAndHandle(item.firstName, item.lastName, item.username)}
                         </View>
+
                     </TouchableOpacity>
                 )}
                 ItemSeparatorComponent={renderSeparator}
@@ -104,28 +146,27 @@ const Search = () => {
     );
 }
 
-const MARGIN_TOP = 40;
-const MARGIN_LEFT = 20;
 const HEADER_HEIGHT = 40;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F0ECE8',
+        backgroundColor: COLORS.BG,
         paddingVertical: 15,
         paddingHorizontal: 15,
     },
     listSeparator: {
         height: 1,
-        marginHorizontal: 5,
+        marginHorizontal: 10,
         backgroundColor: COLORS.GREY_3,
+        marginVertical: 6,
     },
     headerContainer: {
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginBottom: 10,
+        marginBottom: 20,
     },
     searchBar: {
         flex: 1,
@@ -138,6 +179,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: COLORS.GREY_3,
         height: HEADER_HEIGHT,
+        shadowColor: 'black',
+        shadowOpacity: 0.15,
+        shadowRadius: 2,
+        shadowOffset: {width:3,height:3},
+        backgroundColor: COLORS.BG,
     },
     searchInput: {
         marginLeft: 20,
@@ -145,35 +191,56 @@ const styles = StyleSheet.create({
         width: '85%',
         height: 30,
     },
-    searchButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 10,
-        height: HEADER_HEIGHT,
-        borderRadius: 12.5,
-        backgroundColor: COLORS.GREEN,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 12,
-        fontWeight: 'bold',
-        letterSpacing: 0.5,
-    },
     listItem: {
         flexDirection: 'row',
-        padding: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         alignItems: 'center',
         height: 50,
     },
-    listText: {
-        fontSize: 16,
+    fullnameText: {
+        fontSize: 14,
         color: COLORS.TEXT,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+    },
+    unnamedText: {
+        fontSize: 14,
+        color: COLORS.TEXT,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+    },
+    usernameText: {
+        fontSize: 14,
+        color: COLORS.TEXT_LIGHTER,
+        letterSpacing: 0.3,
     },
     listEmptyMessage: {
         marginTop: 10,
         color: COLORS.GREY_3,
         fontSize: 16,
+        letterSpacing: 0.5,
         textAlign: 'center',
+    },
+    profileImageContainer: {
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        borderColor: 'black',
+        borderWidth: 1,
+        overflow: 'hidden',
+        backgroundColor: COLORS.BG,
+        marginRight: 20,
+    },
+    profileImage: {
+        flex: 1,
+        width: '70%',
+        height: '70%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    userInfo: {
+        flexDirection: 'column',
     },
 });
 
