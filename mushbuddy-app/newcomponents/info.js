@@ -19,7 +19,6 @@ const Info = ({ id, auth, dispatch }) => {
     }, [id, auth, dispatch]);
 
     const renderProfileImage = (imgUri) => {
-        console.log(userData);
         return (
             <View style={styles.profileImageContainer}>
                 <Image

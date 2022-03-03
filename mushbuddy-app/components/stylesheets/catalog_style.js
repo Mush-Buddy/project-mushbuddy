@@ -1,11 +1,19 @@
 import { StyleSheet } from 'react-native';
 
+import { COLORS } from './colors';
+
+const HEADER_HEIGHT = 40;
+
 export default StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.BG,
     },
-    searchBarContainer: {
-        //fill later
+    loadingContainer: {
+        flex: 1,
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     catalogEntryContainer: {
         flex: 1,
@@ -65,18 +73,37 @@ export default StyleSheet.create({
         color: '#222222',
         letterSpacing: 0.1,
     },
-    filterButtonText: {
-        fontSize: 13.5,
-        color: '#222222',
-        fontWeight: 'bold',
-        letterSpacing: 0.75,
-    },
-    topBar: {
-        flex: 1,
+    headerContainer: {
         marginTop: 10,
+        paddingHorizontal: 5,
+        marginHorizontal: 15,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
-        width: '95%',
+        marginBottom: 7.6,
+    },
+    searchBar: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 5,
+        paddingLeft: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: COLORS.GREY_3,
+        height: HEADER_HEIGHT,
+        shadowColor: 'black',
+        shadowOpacity: 0.15,
+        shadowRadius: 2,
+        shadowOffset: {width:3,height:3},
+        backgroundColor: COLORS.BG,
+        marginRight: 20,
+    },
+    searchInput: {
+        marginLeft: 20,
+        fontSize: 12,
+        width: '85%',
+        height: 30,
     },
 });

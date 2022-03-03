@@ -32,7 +32,7 @@ const RenderCatalogEntry = ({item, navigation}) => {
         );
     }
     
-    const showCatalogEntryDetail = ({navigation,item}) => {
+    const showCatalogEntryDetail = ({navigation, item}) => {
         navigation.navigate('Detail', { item });
     }
     
