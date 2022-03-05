@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../redux/actions/authAction';
-import { Button, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Button, Text, TextInput, View, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -20,6 +20,13 @@ const Register = () => {
 
     const [passwordVisibility, setPasswordVisibility] = useState(true);
     const [rightIcon, setRightIcon] = useState('eye-outline');
+
+    const lastNameRef = useRef();
+    const cityRef = useRef();
+    const stateRef = useRef();
+    const usernameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
 
     const handleSubmit = () => {
         let userData = { email, username, password, firstName, lastName, city, state };
@@ -87,6 +94,12 @@ const Register = () => {
                         value={firstName}
                         onChangeText={(firstName) => setfirstName(firstName)}
                         placeholderTextColor='#BDBDBD'
+                        returnKeyType='next'
+                        onSubmitEditing={() => {
+                            lastNameRef.current.focus();
+                        }}
+                        blurOnSubmit={false}
+                        maxLength={14}
                     />
 
                     <TextInput
@@ -96,6 +109,13 @@ const Register = () => {
                         value={lastName}
                         onChangeText={(lastName) => setlastName(lastName)}
                         placeholderTextColor='#BDBDBD'
+                        ref={lastNameRef}
+                        maxLength={14}
+                        returnKeyType='next'
+                        onSubmitEditing={() => {
+                            cityRef.current.focus();
+                        }}
+                        blurOnSubmit={false}
                     />
 
                 </View>
@@ -124,6 +144,13 @@ const Register = () => {
                         value={city}
                         onChangeText={(city) => setCity(city)}
                         placeholderTextColor='#BDBDBD'
+                        ref={cityRef}
+                        maxLength={20}
+                        returnKeyType='next'
+                        onSubmitEditing={() => {
+                            stateRef.current.focus();
+                        }}
+                        blurOnSubmit={false}
                     />
 
                     <TextInput
@@ -133,29 +160,15 @@ const Register = () => {
                         value={state}
                         onChangeText={(state) => setState(state)}
                         placeholderTextColor='#BDBDBD'
+                        returnKeyType='next'
+                        ref={stateRef}
+                        maxLength={20}
+                        onSubmitEditing={() => {
+                            usernameRef.current.focus();
+                        }}
+                        blurOnSubmit={false}
                     />
                 </View>
-
-            </View>
-        );
-    }
-
-    const renderEmailInputField = () => {
-        return (
-            <View style={styles.inputField}>
-
-                <Text style={styles.subheaderText}>
-                    Email address
-                </Text>
-
-                <TextInput
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    placeholder="Email address"
-                    value={email}
-                    onChangeText={(email) => setEmail(email)}
-                    placeholderTextColor='#BDBDBD'
-                />
 
             </View>
         );
@@ -177,6 +190,40 @@ const Register = () => {
                     onChangeText={(username) => setUsername(username)}
                     placeholderTextColor='#BDBDBD'
                     maxLength={16}
+                    ref={usernameRef}
+                    returnKeyType='next'
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => {
+                        emailRef.current.focus();
+                    }}
+                />
+
+            </View>
+        );
+    }
+
+    const renderEmailInputField = () => {
+        return (
+            <View style={styles.inputField}>
+
+                <Text style={styles.subheaderText}>
+                    Email address
+                </Text>
+
+                <TextInput
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    placeholder="Email address"
+                    value={email}
+                    onChangeText={(email) => setEmail(email)}
+                    placeholderTextColor='#BDBDBD'
+                    returnKeyType='next'
+                    ref={emailRef}
+                    maxLength={40}
+                    onSubmitEditing={() => {
+                        passwordRef.current.focus();
+                    }}
+                    blurOnSubmit={false}
                 />
 
             </View>
@@ -200,6 +247,8 @@ const Register = () => {
                         onChangeText={(password) => setPassword(password)}
                         placeholderTextColor='#BDBDBD'
                         secureTextEntry={passwordVisibility}
+                        ref={passwordRef}
+                        maxLength={30}
                     />
                     <TouchableOpacity
                         onPress={handlePasswordVisibility}

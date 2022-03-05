@@ -30,18 +30,34 @@ const Info = ({ id, auth, dispatch }) => {
         );
     }
 
-    const renderUserName = (userName) => {
+    // const renderUserName = (userName) => {
+    //     return (
+    //         <Text style={styles.headerText}>
+    //             {userName}
+    //         </Text>
+    //     )
+    // }
+
+    const renderFullName = (firstName, lastName) => {
         return (
             <Text style={styles.headerText}>
-                {userName}
+                {firstName} {lastName}
             </Text>
-        )
+        );
     }
 
-    const renderUserHandle = (userHandle) => {
+    // const renderUserHandle = (userHandle) => {
+    //     return (
+    //         <Text style={styles.subheaderText}>
+    //             @ {userHandle}
+    //         </Text>
+    //     );
+    // }
+
+    const renderUsername = (username) => {
         return (
             <Text style={styles.subheaderText}>
-                @ {userHandle}
+                @ {username}
             </Text>
         );
     }
@@ -55,11 +71,21 @@ const Info = ({ id, auth, dispatch }) => {
         );
     }
 
-    const renderProfileInfo = (userName, userHandle, userLocation) => {
+    // const renderProfileInfo = (userName, userHandle, userLocation) => {
+    //     return (
+    //         <View style={styles.userInfoContainer}>
+    //             {renderUserName(userName)}
+    //             {renderUserHandle(userHandle)}
+    //             {renderUserLocation(userLocation)}
+    //         </View>
+    //     );
+    // }
+
+    const renderProfileInfo = (firstName, lastName, username, userLocation) => {
         return (
             <View style={styles.userInfoContainer}>
-                {renderUserName(userName)}
-                {renderUserHandle(userHandle)}
+                {renderFullName(firstName, lastName)}
+                {renderUsername(username)}
                 {renderUserLocation(userLocation)}
             </View>
         );
@@ -77,7 +103,9 @@ const Info = ({ id, auth, dispatch }) => {
                 {
                     userData.map(user => (<View style={styles.profileStripContainer} key={user._id}>
                         {renderProfileImage(user.avatar)}
-                        {renderProfileInfo(user.username, "test_handle", "test_location")}
+                        {/* {renderProfileInfo(user.username, "test_handle", "test_location")} */}
+                        {renderProfileInfo(user.firstName, user.lastName, user.username, "test_location")}
+                        {console.log(user)}
                     </View>
                     ))
                 }
