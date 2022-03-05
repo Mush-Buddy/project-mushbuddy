@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { StyleSheet } from 'react-native';
-import { COLORS } from '../components/stylesheets/colors';
+import styles from '../stylesheets/catalog_styles/filter_style';
 
 const CatalogFilter = ({ navigation }) => {
     const returnToCatalog = () => {
@@ -43,30 +42,5 @@ const CatalogFilter = ({ navigation }) => {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 15,
-        paddingVertical: 15,
-        backgroundColor: COLORS.BG,
-    },
-    headerContainer: {
-        marginTop: 5,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    headerText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        letterSpacing: 1,
-        color: COLORS.TEXT,
-    },
-    backButton: {
-        position: 'absolute',
-        left: 0,
-    },
-});
 
 export default CatalogFilter;

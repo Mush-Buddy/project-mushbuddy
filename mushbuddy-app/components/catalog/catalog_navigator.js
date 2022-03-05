@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import MushroomCatalog from './MushroomCatalog';
+import MushroomCatalog from './catalog_main';
 import CatalogFilter from './catalog_filter';
 import CatalogEntry from './catalog_entry';
 

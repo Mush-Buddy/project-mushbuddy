@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, ColorPropType, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
+import MapView, { Callout } from 'react-native-maps';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-import MapView, { Callout, Marker } from 'react-native-maps';
-import Markers from './markers.js'
-import { useEffect, useState } from 'react'
+import Markers from './markers.js';
 
 // sample custom markers
-import Icon from 'react-native-vector-icons/Ionicons';
-import SampleMarkerIcon from '../assets/favicon.png';
+//import SampleMarkerIcon from '../../assets/favicon.png';
 
 const Map = ( { navigation } ) => {
   // testing markers we use for testing purposes. This will be a backend call at some point
@@ -113,16 +112,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
     bottom: 10,
-    // justifyContent: 'space-between',
-    // alignSelf: 'center',
     backgroundColor: 'transparent',
-    // shadowOffset: {
-    //   width: 2.5,
-    //   height: 2.5,
-    // },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 3,
-    // shadowColor: '#3A1C00',
   },
 });
 

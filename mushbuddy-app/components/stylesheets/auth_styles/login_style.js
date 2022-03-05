@@ -1,33 +1,16 @@
 import { StyleSheet} from 'react-native';
 
-import { COLORS } from './colors';
+import { COLORS } from '../colors';
 
 const MARGIN_TOP = 60;
 const MARGIN_LEFT = 35;
-const MARGIN_BOTTOM = 30;
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        // flexDirection: 'column',
+        flexDirection: 'column',
         backgroundColor: COLORS.BG,
-        //height: '100%',
-    },
-    headerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        width: 300,
-        marginTop: MARGIN_TOP,
-        marginLeft: MARGIN_LEFT,
-        marginBottom: 50,
-    },
-    headerText: {
-        flex: 1,
-        flexWrap: 'wrap',
-        fontSize: 40,
-        fontWeight: 'bold',
-        letterSpacing: 2,
-        color: COLORS.TEXT,
+        height: '100%',
     },
     fieldsContainer: {
         flex: 1,
@@ -36,25 +19,12 @@ export default StyleSheet.create({
         alignItems: 'flex-start',
         marginLeft: MARGIN_LEFT,
     },
-    sectionContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        marginBottom: 20,
-    },
-    sectionHeaderText: {
-        fontSize: 25,
-        fontWeight: 'bold',
-        letterSpacing: 3,
-        color: COLORS.TEXT_GREEN,
-        marginBottom: 30,
-    },
     inputField: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginLeft: 10,
-        marginBottom: 20,
+        //marginBottom: 60,
     },
     textInput: {
         width: 300,
@@ -64,21 +34,20 @@ export default StyleSheet.create({
         borderBottomColor: COLORS.GREY_3,
         fontSize: 14,
     },
-    inputRow: {
-        flex: 1,
-        flexDirection: 'row',
-        //marginRight: 35,
+    headerText: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        letterSpacing: 2,
+        marginTop: MARGIN_TOP,
+        marginLeft: MARGIN_LEFT,
+        marginBottom: 60,
+        color: COLORS.TEXT,
     },
-    textInputInRow: {
-        paddingBottom: 10,
-        backgroundColor: 'transparent',
-        borderBottomWidth: 1.5,
-        borderBottomColor: COLORS.GREY_3,
-        fontSize: 14,
-        marginRight: 20,
-        width: 140,
-        marginTop: 10,
-    },
+    // italicText: {
+    //     fontSize: 20,
+    //     fontStyle: 'italic',
+    //     color: COLORS.TEXT,
+    // },
     subheaderText: {
         fontSize: 16,
         letterSpacing: 1,
@@ -90,9 +59,8 @@ export default StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: MARGIN_BOTTOM,
     },
-    signupButton: {
+    loginButton: {
         justifyContent: 'center',
         alignItems: 'center',
         width: 300,
@@ -100,6 +68,10 @@ export default StyleSheet.create({
         height: 45,
         borderRadius: 12.5,
         backgroundColor: COLORS.GREEN,
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowColor: COLORS.TEXT_GREEN,
+        shadowOffset: {width: 2, height: 2},
     },
     buttonText: {
         color: 'white',
