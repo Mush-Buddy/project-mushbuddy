@@ -3,13 +3,24 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Pressa
 import { SearchBar } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDataAPI } from '../../utils/fetchData';
 
-const MapPost = ({ navigation }) => {
+import { newPostMade } from '../../redux/actions/profileAction';
+
+const MapPost = ({ route, navigation }) => {
     const { auth } = useSelector(state => state);
+    
+    // ** NEW - + route passed in
+    const { coordinates, markers } = route.params;
+    const postState = useSelector(state => state.profile.newPostMade);
+    const dispatch = useDispatch();
+
+    // console.log('before');
+    // console.log(postState);
+    //dispatch(newPostMade());
 
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
@@ -33,7 +44,6 @@ const MapPost = ({ navigation }) => {
         if (newData.length > 0) {
             setData(newData);
             setPage(page + 1);
-
             setItems(loadDataIntoItems(newData));
         }
     }, []);
@@ -68,7 +78,7 @@ const MapPost = ({ navigation }) => {
                 });
             }
         }
-        console.log(loadedItems);
+        //console.log(loadedItems);
         return loadedItems;
     }
 
@@ -119,13 +129,21 @@ const MapPost = ({ navigation }) => {
     // (1) Make the post (API call)**
     // (2) Return to map (already there, see below)
     const handleOnPressUpload = () => {
+        // **NEW
+        dispatch(newPostMade());
+        console.log('new post made in handleOnPressUpload()');
+        console.log(postState);
+
         returnToMap();
     }
 
     const renderUploadButton = () => {
         // TODO: Should first check if all fields have been completed
         return (
-            <Pressable style={styles.uploadButton} onPress={handleOnPressUpload}>
+            <Pressable
+                style={styles.uploadButton}
+                onPress={handleOnPressUpload}
+            >
                 <Text style={styles.buttonText}>
                     Upload
                 </Text>
@@ -158,9 +176,9 @@ const MapPost = ({ navigation }) => {
                 </Text>
             </View>
 
-            {/* <View style={styles.footerContainer}>
+            <View style={styles.footerContainer}>
                 {renderUploadButton()}
-            </View> */}
+            </View>
         </View>
     );
 }
@@ -178,24 +196,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 15,
         marginBottom: 30,
-        //marginLeft: 10,
-        borderWidth: 1,
-        borderColor: 'blue',
+        // borderWidth: 1,
+        // borderColor: 'blue',
     },
     footerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginRight: 20,
+        //flex: 1,
+        // flexDirection: 'row',
+        // justifyContent: 'flex-end',
+        // alignItems: 'center',
+        // marginRight: 20,
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
     },
     inputFieldIndividual: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        borderWidth: 1,
-        borderColor: 'green',
+        // borderWidth: 1,
+        // borderColor: 'green',
     },
     headerText: {
         fontSize: 25,
@@ -244,9 +264,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     dropDownContainer: {
-        borderWidth: 1,
-        borderColor: 'red',
-
+        // borderWidth: 1,
+        // borderColor: 'red',
     },
     dropDownText: {
         fontSize: 12,

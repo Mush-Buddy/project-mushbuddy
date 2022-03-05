@@ -5,7 +5,13 @@ export const PROFILE_TYPES = {
     LOADING: 'LOADING_PROFILE',
     GET_USER: 'GET_PROFILE_USER',
     GET_ID: 'GET_PROFILE_ID',
-    GET_POSTS: 'GET_PROFILE_POSTS'
+    GET_POSTS: 'GET_PROFILE_POSTS',
+    NEW_POST_MADE: 'NEW_POST_MADE'
+}
+
+// **NEW
+export const newPostMade = () => async (dispatch) => {
+    dispatch({type: PROFILE_TYPES.NEW_POST_MADE})
 }
 
 export const getProfileUsers = ({id, auth}) => async (dispatch) => {

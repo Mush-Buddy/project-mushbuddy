@@ -5,7 +5,11 @@ const initialState = {
     loading: false,
     ids: [],
     users: [],
-    posts: []
+    posts: [],
+
+    // **NEW
+    // numerical value storing the number of posts
+    newPostMade: 0
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -30,6 +34,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: [...state.posts, action.payload]
             };
+        case PROFILE_TYPES.NEW_POST_MADE:
+            return {
+                ...state,
+                newPostMade: state.newPostMade + 1
+            }
         default:
             return state;
     }

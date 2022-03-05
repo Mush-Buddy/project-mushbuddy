@@ -46,7 +46,8 @@
     "recyclerlistview": "^3.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
-    "remote-redux-devtools": "^0.5.16"
+    "remote-redux-devtools": "^0.5.16",
+    "expo-linear-gradient": "~11.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

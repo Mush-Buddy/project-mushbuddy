@@ -8,7 +8,13 @@ import Markers from './markers.js';
 // sample custom markers
 //import SampleMarkerIcon from '../../assets/favicon.png';
 
+// import { newPostMade } from '../.../redux/actions/profileAction';
+import { useSelector } from 'react-redux';
+
+import { newPostMade } from '../../redux/actions/profileAction';
+
 const Map = ( { navigation } ) => {
+  //console.log("rerender");
   // testing markers we use for testing purposes. This will be a backend call at some point
   const [testMarkers, setMarkers] = useState([
     {
@@ -32,6 +38,11 @@ const Map = ( { navigation } ) => {
       coordinate: {latitude: 34, longitude: -118},
     }
   ])
+
+  // listener for updates to postState
+  const postState = useSelector(state => state.profile.newPostMade);
+  // console.log(postState);
+  // console.log("rerender");
 
   // Add a marker to the map.
   // currently offers no input fields, add those later.
