@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { COLORS } from './colors';
+import { COLORS } from '../colors';
 
 const HEADER_HEIGHT = 40;
 

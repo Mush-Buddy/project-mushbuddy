@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../redux/actions/authAction';
-import { Button, Text, TextInput, View, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import styles from '../components/stylesheets/signup_style';
+import styles from '../components/stylesheets/auth_styles/signup_style';
 
 const Register = () => {
     const dispatch = useDispatch()

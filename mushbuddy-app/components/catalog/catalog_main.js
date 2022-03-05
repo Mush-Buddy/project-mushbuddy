@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableHighlight, TouchableOpacity, FlatList, TextInput } from 'react-native';
-import { getDataAPI } from '../utils/fetchData';
+import { View, Text, SafeAreaView, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import { useSelector } from 'react-redux';
-import RenderCatalogEntry from './renderCatalogEntry';
+import { getDataAPI } from '../../utils/fetchData';
+
+import RenderCatalogEntry from './render_catalog_entry';
+
+import styles from '../stylesheets/catalog_style.js';
+import { COLORS } from '../stylesheets/colors.js';
 
 // import { GLOBALTYPES } from '../redux/actions/globalTypes';
 // import { useDispatch } from 'react';
-
-import Icon from 'react-native-vector-icons/Ionicons';
-
-import styles from '../components/stylesheets/catalog_style.js';
-import { COLORS } from '../components/stylesheets/colors.js';
 
 const MushroomCatalog = ({ navigation }) => {
     const { auth } = useSelector(state => state);

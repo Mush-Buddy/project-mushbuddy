@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions/authAction';
-import { Button, Text, TextInput, View, KeyboardAvoidingView, SafeAreaView, Keyboard, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Text, TextInput, View, KeyboardAvoidingView, SafeAreaView, Keyboard, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import styles from '../components/stylesheets/login_style';
+import styles from '../components/stylesheets/auth_styles/login_style';
 
 const Login = () => {
     const dispatch = useDispatch()

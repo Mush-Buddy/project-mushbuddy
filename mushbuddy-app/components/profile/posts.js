@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { FlatList, Text, View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import styles from '../components/stylesheets/profile_styles/history_style.js';
+import styles from '../stylesheets/profile_styles/history_style.js';
 
-import cameraIcon from '../assets/profile_assets/camera_icon.png';
-import SamplePhoto1 from '../assets/profile_assets/mushrooms/king_bolete.png';
+import cameraIcon from '../../assets/profile_assets/camera_icon.png';
+import SamplePhoto1 from '../../assets/profile_assets/mushrooms/king_bolete.png';
 
 const Posts = ({ auth, id, dispatch, profile }) => {
     const [posts, setPosts] = useState([]);

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, Image, ImageBackground } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Image, ImageBackground } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import styles from '../components/stylesheets/profile_styles/profile_style.js';
+import styles from '../stylesheets/profile_styles/profile_style.js';
 
-import headerBackground from '../assets/profile_assets/header_background2.png';
-import defaultIcon from '../assets/profile_assets/icon_default.png';
+import headerBackground from '../../assets/profile_assets/header_background2.png';
+//import defaultIcon from '../../assets/profile_assets/icon_default.png';
 
 const Info = ({ id, auth, dispatch }) => {
     const [userData, setUserData] = useState([]);

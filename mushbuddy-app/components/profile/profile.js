@@ -1,17 +1,17 @@
-import Info from '../info';
-import { useSelector, useDispatch } from 'react-redux';
-import Posts from '../posts';
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { getProfileUsers } from '../../redux/actions/profileAction';
 
+import { View, SafeAreaView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { ButtonGroup } from 'react-native-elements';
 
-import { ScrollView } from 'react-native-gesture-handler';
+import Info from './info';
+import Badges from './badges.js';
+import Posts from './posts';
 
-import Badges from '../../components/profile_components/badges.js';
-
-import styles from '../../components/stylesheets/profile_styles/profile_style.js';
+import styles from '../stylesheets/profile_styles/profile_style.js';
 
 const Profile = () => {
     const { profile, auth } = useSelector(state => state);

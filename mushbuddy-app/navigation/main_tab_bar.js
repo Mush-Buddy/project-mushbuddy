@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Profile from '../newcomponents/profile/profile';
-import Search from '../newcomponents/search';
-import MapNavigator from '../components/map_navigator';
-import CatalogNavigator from '../newcomponents/catalog_navigator';
+import Profile from '../components/profile/profile.js';
+import Search from '../components/search/search.js';
+import MapNavigator from '../components/map/map_navigator.js';
+import CatalogNavigator from '../components/catalog/catalog_navigator.js';
 
 const Tab = createBottomTabNavigator();
 

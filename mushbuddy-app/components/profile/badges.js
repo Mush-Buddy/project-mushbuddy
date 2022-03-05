@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
-
 import { ProgressBar } from 'react-native-paper';
 
 import styles from '../stylesheets/profile_styles/badge_style.js';

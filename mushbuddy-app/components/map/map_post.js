@@ -6,7 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getDataAPI } from '../utils/fetchData';
+import { getDataAPI } from '../../utils/fetchData';
 
 const MapPost = ({ navigation }) => {
     const { auth } = useSelector(state => state);

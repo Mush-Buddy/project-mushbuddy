@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity, ScrollView, Image, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { StyleSheet } from 'react-native';
+import styles from '../stylesheets/catalog_styles/catalog_entry_style';
 
 // Platform-specific import:
 // ReadMore module isn't compatible with Expo's web simulator, so only import (and use) it
@@ -190,121 +190,5 @@ const CatalogEntry = ({ route, navigation }) => {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    upperBar: {
-        marginTop: 15,
-        marginBottom: 10,
-        marginLeft: 10,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-    },
-    entryContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        marginLeft: 20,
-        marginRight: 20,
-        marginBottom: 15,
-    },
-    headerContainer: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    centerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 15,
-        marginBottom: 15,
-    },
-    imageContainer: {
-        width: 335,
-        height: 335,
-        borderRadius: 12.5,
-        borderColor: 'transparent',
-        overflow: 'hidden',
-    },
-    image: {
-        flex: 1,
-        width: 335,
-        height: 335,
-    },
-    headerText: {
-        fontSize: 30,
-        color: '#222222',
-        letterSpacing: 0.5,
-        fontWeight: 'bold',
-    },
-    subheaderText: {
-        fontSize: 15,
-        color: '#666666',
-        fontStyle: 'italic',
-        marginTop: 5,
-        letterSpacing: 1,
-    },
-    sectionHeaderText: {
-        fontSize: 22.5,
-        fontWeight: 'bold',
-        letterSpacing: 0.5,
-        color: '#666666',
-    },
-    descriptionContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        width: '100%',
-        marginTop: 10,
-        marginBottom: 15,
-    },
-    bodyText: {
-        fontSize: 12,
-        letterSpacing: 0.25,
-        color: '#222222',
-    },
-    readMoreText: {
-        fontSize: 10,
-        color: '#CEB3A2',
-        marginTop: 2.5,
-    },
-    seasonsContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        height: 30,
-        marginBottom: 10,
-    },
-    otherInfoContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        width: '100%',
-        marginTop: 10,
-    },
-    infoLineContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        marginBottom: 5,
-    },
-    traitTitleText: {
-        fontSize: 12.5,
-        letterSpacing: 0.5,
-        color: '#222222',
-        fontWeight: 'bold',
-    },
-    traitDataText: {
-        fontSize: 11,
-        letterSpacing: 0.25,
-        color: '#474747',
-    },
-});
 
 export default CatalogEntry;

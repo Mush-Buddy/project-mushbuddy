@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, ColorPropType } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import React from 'react';
+import MapView, { Marker } from 'react-native-maps';
 
 // a collection of markers
 const Markers = ( {markers} ) => {
