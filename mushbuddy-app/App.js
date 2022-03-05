@@ -1,11 +1,11 @@
 import MainTabBar from './navigation/main_tab_bar';
-import Register from './navigation/register'
-import Index from './index'
+import Register from './navigation/register';
+import Index from './index';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import rootReducer from './redux/reducers/index'
+import rootReducer from './redux/reducers/index';
 
 // import { LogBox } from 'react-native';
 
@@ -25,6 +25,5 @@ const App = () => {
   );
   //return <MainTabBar />;
 };
-
 
 export default App;

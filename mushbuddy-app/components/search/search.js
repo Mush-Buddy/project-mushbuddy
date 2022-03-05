@@ -125,9 +125,9 @@ const Search = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{ flex: 1 }}>
+
                     {renderHeaderContainer()}
 
                     <FlatList
@@ -136,12 +136,10 @@ const Search = () => {
                         renderItem={({ item }) => (
                             // TODO - Navigate to other user's profile
                             <TouchableOpacity onPress={() => console.log(item)}>
-
                                 <View style={styles.listItem}>
                                     {renderUserAvatar(item.avatar)}
                                     {renderNameAndHandle(item.firstName, item.lastName, item.username)}
                                 </View>
-
                             </TouchableOpacity>
                         )}
                         ItemSeparatorComponent={renderSeparator}

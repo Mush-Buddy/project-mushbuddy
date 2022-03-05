@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MainTabBar from './navigation/main_tab_bar'
-import Login from './navigation/login'
-import Register from './navigation/register'
+import MainTabBar from './navigation/main_tab_bar';
+import Login from './navigation/login';
+import Register from './navigation/register';
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();

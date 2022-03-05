@@ -1,5 +1,5 @@
-import { PROFILE_TYPES } from '../actions/profileAction'
-import { EditData } from '../actions/globalTypes'
+import { PROFILE_TYPES } from '../actions/profileAction';
+import { EditData } from '../actions/globalTypes';
 
 const initialState = {
     loading: false,
@@ -35,4 +35,4 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export default profileReducer
+export default profileReducer;

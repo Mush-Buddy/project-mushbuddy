@@ -1,5 +1,5 @@
-import { GLOBALTYPES } from './globalTypes'
-import { postDataAPI } from '../../utils/fetchData'
+import { GLOBALTYPES } from './globalTypes';
+import { postDataAPI } from '../../utils/fetchData';
 
 export const login = (data) => async (dispatch) => {
     try {
