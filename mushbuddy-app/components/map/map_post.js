@@ -34,21 +34,9 @@ const MapPost = ({ navigation }) => {
             setData(newData);
             setPage(page + 1);
 
-            // TODO: DROPDOWNPICKER -- CHECK THIS
             setItems(loadDataIntoItems(newData));
         }
-    }, []); // this empty array (second arg.) prevents getDataAPI from being called every time a component updates
-
-    // const handleLoadMore = async () => {
-    //     const res = await getDataAPI(`catalog/?page=${page}`, auth.token);
-    //     const newData = res.data.catalog;
-    //     if (newData.length > 0) {
-    //         setData((c) => {
-    //             return c.concat(newData);
-    //         });
-    //         setPage(page + 1);
-    //     }
-    // }
+    }, []);
 
     const returnToMap = () => {
         navigation.navigate('MapMain');
@@ -109,12 +97,12 @@ const MapPost = ({ navigation }) => {
             />
         );
     }
-    
+
     // INPUT FIELD --
     // Using this as a substitute for dropdown picker until that gets fixed.
 
     const renderInputField = () => {
-        return(
+        return (
             <TextInput
                 style={styles.inputText}
                 autoCapitalize="none"
@@ -156,27 +144,23 @@ const MapPost = ({ navigation }) => {
                 </Text>
             </View>
 
-            {/* <View style={styles.inputFieldsContainer}> */}
-
-                <View style={styles.inputFieldIndividual}>
-                    <Text style={styles.subheaderText}>
-                        Mushroom name
-                    </Text>
-                    {/* {renderInputField()} */}
-                    {renderCatalogDropdown()}
-                </View>
-
-                {/* <View style={styles.inputFieldIndividual}>
-                    <Text style={styles.subheaderText}>
-                        Location found
-                    </Text>
-                </View> */}
-
-            {/* </View> */}
-
-            <View style={styles.footerContainer}>
-                    {/* {renderUploadButton()} */}
+            <View style={styles.inputFieldIndividual}>
+                <Text style={styles.subheaderText}>
+                    Mushroom name
+                </Text>
+                {/* {renderInputField()} */}
+                {renderCatalogDropdown()}
             </View>
+
+            <View style={styles.inputFieldIndividual}>
+                <Text style={styles.subheaderText}>
+                    Location found
+                </Text>
+            </View>
+
+            {/* <View style={styles.footerContainer}>
+                {renderUploadButton()}
+            </View> */}
         </View>
     );
 }
@@ -195,6 +179,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 30,
         //marginLeft: 10,
+        borderWidth: 1,
+        borderColor: 'blue',
     },
     footerContainer: {
         flex: 1,
@@ -203,19 +189,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 20,
     },
-    // inputFieldsContainer: {
-    //     flex: 1,
-    //     flexDirection: 'column',
-    //     justifyContent: 'flex-start',
-    //     alignItems: 'flex-start',
-    //     marginLeft: 20,
-    //     marginRight: 20,
-    // },
     inputFieldIndividual: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        borderWidth: 1,
+        borderColor: 'green',
     },
     headerText: {
         fontSize: 25,
@@ -243,8 +223,6 @@ const styles = StyleSheet.create({
         color: '#222222',
     },
     exitButton: {
-        // flex: 1,
-        // flexDirection: 'row',
         position: 'absolute',
         left: 1,
     },

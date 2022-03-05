@@ -7,7 +7,8 @@ import { getDataAPI } from '../../utils/fetchData';
 
 import RenderCatalogEntry from './render_catalog_entry';
 
-import styles from '../stylesheets/catalog_style.js';
+//import styles from '../stylesheets/catalog_styles/catalog_style.js';
+import styles from '../stylesheets/catalog_styles/catalog_style';
 import { COLORS } from '../stylesheets/colors.js';
 
 // import { GLOBALTYPES } from '../redux/actions/globalTypes';

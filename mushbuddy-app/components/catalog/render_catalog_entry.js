@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, Text, Image, TouchableHighlight } from 'react-native';
-import styles from '../stylesheets/catalog_style.js';
+import styles from '../stylesheets/catalog_styles/catalog_style.js';
 
 const RenderCatalogEntry = ({item, navigation}) => {
     const renderCatalogImageWithURL = (link) => {

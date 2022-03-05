@@ -1,5 +1,5 @@
-import { GLOBALTYPES } from './globalTypes'
-import { getDataAPI } from '../../utils/fetchData'
+import { GLOBALTYPES } from './globalTypes';
+import { getDataAPI } from '../../utils/fetchData';
 
 export const PROFILE_TYPES = {
     LOADING: 'LOADING_PROFILE',
