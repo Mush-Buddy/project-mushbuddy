@@ -9,9 +9,9 @@ const MARGIN_BOTTOM = 30;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
+        // flexDirection: 'column',
         backgroundColor: COLORS.BG,
-        height: '100%',
+        //height: '100%',
     },
     headerContainer: {
         flex: 1,

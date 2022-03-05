@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GLOBALTYPES } from '../redux/actions/globalTypes';
 import { getDataAPI } from '../utils/fetchData';
-import { View, TextInput, FlatList, Text, Button, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { View, TextInput, FlatList, Text, Button, StyleSheet, SafeAreaView, Image, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { COLORS } from '../components/stylesheets/colors';
@@ -29,6 +29,14 @@ const Search = () => {
 
     const capitalizeFirstLetterOf = (nameString) => {
         return nameString.charAt(0).toUpperCase() + nameString.slice(1);
+    }
+
+    const renderHeaderContainer = () => {
+        return (
+            <View style={styles.headerContainer}>
+                {renderSearchBar()}
+            </View>
+        );
     }
 
     const renderSearchBar = () => {
@@ -58,17 +66,9 @@ const Search = () => {
         );
     }
 
-    const renderHeaderContainer = () => {
-        return (
-            <View style={styles.headerContainer}>
-                {renderSearchBar()}
-            </View>
-        );
-    }
-
     const renderSeparator = () => {
         return (
-            <View style={styles.listSeparator}/>
+            <View style={styles.listSeparator} />
         );
     }
 
@@ -123,25 +123,29 @@ const Search = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-            {renderHeaderContainer()}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{ flex: 1 }}>
+                    {renderHeaderContainer()}
 
-            <FlatList
-                data={users}
-                keyExtractor={(item) => item._id}
-                renderItem={({ item }) => (
-                    // TODO - Navigate to other user's profile
-                    <TouchableOpacity onPress={() => console.log(item)}>
-                        
-                        <View style={styles.listItem}>
-                            {renderUserAvatar(item.avatar)}
-                            {renderNameAndHandle(item.firstName, item.lastName, item.username)}
-                        </View>
+                    <FlatList
+                        data={users}
+                        keyExtractor={(item) => item._id}
+                        renderItem={({ item }) => (
+                            // TODO - Navigate to other user's profile
+                            <TouchableOpacity onPress={() => console.log(item)}>
 
-                    </TouchableOpacity>
-                )}
-                ItemSeparatorComponent={renderSeparator}
-                ListEmptyComponent={renderEmptyStatement}
-            />
+                                <View style={styles.listItem}>
+                                    {renderUserAvatar(item.avatar)}
+                                    {renderNameAndHandle(item.firstName, item.lastName, item.username)}
+                                </View>
+
+                            </TouchableOpacity>
+                        )}
+                        ItemSeparatorComponent={renderSeparator}
+                        ListEmptyComponent={renderEmptyStatement}
+                    />
+                </View>
+            </TouchableWithoutFeedback>
         </SafeAreaView>
     );
 }
@@ -182,7 +186,7 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOpacity: 0.15,
         shadowRadius: 2,
-        shadowOffset: {width:3,height:3},
+        shadowOffset: { width: 3, height: 3 },
         backgroundColor: COLORS.BG,
     },
     searchInput: {

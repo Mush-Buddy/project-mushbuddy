@@ -84,6 +84,7 @@ const MapPost = ({ navigation }) => {
         return loadedItems;
     }
 
+    // onOpen & onClose functionality
     const renderCatalogDropdown = () => {
         return (
             <DropDownPicker
@@ -96,7 +97,15 @@ const MapPost = ({ navigation }) => {
                 searchable={true}
                 searchablePlaceholder="Search..."
                 searchableError="No existing entries match your search."
-                maxHeight={200}
+                maxHeight={150}
+                style={styles.dropDownView}
+                textStyle={styles.dropDownText}
+                labelStyle={styles.dropDownLabel}
+                autoScroll={true}
+                containerStyle={styles.dropDownContainer}
+                onOpen={() => console.log('opened dropdownpicker')}
+                onClose={() => console.log('closed dropdownpicker')}
+                labelProps={{ numberOfLines: 1 }}
             />
         );
     }
@@ -147,7 +156,7 @@ const MapPost = ({ navigation }) => {
                 </Text>
             </View>
 
-            <View style={styles.inputFieldsContainer}>
+            {/* <View style={styles.inputFieldsContainer}> */}
 
                 <View style={styles.inputFieldIndividual}>
                     <Text style={styles.subheaderText}>
@@ -163,7 +172,7 @@ const MapPost = ({ navigation }) => {
                     </Text>
                 </View> */}
 
-            </View>
+            {/* </View> */}
 
             <View style={styles.footerContainer}>
                     {/* {renderUploadButton()} */}
@@ -176,14 +185,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F0ECE8',
+        paddingHorizontal: 15,
     },
     headerContainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         marginTop: 15,
-        marginLeft: 10,
+        marginBottom: 30,
+        //marginLeft: 10,
     },
     footerContainer: {
         flex: 1,
@@ -192,14 +203,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 20,
     },
-    inputFieldsContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginLeft: 20,
-        marginRight: 20,
-    },
+    // inputFieldsContainer: {
+    //     flex: 1,
+    //     flexDirection: 'column',
+    //     justifyContent: 'flex-start',
+    //     alignItems: 'flex-start',
+    //     marginLeft: 20,
+    //     marginRight: 20,
+    // },
     inputFieldIndividual: {
         flex: 1,
         flexDirection: 'column',
@@ -207,7 +218,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     headerText: {
-        fontSize: 22.5,
+        fontSize: 25,
         fontWeight: 'bold',
         color: '#222222',
         letterSpacing: 1,
@@ -217,6 +228,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#222222',
         marginBottom: 10,
+        letterSpacing: 0.5,
     },
     bodyText: {
         fontSize: 12,
@@ -231,10 +243,10 @@ const styles = StyleSheet.create({
         color: '#222222',
     },
     exitButton: {
-        flex: 1,
-        flexDirection: 'row',
+        // flex: 1,
+        // flexDirection: 'row',
         position: 'absolute',
-        left: 5,
+        left: 1,
     },
     uploadButton: {
         alignItems: 'center',
@@ -249,6 +261,20 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         color: 'white',
         fontWeight: 'bold',
+    },
+    dropDownView: {
+        backgroundColor: 'transparent',
+    },
+    dropDownContainer: {
+        borderWidth: 1,
+        borderColor: 'red',
+
+    },
+    dropDownText: {
+        fontSize: 12,
+    },
+    dropDownLabel: {
+        fontSize: 12,
     },
 });
 
