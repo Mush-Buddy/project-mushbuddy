@@ -11,6 +11,8 @@ import { getDataAPI } from '../../utils/fetchData';
 import styles from '../stylesheets/search_styles/search_style';
 import { COLORS } from '../stylesheets/colors';
 
+var hasNotSearched = true;
+
 const Search = () => {
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
@@ -19,6 +21,9 @@ const Search = () => {
 
     const handleSearch = async (e) => {
         if (!search) return;
+        
+        hasNotSearched = false;
+
         try {
             const res = await getDataAPI(`users/?username=${search}`, auth.token);
             //console.log(res);
@@ -77,7 +82,13 @@ const Search = () => {
 
     // Message to render if list is empty
     const renderEmptyStatement = () => {
-        return (
+        console.log(hasNotSearched);
+        if(hasNotSearched) return (
+            <Text style={styles.listEmptyMessage}>
+               Search for a user!
+            </Text>
+        );
+        else return (
             <Text style={styles.listEmptyMessage}>
                 No users with this username were found.
             </Text>
