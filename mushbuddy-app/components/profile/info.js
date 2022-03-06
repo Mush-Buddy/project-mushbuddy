@@ -104,7 +104,7 @@ const Info = ({ id, auth, dispatch }) => {
                         {renderProfileImage(user.avatar)}
                         {/* {renderProfileInfo(user.username, "test_handle", "test_location")} */}
                         {renderProfileInfo(user.firstName, user.lastName, user.username, "test_location")}
-                        {console.log(user)}
+                        {/* {console.log(user)} */}
                     </View>
                     ))
                 }
