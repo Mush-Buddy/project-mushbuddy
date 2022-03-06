@@ -5,8 +5,7 @@ import { COLORS } from '../colors';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 15,
-        paddingVertical: 15,
+        padding: 15,
         backgroundColor: COLORS.BG,
     },
     headerContainer: {
@@ -15,6 +14,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
         marginBottom: 15,
+    },
+    carouselsContainer: {
+        //flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerText: {
         fontSize: 30,
