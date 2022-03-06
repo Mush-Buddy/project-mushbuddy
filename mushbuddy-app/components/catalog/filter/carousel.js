@@ -62,24 +62,6 @@ const Carousel = ({ items, carouselType, onSelect, clearCarousel }) => {
         );
     }
 
-    const getGradientColor1 = () => {
-        if (interval === selectedInterval) {
-            return '#99CDCD';
-        } else {
-            //return '#C0D6D6';
-            return '#FFFFFF';
-        }
-    }
-
-    const getGradientColor2 = () => {
-        if (interval === selectedInterval) {
-            return '#FFDE98';
-        } else {
-            //return '#F8E6B4';
-            return '#FFFFFF';
-        }
-    }
-
     const getGradientColors = (i) => {
         if (i === selectedInterval) {
             return ['#99CDCD', '#FFDE98'];
@@ -140,27 +122,6 @@ const Carousel = ({ items, carouselType, onSelect, clearCarousel }) => {
                 }}
             >
                 {items.map((item, index) => {
-                    // switch (carouselType) {
-                    //     case 'cap':
-                    //         return (
-                    //             <Slide
-                    //                 key={index}
-                    //                 label={item.label}
-                    //                 carouselType={carouselType}
-                    //                 onSelect={onSelect}
-                    //                 highlightSelect={highlightSelectedInterval}
-                    //                 index={index}
-                    //                 currentSelection={selectedInterval}
-                    //             />
-                    //         );
-                    //     default:
-                    //         return (
-                    //             <Slide
-                    //                 key={index}
-                    //                 label={item.label}
-                    //             />
-                    //         );
-                    // }
                     return (
                         <Slide
                             key={index}
@@ -189,12 +150,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         shadowColor: 'black',
-        //shadowOpacity: 0.5,
         marginTop: 10,
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 5,
-        // },
     },
     scrollView: {
         display: 'flex',

@@ -49,13 +49,6 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         borderColor: 'transparent',
-        // shadowOpacity: 0.5,
-        // shadowRadius: 1,
-        // shadowColor: 'black',
-        // shadowOffset: {
-        //     width: 3,
-        //     height: 3,
-        // },
         marginHorizontal: 5,
     },
     buttonText: {

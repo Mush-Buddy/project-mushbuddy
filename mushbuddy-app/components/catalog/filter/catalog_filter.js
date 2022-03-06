@@ -70,10 +70,6 @@ const CatalogFilter = ({ navigation }) => {
             >
                 <TouchableOpacity
                     onPress={resetSelections}
-                // style={{
-                //     ...styles.button,
-                //     backgroundColor: 'red'
-                // }}
                 >
                     <Text style={styles.buttonText}>
                         Clear selections
@@ -83,6 +79,7 @@ const CatalogFilter = ({ navigation }) => {
         );
     }
 
+    // TODO: Handle submit
     const renderSubmitButton = () => {
         return (
             <LinearGradient
@@ -91,10 +88,6 @@ const CatalogFilter = ({ navigation }) => {
             >
                 <TouchableOpacity
                     onPress={() => console.log("submit pressed")}
-                    // style={{
-                    //     ...styles.button,
-                    //     //backgroundColor: 'green'
-                    // }}
                 >
                     <Text style={styles.buttonText}>
                         Filter by these selections
