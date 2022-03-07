@@ -18,41 +18,46 @@ const Map = ( { navigation } ) => {
   // testing markers we use for testing purposes. This will be a backend call at some point
   const [testMarkers, setMarkers] = useState([
     {
-      title: "Chicago Mushroom",
-      description: "This mushroom was found near Chicago",
-      coordinate: {latitude: 42.03, longitude: -93.58},
-    },
-    {
-      title: "Dartmouth Mushroom",
-      description: "This mushroom was found near Dartmouth",
+      title: "Enoki",
+      description: "A Enoki was found here",
       coordinate: {latitude: 43.700859, longitude: -72.289398},
     },
     {
-      title: "Around Dartmouth Mushroom",
-      description: "This mushroom was found near Around Dartmouth",
-      coordinate: {latitude: 44.700859, longitude: -75.289398},
+      title: "Chanterelle",
+      description: "A Chanterelle was found here",
+      coordinate: {latitude: 43.703, longitude: -72.286},
     },
     {
-      title: "Los Angeles Mushroom",
-      description: "This mushroom was found near Los Angeles",
-      coordinate: {latitude: 34, longitude: -118},
-    }
+      title: "Porcini",
+      description: "A Porcini was found here",
+      coordinate: {latitude: 43.704, longitude: -72.293},
+    },
   ])
+
+  // The user's location.
+  const [userLocation, setUserLocation] = useState({latitude: 0.0, longitude: 0.0});
 
   // listener for updates to postState
   const postState = useSelector(state => state.profile.newPostMade);
   // console.log(postState);
   // console.log("rerender");
 
+  // just use these coordinates if location services don't work
+  const defaultCoords = {latitude: 43.703, longitude: -72.293}
   // Add a marker to the map.
-  // currently offers no input fields, add those later.
-  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
   // TODO: coordinate is from location services, title and description must be linked up to input fields.
-  const addMarker = (event, title, description) => {
+  const addMarker = (coordinate, title, description) => {
     console.log("new marker to be placed at:")
-    console.log(event.coordinate)
-    const newMarker = {title: title, description: description, coordinate: event.coordinate}
+    console.log(coordinate)
+    const newMarker = {title: title, description: description, coordinate: coordinate}
     setMarkers([...testMarkers, newMarker])
+  }
+
+  // update the user location with their new GPS coordinates.
+  const updateUserLocation = (event) => {
+    const newLocation = {latitude: event.coordinate.latitude, longitude: event.coordinate.longitude};
+    // this might not update right away
+    setUserLocation(newLocation);
   }
 
   const moveToNewPost = () => {
@@ -74,12 +79,13 @@ const Map = ( { navigation } ) => {
         initialRegion={{
           latitude: 43.700859,
           longitude: -72.289398,
-          latitudeDelta: 0.0,
-          longitudeDelta: 0.0,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
         // temporary. a UI entry field will be used later to add markers
-        onPress={e => addMarker(e.nativeEvent, "marker title", "marker description")} 
         showsUserLocation={true}
+        // updates the userLocation state on location change
+        onUserLocationChange={e => updateUserLocation(e.nativeEvent)}
       >
 
       {/* next, render all markers */}
