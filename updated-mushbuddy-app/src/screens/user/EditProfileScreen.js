@@ -75,7 +75,7 @@ const EditProfileScreen = (props) => {
                 let userData = {firstName, lastName, city, state}
                 await dispatch(usersActions.updateProfile({userData,auth}))
                 clearForm()
-                props.navigation.navigate('YourProfile', { screen: 'UserProfile' });
+                props.navigation.navigate('Profile', { screen: 'UserProfile' });
                 showMessage({
                     message: "Your profile was successfully edited.",
                     type: "success",

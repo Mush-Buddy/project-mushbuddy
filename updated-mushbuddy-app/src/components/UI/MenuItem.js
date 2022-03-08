@@ -31,7 +31,7 @@ const MenuItem = () => {
             </MenuTrigger>
             <MenuOptions >
                 <View style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, backgroundColor: Colors.brightBlue, overflow: 'hidden' }} >
-                    <MenuOption onSelect={() => navigation.navigate('YourProfile', { screen: 'EditProfile' })}>
+                    <MenuOption onSelect={() => navigation.navigate('Profile', { screen: 'EditProfile' })}>
                         <View style={{ flexDirection: 'row', borderBottomColor: '#fff', borderBottomWidth: 1 }} >
                             <MaterialCommunityIcons name="account-edit" size={24} color="#fff" style={{ alignSelf: 'center', marginLeft: 10 }} />                                
                             <Text style={{ padding: 15, fontSize: 16,  color: '#fff' }}>Edit Profile</Text>

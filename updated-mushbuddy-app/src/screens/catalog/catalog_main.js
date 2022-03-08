@@ -42,13 +42,10 @@ const MushroomCatalog = ({ navigation, route }) => {
 
     const handleLoadMore = useCallback(() => setShouldFetch(true), []);
 
-    // TODO: Fill this out
-    // Reference search.js (users) & map_post (catalog search but w/ dropdownpicker)
     const handleSearch = ( ) => {
         navigation.navigate('filteredPage', {nameCommon: { $regex: search }})
     }
 
-    // HEADER
 
     const renderHeader = () => {
         return (

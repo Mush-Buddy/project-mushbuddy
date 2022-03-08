@@ -6,9 +6,9 @@ export default StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#F0ECE8',
       },
-      // scrollView: {
-      //   height: 20,
-      // },
+      scrollView: {
+         height: 20,
+      },
       text: {
         color: '#222222',
       },
@@ -77,7 +77,7 @@ export default StyleSheet.create({
         marginTop: 5,
       },
       buttonGroupContainer: {
-        //flex: 1,
+        flex: 1,
         width: '100%',
         height: 40,
         marginTop: 5,

@@ -145,7 +145,7 @@ const Posts = ({ id, auth, dispatch, posts, handleScroll }) => {
                 data={post}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
-                onScroll={(e) => handleOnScroll(e.nativeEvent.contentOffset.y)}
+                //onScroll={(e) => handleOnScroll(e.nativeEvent.contentOffset.y)}
                 //ListHeaderComponent={renderHeader}
                 //stickyHeaderIndices={[0]}
                 keyExtractor={item => item._id}

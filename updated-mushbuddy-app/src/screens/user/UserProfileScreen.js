@@ -22,9 +22,11 @@ const UserProfileScreen = (props) => {
     const dispatch = useDispatch();
     const [id, setId] = useState(auth.user._id);
 
+    /*
     // For scrolling
     const [previous, setPrevious] = useState(0);
     const [hidden, setHidden] = useState(false);
+
 
     const handleOnScroll = (event) => {
         if (previous < event) {
@@ -35,6 +37,7 @@ const UserProfileScreen = (props) => {
             setHidden(false);
         }
     }
+    */
 
     useEffect(() => {
         console.log(route.params)
@@ -99,7 +102,7 @@ const UserProfileScreen = (props) => {
                     posts={posts}
                     id={id}
                     dispatch={dispatch}
-                    handleScroll={handleOnScroll}
+                    //handleScroll={handleOnScroll}
                 />
             );
         }
@@ -113,6 +116,7 @@ const UserProfileScreen = (props) => {
         );
     }
 
+    /*
     const renderHeader = () => {
         if (hidden) {
             return null;
@@ -125,23 +129,22 @@ const UserProfileScreen = (props) => {
             );
         }
     }
+    */
 
-    return (
-        users.allUsers > 1 ? (loadingIndicator()) : (
-            <SafeAreaView style={styles.container}>
-                {/* <Info auth={auth} id={id} users={users} dispatch={dispatch} />
-                {renderButtonGroup(buttons)} */}
-                {renderHeader()}
-                {renderSubComponent()}
-            </SafeAreaView>)
-        //     <ScrollView
-        //     showsVerticalScrollIndicator={false}
-        //     style={styles.scrollView}
-        // >
-        //     <Info auth={auth} id={id} users={users} dispatch={dispatch} />
-        //     {renderButtonGroup(buttons)}
-        // </ScrollView>
-    );
+   return (
+    users.allUsers >1 ? (loadingIndicator()) : (<SafeAreaView style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
+                <Info auth={auth} id={id} users={users} dispatch={dispatch}/>
+                {renderButtonGroup(buttons)}
+            </ScrollView>
+            {renderSubComponent()}
+        </SafeAreaView>)
+);
+
+    
 }
 
 export const screenOptions = (navData) => {
