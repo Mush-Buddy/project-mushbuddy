@@ -17,12 +17,25 @@ const Map = ( { navigation } ) => {
   const { posts } = useSelector(state => state)
   const [shouldFetch, setShouldFetch] = useState(true);
 
+  const defaultCoords = {latitude: 43.703, longitude: -72.293}
+
+  function getRandomNumberBetween(min, max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+  // random range for current region:
+  //   "latitude": 43.706926586852234,
+  //   "longitude": -72.29416723076919,
+  // and
+  //   "latitude": 43.69475372084176,
+  //   "longitude": -72.28457748717949,
+
   useEffect(() => {
     console.log('fetching')
     const get_data = async () => {
         const res = await getDataAPI(`posts/${auth.user._id}?page=${page}&limit=${limit}`, auth.token)
         const newData = res.data.posts;
-        const markers = newData.map(data => {return {title:data.title,description:data.content,coordinate: {latitude: 43.703, longitude: -72.293}}})
+        // putting markers in random locations within the region (for now)
+        const markers = newData.map(data => {return {title:data.title,description:data.content,coordinate: {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000}}})
         setPosts(markers);
         setPage(page);
         console.log(newData,markers)
@@ -49,7 +62,6 @@ const Map = ( { navigation } ) => {
     },
   ])
 
-  const defaultCoords = {latitude: 43.703, longitude: -72.293}
   // Add a marker to the map.
   // currently offers no input fields, add those later.
   // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
@@ -84,6 +96,7 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
+        // onPress={e => console.log()}
       >
 
       {/* next, render all markers */}
