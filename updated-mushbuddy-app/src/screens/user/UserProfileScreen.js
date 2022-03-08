@@ -23,18 +23,18 @@ const UserProfileScreen = (props) => {
     const [id, setId] = useState(auth.user._id);
 
     // For scrolling
-    const [previous, setPrevious] = useState(0);
-    const [hidden, setHidden] = useState(false);
+    // const [previous, setPrevious] = useState(0);
+    // const [hidden, setHidden] = useState(false);
 
-    const handleOnScroll = (event) => {
-        if (previous < event) {
-            setPrevious(event);
-            setHidden(true);
-        } else {
-            setPrevious(event);
-            setHidden(false);
-        }
-    }
+    // const handleOnScroll = (event) => {
+    //     if (previous < event) {
+    //         setPrevious(event);
+    //         setHidden(true);
+    //     } else {
+    //         setPrevious(event);
+    //         setHidden(false);
+    //     }
+    // }
 
     useEffect(() => {
         console.log(route.params)
@@ -99,7 +99,7 @@ const UserProfileScreen = (props) => {
                     posts={posts}
                     id={id}
                     dispatch={dispatch}
-                    handleScroll={handleOnScroll}
+                    //handleScroll={handleOnScroll}
                 />
             );
         }
@@ -113,34 +113,35 @@ const UserProfileScreen = (props) => {
         );
     }
 
-    const renderHeader = () => {
-        if (hidden) {
-            return null;
-        } else {
-            return (
-                <View>
-                    <Info auth={auth} id={id} users={users} dispatch={dispatch} />
-                    {renderButtonGroup(buttons)}
-                </View>
-            );
-        }
-    }
+    // const renderHeader = () => {
+    //     if (hidden) {
+    //         return null;
+    //     } else {
+    //         return (
+    //             <View>
+    //                 <Info auth={auth} id={id} users={users} dispatch={dispatch} />
+    //                 {renderButtonGroup(buttons)}
+    //             </View>
+    //         );
+    //     }
+    // }
 
     return (
-        users.allUsers > 1 ? (loadingIndicator()) : (
-            <SafeAreaView style={styles.container}>
-                {/* <Info auth={auth} id={id} users={users} dispatch={dispatch} />
-                {renderButtonGroup(buttons)} */}
-                {renderHeader()}
-                {renderSubComponent()}
-            </SafeAreaView>)
-        //     <ScrollView
-        //     showsVerticalScrollIndicator={false}
-        //     style={styles.scrollView}
-        // >
-        //     <Info auth={auth} id={id} users={users} dispatch={dispatch} />
-        //     {renderButtonGroup(buttons)}
-        // </ScrollView>
+        // users.allUsers > 1 ? (loadingIndicator()) : (
+        //     <SafeAreaView style={styles.container}>
+        //         {renderHeader()}
+        //         {renderSubComponent()}
+        //     </SafeAreaView>)
+        users.allUsers >1 ? (loadingIndicator()) : (<SafeAreaView style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
+                <Info auth={auth} id={id} users={users} dispatch={dispatch}/>
+                {renderButtonGroup(buttons)}
+            </ScrollView>
+            {renderSubComponent()}
+        </SafeAreaView>)
     );
 }
 

@@ -12,7 +12,8 @@ import { useSelector } from 'react-redux';
 import Colors from '../../constants/Colors';
 import { getDataAPI } from '../../utils/fetchData'
 
-const Posts = ({ id, auth, dispatch, posts, handleScroll }) => {
+const Posts = ({ id, auth, dispatch, posts }) => {
+    // removed handleScroll param for now
     const [post, setPosts] = useState([]);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
@@ -135,9 +136,9 @@ const Posts = ({ id, auth, dispatch, posts, handleScroll }) => {
         }
     }
 
-    const handleOnScroll = (event) => {
-        handleScroll(event);
-    }
+    // const handleOnScroll = (event) => {
+    //     handleScroll(event);
+    // }
 
     return (
         <View style={styles.container}>
@@ -145,7 +146,7 @@ const Posts = ({ id, auth, dispatch, posts, handleScroll }) => {
                 data={post}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
-                onScroll={(e) => handleOnScroll(e.nativeEvent.contentOffset.y)}
+                //onScroll={(e) => handleOnScroll(e.nativeEvent.contentOffset.y)}
                 //ListHeaderComponent={renderHeader}
                 //stickyHeaderIndices={[0]}
                 keyExtractor={item => item._id}
