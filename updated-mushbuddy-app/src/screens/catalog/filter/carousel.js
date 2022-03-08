@@ -87,13 +87,13 @@ const Carousel = ({ items, carouselType, onSelect, clearCarousel }) => {
     // Varying widths based on carouselType (number of options/intervals/etc.)
     const getWidth = (type) => {
         if (type === 'cap') {
-            return '1100%';
+            return '1000%';
         } else if (type === 'hymenium') {
             return '500%';
         } else if (type === 'gillAttachment') {
-            return '900%';
+            return '800%';
         } else if (type === 'veil') {
-            return '600%';
+            return '500%';
         }
     }
     

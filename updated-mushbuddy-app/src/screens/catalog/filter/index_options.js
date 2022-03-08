@@ -3,9 +3,10 @@
 
 const options = {
     cap: [
+        // {
+        //     label: 'none',
+        // }, 
         {
-            label: 'none',
-        }, {
             label: 'campanulate',
         }, {
             label: 'conical',
@@ -41,9 +42,10 @@ const options = {
         },
     ],
     gillAttachment: [
+        // {
+        //     label: 'none',
+        // },
         {
-            label: 'none',
-        }, {
             label: 'adnate',
         }, {
             label: 'adnexed',
@@ -62,9 +64,10 @@ const options = {
         },
     ],
     veil: [
+        // {
+        //     label: 'none',
+        // },
         {
-            label: 'none',
-        }, {
             label: 'bare',
         }, {
             label: 'ring',
