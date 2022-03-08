@@ -9,7 +9,6 @@ import Carousel from './carousel';
 import Options from './index_options';
 
 const CatalogFilter = ({ navigation }) => {
-
     const [cap, setCap] = useState('');
     const [hymenium, setHymenium] = useState('');
     const [gillType, setGillType] = useState('');
@@ -87,7 +86,7 @@ const CatalogFilter = ({ navigation }) => {
                 style={styles.button}
             >
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('filteredPage',{cap,gillType})}
+                    onPress={() => navigation.navigate('filteredPage',{'gillsType':hymenium})}
                 >
                     <Text style={styles.buttonText}>
                         Filter by these selections
