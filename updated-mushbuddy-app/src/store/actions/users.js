@@ -26,13 +26,13 @@ export const fetchUsers = ({id, auth}) => async (dispatch) => {
 
 export const followUser = ({user, auth}) => async (dispatch) => {
     try {
-        /*
+        console.log(user,auth)
         dispatch({
             type: FOLLOW,
             user: user,
             loggedUser: auth.user
         })
-        */
+        console.log('past')
         dispatch({ 
             type: AUTHENTICATE, 
             payload: {
@@ -42,7 +42,7 @@ export const followUser = ({user, auth}) => async (dispatch) => {
         })
         const res = await patchDataAPI(`users/follow/${user._id}`, null, auth.token)
     } catch (err) {
-        console.log(err.response.data)
+        console.log(err)
         dispatch({
             type: ALERT, 
             payload: {error: err.response.data.msg}
@@ -52,13 +52,11 @@ export const followUser = ({user, auth}) => async (dispatch) => {
 
 export const unfollowUser = ({user,auth}) => async (dispatch) => {
     try {
-        /** 
         dispatch({
             type: UNFOLLOW,
             user: user,
             loggedUser: auth.user
         })
-        */
         dispatch({ 
             type: AUTHENTICATE, 
             payload: {
@@ -82,7 +80,6 @@ export const updateProfile = ({userData, auth}) => async (dispatch) => {
         const res = await patchDataAPI("users/update", {
             ...userData,
         }, auth.token)
-
         dispatch({
             type: UPDATE_PROFILE,
             payload: {

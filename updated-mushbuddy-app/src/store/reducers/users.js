@@ -1,4 +1,4 @@
-import { SET_USERS, SET_FIND_PEOPLE, FOLLOW_FIND_PEOPLE, UPDATE_USER } from "../actions/users";
+import { SET_USERS, SET_FIND_PEOPLE, FOLLOW, UNFOLLOW, FOLLOW_FIND_PEOPLE, UPDATE_USER } from "../actions/users";
 import { LOGOUT } from "../actions/auth";
 
 const initialState = {
@@ -18,22 +18,32 @@ export default (state=initialState, action) => {
                 ...state,
                 findPeople: action.payload.users
             }
-        /** 
         case FOLLOW:
-            const updatedFollowAllUsers = state.allUsers;
-            updatedFollowAllUsers.following = updatedFollowAllUsers.following.concat(action.user);
+            const userInd = state.allUsers.findIndex(user => user._id === action.user._id);
+            if (userInd !== -1){
+                const updatedFollowAllUsers = [...state.allUsers];
+                updatedFollowAllUsers[userInd].followers = updatedFollowAllUsers[userInd].followers.concat(action.loggedUser);
+                return{
+                    ...state,
+                    allUsers: updatedFollowAllUsers
+                }
+            }
             return{
-                ...state,
-                allUsers: updatedFollowAllUsers
+                ...state
             }
         case UNFOLLOW:
-            const updatedUnfollowAllUsers = state.allUsers;
-            updatedUnfollowAllUsers.following = updatedUnfollowAllUsers.following.filter(u => u._id !== action.user._id)
-            return{
-                ...state,
-                allUsers: updatedUnfollowAllUsers
+            const userIdx = state.allUsers.findIndex(user => user._id === action.user._id);
+            if (userIdx !== -1){
+                const updatedUnfollowAllUsers = state.allUsers;
+                updatedUnfollowAllUsers[userIdx].followers = updatedUnfollowAllUsers[userIdx].followers.filter(u => u._id !== action.loggedUser._id)
+                return{
+                    ...state,
+                    allUsers: updatedUnfollowAllUsers
+                }
             }
-        */
+            return {
+                ...state
+            }
         case LOGOUT:
             return initialState
         default:

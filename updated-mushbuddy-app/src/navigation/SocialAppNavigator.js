@@ -197,6 +197,21 @@ export const BottomNavigator = () => {
             }}
         >
             <BottomTabNavigator.Screen
+                name="Profile"
+                component={UserNavigator}
+                options={{
+                    tabBarLabel: 'Profile',
+                    headerShown: false,
+                    tabBarIcon: (props) => (
+                        <Ionicons
+                            name={Platform.OS === 'android' ? 'md-person' : 'ios-person'}
+                            size={24}
+                            color={props.color}
+                        />
+                    )
+                }}
+            />
+            <BottomTabNavigator.Screen
                 name="Catalog"
                 component={CatalogNavigator}
                 options={{
@@ -220,21 +235,6 @@ export const BottomNavigator = () => {
                     tabBarIcon: (props) => (
                         <Ionicons
                             name={'map'}
-                            size={24}
-                            color={props.color}
-                        />
-                    )
-                }}
-            />
-            <BottomTabNavigator.Screen
-                name="Profile"
-                component={UserNavigator}
-                options={{
-                    tabBarLabel: 'Profile',
-                    headerShown: false,
-                    tabBarIcon: (props) => (
-                        <Ionicons
-                            name={Platform.OS === 'android' ? 'md-person' : 'ios-person'}
                             size={24}
                             color={props.color}
                         />

@@ -118,7 +118,7 @@ const Info = ({ id, auth, dispatch, users }) => {
                         userData.map(user => (<View style={styles.profileStripContainer} key={user._id}>
                             {renderProfileImage(user.avatar)}
                             {renderProfileInfo(user.firstName, user.lastName, user.username, `${user.city}, ${user.state}`,user)}
-                            {/* {renderFollowersFollowing(user)} */}
+                            {renderFollowersFollowing(user)}
                         </View>
                         ))
                     
