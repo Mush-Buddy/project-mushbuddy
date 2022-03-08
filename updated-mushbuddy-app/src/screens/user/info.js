@@ -15,13 +15,13 @@ import { useNavigation } from '@react-navigation/native';
 const Info = ({ id, auth, dispatch, users }) => {
     console.log(users)
     const [userData, setUserData] = useState([]);
-    const [isLoading,  setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();
 
     useEffect(() => {
-        if(id === auth.user._id){
+        if (id === auth.user._id) {
             setUserData([auth.user]);
-        } else{
+        } else {
             const newData = users.allUsers.filter(user => user._id === id);
             setUserData(newData);
         }
@@ -64,38 +64,48 @@ const Info = ({ id, auth, dispatch, users }) => {
         );
     }
 
-    const renderProfileInfo = (firstName, lastName, username, userLocation) => {
+    const renderProfileInfo = (firstName, lastName, username, userLocation, currUser, userFollowers, userFollowing) => {
         return (
             <View style={styles.userInfoContainer}>
                 {renderFullName(firstName, lastName)}
                 {renderUsername(username)}
                 {renderUserLocation(userLocation)}
+                {renderFollowersFollowing(currUser, userFollowers, userFollowing)}
             </View>
         );
     }
 
     // TODO: Fix styling
-    const renderFollowersFollowing = (currUser) => {
+    const renderFollowersFollowing = (currUser, userFollowers, userFollowing) => {
         return (
-            isLoading ? ( loadingIndicator() )  :
-            (<View style={{paddingRight: 20}}>
-                <TouchableOpacity onPress={() => navigation.navigate(
-                                            'UserStats',
-                                            { activeTab: 0, currUser: currUser}
-                                        )}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-                        <Text style={{ fontSize: 12, color: 'grey' }}>Followers:{currUser.followers && currUser.followers.length}</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate(
-                                            'UserStats',
-                                            { activeTab: 1, currUser: currUser }
-                                        )}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }} >
-                        <Text style={{ fontSize: 12, color: 'grey' }}>Following:{currUser.following && currUser.following.length}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>)
+            isLoading ? (loadingIndicator()) :
+                (<View style={styles.followLine}>
+                    <TouchableOpacity onPress={() => navigation.navigate(
+                        'UserStats',
+                        { activeTab: 0, currUser: currUser }
+                    )}>
+                        <View
+                            style={styles.followerCount}
+                            //style={{ justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Text style={styles.followerText}>
+                                Followers: {userFollowers && userFollowers.length}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate(
+                        'UserStats',
+                        { activeTab: 1, currUser: currUser }
+                    )}>
+                        <View 
+                            //style={{ justifyContent: 'center', alignItems: 'center' }}
+                        >
+                            <Text style={styles.followerText}>
+                                Following: {userFollowing && userFollowing.length}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>)
         )
     }
 
@@ -111,20 +121,23 @@ const Info = ({ id, auth, dispatch, users }) => {
         <View style={styles.upperContainer}>
             <ImageBackground source={headerBackground} resizeMode="stretch" style={styles.headerBackgroundImage}>
                 <View style={styles.upperNavigation}>
-                    <MenuItem/>
-                </View>   
+                    <MenuItem />
+                </View>
                 {
-                    isLoading ? ( loadingIndicator() )  :
-                        userData.map(user => (<View style={styles.profileStripContainer} key={user._id}>
-                            {renderProfileImage(user.avatar)}
-                            {renderProfileInfo(user.firstName, user.lastName, user.username, `${user.city}, ${user.state}`,user)}
-                            {renderFollowersFollowing(user)}
-                        </View>
+                    isLoading ? (loadingIndicator()) :
+                        userData.map(user => (
+                            <View
+                                style={styles.profileStripContainer}
+                                key={user._id}
+                            >
+                                {renderProfileImage(user.avatar)}
+                                {renderProfileInfo(user.firstName, user.lastName, user.username, `${user.city}, ${user.state}`, user, user.followers, user.following)}
+                                {/* {renderFollowersFollowing(user)} */}
+                            </View>
                         ))
-                    
                 }
             </ImageBackground>
-        </View> 
+        </View>
     );
 }
 

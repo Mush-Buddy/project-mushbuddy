@@ -7,7 +7,7 @@ export default StyleSheet.create({
         backgroundColor: '#F0ECE8',
       },
       scrollView: {
-         height: 20,
+        height: 20,
       },
       text: {
         color: '#222222',
@@ -56,13 +56,14 @@ export default StyleSheet.create({
       userInfoContainer: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
+        //justifyContent: 'flex-start',
+        //alignItems: 'flex-start',
         height: '100%',
         marginTop: 150,
         paddingLeft: 30,
       },
       headerText: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
       },
       subheaderText: {
@@ -71,10 +72,10 @@ export default StyleSheet.create({
         marginTop: 3,
       },
       locationLine: {
-        flex: 1,
+        //flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginTop: 5,
+        marginTop: 2.5,
       },
       buttonGroupContainer: {
         flex: 1,
@@ -83,5 +84,19 @@ export default StyleSheet.create({
         marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
+      },
+      followLine: {
+        //flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        //marginTop: 5,
+        marginLeft: 20,
+      },
+      followerCount: {
+        marginRight: 5,
+      },
+      followerText: {
+        fontSize: 12,
+        color: 'grey',
       },
 });
