@@ -72,9 +72,9 @@ const EditProfileScreen = (props) => {
         setIsLoading(true);
         if(validatePost()){
             try {
-                let userData = {firstName, lastName, city, state}
-                await dispatch(usersActions.updateProfile({userData,auth}))
-                clearForm()
+                let userData = {firstName, lastName, city, state};
+                await dispatch(usersActions.updateProfile({userData,auth}));
+                clearForm();
                 props.navigation.navigate('Profile', { screen: 'UserProfile' });
                 showMessage({
                     message: "Your profile was successfully edited.",
@@ -96,10 +96,10 @@ const EditProfileScreen = (props) => {
 
     return(
         <ScrollView>
-            <KeyboardAvoidingView style={styles.screen} >
+            <KeyboardAvoidingView style={styles.screen}>
                 <View style={styles.container}>
-                    <View style={styles.labelContainer} >
-                        <Text style={styles.labelText} >firstName</Text>
+                    <View style={styles.labelContainer}>
+                        <Text style={styles.labelText}>First name</Text>
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
@@ -109,8 +109,8 @@ const EditProfileScreen = (props) => {
                             onChangeText={(text) => setfirstName(text) }
                         />
                     </View>
-                    <View style={styles.labelContainer} >
-                        <Text style={styles.labelText} >lastName</Text>
+                    <View style={styles.labelContainer}>
+                        <Text style={styles.labelText}>Last name</Text>
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
@@ -121,25 +121,25 @@ const EditProfileScreen = (props) => {
                         />
                     </View>
                     <View style={styles.labelContainer} >
-                        <Text style={styles.labelText} >state</Text>
+                        <Text style={styles.labelText}>City</Text>
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
-                            placeholder="State"
-                            underlineColorAndroid='transparent'
-                            value={state}
-                            onChangeText={(text) => setstate(text) }
-                        />
-                    </View>
-                    <View style={styles.labelContainer} >
-                        <Text style={styles.labelText} >city</Text>
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <TextInput style={styles.inputs}
-                            placeholder="City"
+                            placeholder="City (i.e. Hanover)"
                             underlineColorAndroid='transparent'
                             value={city}
                             onChangeText={(text) => setcity(text) }
+                        />
+                    </View>
+                    <View style={styles.labelContainer}>
+                        <Text style={styles.labelText}>State</Text>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.inputs}
+                            placeholder="State (i.e. NH)"
+                            underlineColorAndroid='transparent'
+                            value={state}
+                            onChangeText={(text) => setstate(text) }
                         />
                     </View>
 

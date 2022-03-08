@@ -14,12 +14,18 @@ const CatalogFilter = ({ navigation }) => {
     const [gillType, setGillType] = useState('');
     const [veil, setVeil] = useState('');
 
+    //const [capShape, setCapShape] = useState('');
+    // const [gillsType, setHymenium] = useState('');
+    // const [gillType, setGillType] = useState('');
+    // const [veil, setVeil] = useState('');
+
     const clearCap = useRef(null);
     const clearHymenium = useRef(null);
     const clearGillType = useRef(null);
     const clearVeil = useRef(null);
 
     const resetSelections = () => {
+        //setCriteria({});
         setCap('');
         setHymenium('');
         setGillType('');
@@ -38,18 +44,34 @@ const CatalogFilter = ({ navigation }) => {
 
     const onCapSelected = (selectedLabel) => {
         setCap(selectedLabel);
+        // setCriteria({
+        //     ...criteria,
+        //     'capShape': cap,
+        // });
     }
 
     const onHymeniumSelected = (selectedLabel) => {
         setHymenium(selectedLabel);
+        // setCriteria({
+        //     ...criteria,
+        //     'gillsType': hymenium,
+        // });
     }
 
     const onGillTypeSelected = (selectedLabel) => {
         setGillType(selectedLabel);
+        // setCriteria({
+        //     ...criteria,
+        //     'gillsAttachment': gillType,
+        // });
     }
 
     const onVeilSelected = (selectedLabel) => {
         setVeil(selectedLabel);
+        // setCriteria({
+        //     ...criteria,
+        //     'veilType': veil,
+        // });
     }
 
     const renderButtons = () => {
