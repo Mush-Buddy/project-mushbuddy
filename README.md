@@ -32,9 +32,10 @@ Mush-Buddy is an app developed for mobile devices. It should be run either throu
 5. Create a local version of the project: `git clone https://github.com/Mush-Buddy/project-mushbuddy.git`
 6. Navigate to the project directory (and the app subdirectory): `cd project-mushbuddy/mushbuddy-app`
 7. Download all packages necessary for the app to run: `npm install`
-8. Start up Expo: `expo start`
-9. Expo will present multiple options for you to run the project; for optimal performance, choose iOS Simulator.
-10. ⚠️ While running the simulator, you may encounter an error that reads, "React Native version mismatch." To resolve the error, update your local version of React Native to the most recent one.
+8. Download the server repo from https://github.com/Mush-Buddy/mushbuddy-backend and follow the instructions to install and run the server in a seperate tab. 
+9. Start up Expo: `expo start`
+10. Expo will present multiple options for you to run the project; for optimal performance, choose iOS Simulator.
+11. ⚠️ While running the simulator, you may encounter an error that reads, "React Native version mismatch." To resolve the error, update your local version of React Native to the most recent one.
 
 **On your mobile device:**
 
