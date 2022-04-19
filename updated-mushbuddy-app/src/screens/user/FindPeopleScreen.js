@@ -29,7 +29,6 @@ const FindPeopleScreen = () => {
         setIsLoading(false);
     }
 
-
     const capitalizeFirstLetterOf = (nameString) => {
         return nameString.charAt(0).toUpperCase() + nameString.slice(1);
     }

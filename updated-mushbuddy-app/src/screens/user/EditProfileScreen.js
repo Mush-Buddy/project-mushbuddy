@@ -8,7 +8,7 @@ import Colors from '../../constants/Colors';
 import { showMessage } from "react-native-flash-message";
 
 const EditProfileScreen = (props) => {
-    const { auth } = useSelector(state => state)
+    const { auth } = useSelector(state => state);
     const loggedUser = useSelector(state => state.auth.user);
     const users = useSelector(state => state.users.allUsers);
     const userDetails = useSelector(state => state.auth.user);
@@ -32,7 +32,7 @@ const EditProfileScreen = (props) => {
     }
 
     const validatePost = () => {
-        if (firstName.length < 1){
+        if (firstName.length < 1) {
             showMessage({
                 message: "Please enter a valid firstName.",
                 type: "danger",
@@ -67,10 +67,9 @@ const EditProfileScreen = (props) => {
         return true;
     }
 
-
     const updatePost = async () => {
         setIsLoading(true);
-        if(validatePost()){
+        if (validatePost()) {
             try {
                 let userData = {firstName, lastName, city, state};
                 await dispatch(usersActions.updateProfile({userData,auth}));

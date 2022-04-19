@@ -1,10 +1,10 @@
 import { AUTHENTICATE, LOGOUT } from "../actions/auth";
 import {UPDATE_PROFILE} from "../actions/users"
 
-const initialState = { }
+const initialState = {};
 
 export default (state=initialState, action) => {
-    switch(action.type){
+    switch(action.type) {
         case AUTHENTICATE:
             return {
                 ...state,
@@ -16,7 +16,7 @@ export default (state=initialState, action) => {
                 ...action.payload
             }
         case LOGOUT:
-            return initialState
+            return initialState;
         default:
             return state;
     }

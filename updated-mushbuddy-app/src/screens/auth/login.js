@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { signin } from '../../store/actions/auth'
+import { signin } from '../../store/actions/auth';
 import { Text, TextInput, View, KeyboardAvoidingView, SafeAreaView, Keyboard, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from '../../components/stylesheets/auth_styles/login_style';
 
 const Login = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    //const authStatus = useSelector(state => state.auth.error);
+    const [error, setError] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,9 +19,37 @@ const Login = () => {
 
     const passwordInputRef = useRef();
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let userData = { username, password };
-        dispatch(signin(userData));
+        const result = await dispatch(signin(userData));
+
+        // If a string is returned, then we know it's an error message.
+        // Display the error message in the UI.
+        if (typeof result === 'string') {
+            setError(result);
+            //console.log(result);
+        }
+    }
+
+    const renderLoginError = () => {
+        if (error != '') {
+            if (error == 'wrong_username') {
+                return (
+                    <Text style={styles.errorText}>
+                        The username you entered does not match our records.
+                        Please double-check and try again.
+                    </Text>
+                );
+            } else {
+                return (
+                    <Text style={styles.errorText}>
+                        The password you entered does not match our records.
+                        Please double-check and try again.
+                        (Remember that passwords are case-sensitive.)
+                    </Text>
+                );
+            }
+        }
     }
 
     const handlePasswordVisibility = () => {
@@ -125,6 +155,7 @@ const Login = () => {
                 <View style={styles.container}>
                     {renderHeader()}
                     {renderInputFields()}
+                    {renderLoginError()}
                     <View style={styles.bottomContainer}>
                         {renderLoginButton()}
                     </View>
