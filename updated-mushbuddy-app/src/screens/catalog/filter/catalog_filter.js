@@ -14,24 +14,18 @@ const CatalogFilter = ({ navigation }) => {
     const [gillType, setGillType] = useState('');
     const [veil, setVeil] = useState('');
 
-    //const [capShape, setCapShape] = useState('');
-    // const [gillsType, setHymenium] = useState('');
-    // const [gillType, setGillType] = useState('');
-    // const [veil, setVeil] = useState('');
-
     const clearCap = useRef(null);
     const clearHymenium = useRef(null);
     const clearGillType = useRef(null);
     const clearVeil = useRef(null);
 
     const resetSelections = () => {
-        //setCriteria({});
+
         setCap('');
         setHymenium('');
         setGillType('');
         setVeil('');
 
-        //clearCarousel.current();
         clearCap.current();
         clearHymenium.current();
         clearGillType.current();
@@ -44,34 +38,42 @@ const CatalogFilter = ({ navigation }) => {
 
     const onCapSelected = (selectedLabel) => {
         setCap(selectedLabel);
-        // setCriteria({
-        //     ...criteria,
-        //     'capShape': cap,
-        // });
     }
 
     const onHymeniumSelected = (selectedLabel) => {
         setHymenium(selectedLabel);
-        // setCriteria({
-        //     ...criteria,
-        //     'gillsType': hymenium,
-        // });
     }
 
     const onGillTypeSelected = (selectedLabel) => {
         setGillType(selectedLabel);
-        // setCriteria({
-        //     ...criteria,
-        //     'gillsAttachment': gillType,
-        // });
     }
 
     const onVeilSelected = (selectedLabel) => {
         setVeil(selectedLabel);
-        // setCriteria({
-        //     ...criteria,
-        //     'veilType': veil,
-        // });
+    }
+
+    const processCriteria = () => {
+
+        var criteria = {};
+
+        if (cap !== '') {
+            criteria['capShape'] = cap;
+        }
+
+        if (hymenium !== '') {
+            criteria['gillsType'] = hymenium;
+        }
+
+        // Needs reworking; temporary solution for now.
+        if (gillType !== '') {
+            criteria['gillsAttachment'] = 'Yes'; // TEMP
+        }
+
+        if (veil !== '') {
+            criteria['veilType'] = veil;
+        }
+
+        return criteria;
     }
 
     const renderButtons = () => {
@@ -102,13 +104,14 @@ const CatalogFilter = ({ navigation }) => {
 
     // TODO: Handle submit
     const renderSubmitButton = () => {
+        //processCriteria();
         return (
             <LinearGradient
                 colors={['#5cc76d', '#60af85']}
                 style={styles.button}
             >
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('filteredPage',{'gillsType':hymenium})}
+                    onPress={() => navigation.navigate('filteredPage', processCriteria())}
                 >
                     <Text style={styles.buttonText}>
                         Filter by these selections
