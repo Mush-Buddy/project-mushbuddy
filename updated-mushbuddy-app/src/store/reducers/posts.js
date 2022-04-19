@@ -7,19 +7,19 @@ const initialState = {
 };
 
 export default (state=initialState, action) => {
-    switch(action.type){
+    switch(action.type) {
         case SET_POSTS:
             return {
                 ...state,
-                allPosts: [...state.allPosts,action.payload.posts]
-            }
+                allPosts: [...state.allPosts,action.payload.posts],
+            };
         case CREATE_POST:
             return{
                 ...state,
-                newPost: state.newPost + 1
-            }
+                newPost: state.newPost + 1,
+            };
         case LOGOUT:
-            return initialState
+            return initialState;
         default:
             return state;
     }

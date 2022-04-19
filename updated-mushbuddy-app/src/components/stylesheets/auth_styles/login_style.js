@@ -24,7 +24,6 @@ export default StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        //marginBottom: 60,
     },
     textInput: {
         width: 300,
@@ -43,16 +42,16 @@ export default StyleSheet.create({
         marginBottom: 60,
         color: COLORS.TEXT,
     },
-    // italicText: {
-    //     fontSize: 20,
-    //     fontStyle: 'italic',
-    //     color: COLORS.TEXT,
-    // },
     subheaderText: {
         fontSize: 16,
         letterSpacing: 1,
         fontWeight: 'bold',
         marginBottom: 5,
+    },
+    errorText: {
+        color: '#B32000',
+        marginLeft: MARGIN_LEFT,
+        fontSize: 12,
     },
     bottomContainer: {
         flex: 1,

@@ -9,28 +9,28 @@ const initialState = {
 export default (state=initialState, action) => {
     switch(action.type){
         case SET_USERS:
-            return{
+            return {
                 ...state,
-                allUsers: [...state.allUsers,action.payload.user]
-            }
+                allUsers: [...state.allUsers,action.payload.user],
+            };
         case SET_FIND_PEOPLE:
-            return{
+            return {
                 ...state,
-                findPeople: action.payload.users
-            }
+                findPeople: action.payload.users,
+            };
         case FOLLOW:
             const userInd = state.allUsers.findIndex(user => user._id === action.user._id);
-            if (userInd !== -1){
+            if (userInd !== -1) {
                 const updatedFollowAllUsers = [...state.allUsers];
                 updatedFollowAllUsers[userInd].followers = updatedFollowAllUsers[userInd].followers.concat(action.loggedUser);
-                return{
+                return {
                     ...state,
-                    allUsers: updatedFollowAllUsers
-                }
+                    allUsers: updatedFollowAllUsers,
+                };
             }
-            return{
+            return {
                 ...state
-            }
+            };
         case UNFOLLOW:
             const userIdx = state.allUsers.findIndex(user => user._id === action.user._id);
             if (userIdx !== -1){

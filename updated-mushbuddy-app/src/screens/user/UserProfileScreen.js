@@ -37,7 +37,7 @@ const UserProfileScreen = (props) => {
     // }
 
     useEffect(() => {
-        console.log(route.params)
+        console.log(route.params);
         if (route.params) {
             setId(route.params.userId);
         }
@@ -48,7 +48,6 @@ const UserProfileScreen = (props) => {
             dispatch(usersActions.fetchUsers({ id: id, auth: auth }));
         }
     }, [id, auth, dispatch, users.allUsers]);
-
 
     const buttons = ['Badges', 'History'];
     const [selectedIndex, setSelectedIndex] = useState(0);

@@ -1,6 +1,6 @@
-import {  ALERT } from "../actions/auth";
+import { ALERT } from "../actions/auth";
 
-const initialState = {}
+const initialState = {};
 
 const alert = (state = initialState, action) => {
     switch (action.type){
@@ -11,5 +11,4 @@ const alert = (state = initialState, action) => {
     }
 }
 
-
-export default alert
+export default alert;
