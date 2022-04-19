@@ -30,8 +30,8 @@ const MushroomCatalog = ({ navigation, route }) => {
         }
         const get_data = async () => {
             const res = await getDataAPI(`catalog/?page=${page}&limit=${limit}`, auth.token);
-            console.log('called', page)
-            console.log(res.data)
+            // console.log('called', page);
+            // console.log(res.data);
             const newData = res.data.catalog;
             setShouldFetch(false);
             setCatalog(oldData => [...oldData, ...newData]);
@@ -43,9 +43,8 @@ const MushroomCatalog = ({ navigation, route }) => {
     const handleLoadMore = useCallback(() => setShouldFetch(true), []);
 
     const handleSearch = ( ) => {
-        navigation.navigate('filteredPage', {nameCommon: { $regex: search }})
+        navigation.navigate('filteredPage', {nameCommon: { $regex: search }});
     }
-
 
     const renderHeader = () => {
         return (

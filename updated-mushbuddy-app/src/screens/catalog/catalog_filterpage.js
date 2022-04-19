@@ -24,7 +24,7 @@ const MushroomCatalogFiltered = (props) => {
 
     const [search, setSearch] = useState('');
 
-    console.log(filterparams)
+    console.log(filterparams);
     useEffect(() => {
         if (!shouldFetch) {
             return;
