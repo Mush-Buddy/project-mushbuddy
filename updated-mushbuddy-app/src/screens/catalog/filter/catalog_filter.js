@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, PixelRatio } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -8,23 +8,28 @@ import Carousel from './carousel';
 
 import Options from './index_options';
 
-//import { GLView } from 'expo-gl';
-import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import { Renderer, TextureLoader } from 'expo-three';
-import ExpoTHREE from 'expo-three';
-import * as THREE from 'three';
-import {
-    AmbientLight,
-    Fog,
-    GridHelper,
-    PerspectiveCamera,
-    PointLight,
-    Scene,
-    SpotLight,
-} from 'three';
-import { Asset } from 'expo-asset';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import Mush3D from './mush_3d';
+
+// //import { GLView } from 'expo-gl';
+// import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
+// import { Renderer, TextureLoader } from 'expo-three';
+// import ExpoTHREE from 'expo-three';
+// import * as THREE from 'three';
+// import {
+//     AmbientLight,
+//     Fog,
+//     GridHelper,
+//     Camera,
+//     PerspectiveCamera,
+//     PointLight,
+//     Scene,
+//     SpotLight,
+// } from 'three';
+// import { Asset } from 'expo-asset';
+// import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+// //import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+
+// import OrbitControlsView from 'expo-three-orbit-controls';
 
 const CatalogFilter = ({ navigation }) => {
     const [cap, setCap] = useState('');
@@ -37,11 +42,14 @@ const CatalogFilter = ({ navigation }) => {
     const clearGillType = useRef(null);
     const clearVeil = useRef(null);
 
-   let timeout;
+    // const [camera, setCamera] = useState(null);
 
-   useEffect(() => {
-       return () => clearTimeout(timeout);
-   }, []);
+    // let timeout;
+
+    // // Clear the animation loop when the component unmounts.
+    // useEffect(() => {
+    //     return () => clearTimeout(timeout);
+    // }, []);
 
     const resetSelections = () => {
 
@@ -100,151 +108,82 @@ const CatalogFilter = ({ navigation }) => {
         return criteria;
     }
 
-    const renderModel = () => {
-        return (
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <GLView
-                    style={{ width: 200, height: 200, borderColor: 'red', borderWidth: 1 }}
-                    onContextCreate={async (gl) => {
-                        const sceneColor = 0x6ad6f0;
+    // const onContextCreate = async (gl) => {
+    //     const sceneColor = 0x6ad6f0;
 
-                        // Create a WebGLRenderer
-                        const renderer = new Renderer({ gl });
-                        renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
-                        renderer.setClearColor(sceneColor);
+    //     // Create a WebGLRenderer
+    //     const renderer = new Renderer({ gl });
+    //     renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
+    //     renderer.setClearColor(sceneColor);
 
-                        // Parameters: Field of view (vertical), aspect ratio, near plane, far plane
-                        const camera = new PerspectiveCamera(45, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
-                        camera.position.set(5, 0, 5);
+    //     // Parameters: Field of view (vertical), aspect ratio, near plane, far plane
+    //     const camera = new PerspectiveCamera(40, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
+    //     camera.position.set(5, 0, 3);
 
-                        const scene = new Scene();
-                        scene.fog = new Fog(sceneColor, 1, 1000);
-                        scene.add(new GridHelper(10, 10));
+    //     setCamera(camera);
 
-                        const ambientLight = new AmbientLight(0x101010);
-                        scene.add(ambientLight);
+    //     const scene = new Scene();
+    //     scene.fog = new Fog(sceneColor, 1, 1000);
 
-                        const pointLight = new PointLight(0xffffff, 2, 1000, 1);
-                        pointLight.position.set(0, 200, 200);
-                        scene.add(pointLight);
+    //     scene.add(new GridHelper(10, 100));
 
-                        const spotLight = new SpotLight(0xffffff, 0.5);
-                        spotLight.position.set(0, 500, 100);
-                        spotLight.lookAt(scene.position);
-                        scene.add(spotLight);
+    //     const ambientLight = new AmbientLight(0x101010);
+    //     scene.add(ambientLight);
 
-                        //const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
-                        const asset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.obj'));
-                        await asset.downloadAsync();
+    //     const pointLight = new PointLight(0xffffff, 2, 1000, 1);
+    //     pointLight.position.set(0, 200, 200);
+    //     scene.add(pointLight);
 
-                        const materialAsset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.mtl'));
-                        await materialAsset.downloadAsync();
+    //     const spotLight = new SpotLight(0xffffff, 0.5);
+    //     spotLight.position.set(0, 500, 100);
+    //     spotLight.lookAt(scene.position);
+    //     scene.add(spotLight);
 
-                        const objectLoader = new OBJLoader();
-                        const materialLoader = new MTLLoader();
+    //     //const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
+    //     const asset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.obj'));
+    //     await asset.downloadAsync();
 
-                        const mush_material = await materialLoader.loadAsync(materialAsset.uri);
-                        mush_material.preload();
-                        //objectLoader.setMaterials(material);
+    //     // const materialAsset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.mtl'));
+    //     // await materialAsset.downloadAsync();
 
-                        const object = await objectLoader.loadAsync(asset.uri);
-                        object.traverse((obj) => {
-                            if (obj.isMesh) {
-                                //obj.material = mush_material;
-                                obj.material.color.setHex(0xD04122);
-                            }
-                        })
-                        // object.traverse = (child) => {
-                        //     if (child instanceof THREE.Mesh) {
-                        //         child.material.color.setHex(0xD04122);
-                        //     }
-                        // };
-                        //object.material = mush_material;
-                        //object.scale.set(0.025, 0.025, 0.025);
-                        scene.add(object);
-                        camera.lookAt(object.position);
+    //     const objectLoader = new OBJLoader();
 
-                        const render = () => {
-                            timeout = requestAnimationFrame(render);
-                            renderer.render(scene, camera);
-                            gl.endFrameEXP();
-                        };
-                        render();
-                    }}
-                />
-            </View>
-        );
-    }
+    //     // const materialLoader = new MTLLoader();
+    //     // const mush_material = await materialLoader.loadAsync(materialAsset.uri);
+    //     // mush_material.preload();
+
+    //     const object = await objectLoader.loadAsync(asset.uri);
+    //     object.traverse((obj) => {
+    //         if (obj.isMesh) {
+    //             //obj.material.color.setHex(0xD04122);
+    //             obj.material = new THREE.MeshNormalMaterial();
+    //         }
+    //     });
+
+    //     //object.scale.set(0.025, 0.025, 0.025);
+    //     scene.add(object);
+    //     camera.lookAt(object.position);
+
+    //     const render = () => {
+    //         timeout = requestAnimationFrame(render);
+    //         renderer.render(scene, camera);
+    //         gl.endFrameEXP();
+    //     };
+
+    //     render();
+    // }
 
     // const renderModel = () => {
     //     return (
-    //         <GLView
-    //             style={{ width: 300, height: 300 }}
-    //             onContextCreate={onContextCreate}
-    //         />
-    //     );
-    // }
-
-    // const onContextCreate = (gl) => {
-    //     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    //     gl.clearColor(0, 1, 1, 1);
-
-    //     // Create vertex shader (shape & position)
-    //     const vert = gl.createShader(gl.VERTEX_SHADER);
-    //     gl.shaderSource(
-    //         vert,
-    //         `
-    //         void main(void) {
-    //             gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
-    //             gl_PointSize = 150.0;
-    //         }
-    //         `
-    //     );
-
-    //     gl.compileShader(vert);
-
-    //     // Create fragment shader (color)
-    //     const frag = gl.createShader(gl.FRAGMENT_SHADER);
-    //     gl.shaderSource(
-    //         frag,
-    //         `
-    //         void main(void) {
-    //             gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    //         }
-    //         `
-    //     );
-    //     gl.compileShader(frag);
-
-    //     // Link together into a program
-    //     const program = gl.CreateProgram();
-    //     gl.attachShader(program, vert);
-    //     gl.attachShader(program, frag);
-    //     gl.linkProgram(program);
-    //     gl.useProgram(program);
-
-    //     gl.clear(gl.COLOR_BUFFER_BIT);
-    //     gl.drawArrays(gl.POINTS, 0, 1);
-
-    //     gl.flush();
-    //     gl.endFrameEXP();
-    // }
-
-    // const renderModelView = () => {
-    //     return (
-    //         <ModelView
-    //             model={{
-    //                 uri: 'moon.obj',
-    //             }}
-    //             texture={{
-    //                 uri: 'map.jpg',
-    //             }}
-
-    //             scale={0.01}
-    //             translateZ={-2}
-    //             rotateZ={270}
-    //             style={{flex:1}}
-
-    //         />
+    //         <OrbitControlsView
+    //             style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+    //             camera={camera}
+    //         >
+    //             <GLView
+    //                 style={{ width: 200, height: 200, borderColor: 'transparent', borderWidth: 1 }}
+    //                 onContextCreate={onContextCreate}
+    //             />
+    //         </OrbitControlsView>
     //     );
     // }
 
@@ -276,7 +215,6 @@ const CatalogFilter = ({ navigation }) => {
 
     // TODO: Handle submit
     const renderSubmitButton = () => {
-        //processCriteria();
         return (
             <LinearGradient
                 colors={['#5cc76d', '#60af85']}
@@ -368,7 +306,7 @@ const CatalogFilter = ({ navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {renderUpperNavigation()}
 
-                {renderModel()}
+                <Mush3D/>
 
                 <View style={styles.carouselsContainer}>
                     {renderSubheader('What type of cap does your mushroom have?')}

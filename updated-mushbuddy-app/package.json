@@ -27,6 +27,7 @@
     "expo-location": "~14.0.1",
     "expo-status-bar": "~1.2.0",
     "expo-three": "^6.1.0",
+    "expo-three-orbit-controls": "^2.0.0",
     "native-base": "^3.3.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
