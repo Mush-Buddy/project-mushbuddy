@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, TouchableOpacity, ScrollView, PixelRatio } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -7,6 +7,28 @@ import styles from '../../../components/stylesheets/catalog_styles/filter_style'
 import Carousel from './carousel';
 
 import Options from './index_options';
+
+//import { GLView } from 'expo-gl';
+import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
+import { Renderer, TextureLoader } from 'expo-three';
+import ExpoTHREE from 'expo-three';
+import * as THREE from 'three';
+import {
+    AmbientLight,
+    BoxBufferGeometry,
+    Fog,
+    Mesh,
+    MeshStandardMaterial,
+    PerspectiveCamera,
+    PointLight,
+    Scene,
+    SpotLight,
+} from 'three';
+//import { stopLocationUpdatesAsync } from 'expo-location';
+import { Asset } from 'expo-asset';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+
+//import ModelView from 'react-native-gl-model-view';
 
 const CatalogFilter = ({ navigation }) => {
     const [cap, setCap] = useState('');
@@ -18,6 +40,29 @@ const CatalogFilter = ({ navigation }) => {
     const clearHymenium = useRef(null);
     const clearGillType = useRef(null);
     const clearVeil = useRef(null);
+
+    // All assets require a local URI to be loaded.
+    // Resolving local URI with expo-asset.
+    // const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
+    // await asset.downloadAsync();
+    // // OBJLoader
+    // const loader = new OBJLoader();
+    // loader.load(asset.localUri, group => {
+    //     // Model loaded...
+    // });
+
+    // //const uri = asset.localUri;
+
+    // // Loading in the texture.
+    // const texture = new TextureLoader().load(require('../../../../assets/map.jpg'));
+
+    // --------------------
+
+    // const [show, setShow] = useState(false);
+    // const delay = 5;
+    // useEffect(() => {
+    //     let timer1 = setTimeout(() => setShow(true), delay * 1000);
+    // })
 
     const resetSelections = () => {
 
@@ -75,6 +120,173 @@ const CatalogFilter = ({ navigation }) => {
 
         return criteria;
     }
+
+    const renderModel = () => {
+        return (
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <GLView
+                    style={{ width: 200, height: 200, borderColor: 'red', borderWidth: 1 }}
+                    onContextCreate={async (gl) => {
+                        // const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
+                        //const sceneColor = '#111111';
+                        //const scale = PixelRatio.get();
+
+                        // Create a WebGLRenderer without a DOM element
+                        const renderer = new Renderer({ gl });
+                        renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
+                        // renderer.capabilities.maxVertexUniforms = 52502;
+                        // renderer.setSize(width/scale, height/scale);
+                        //renderer.setPixelRatio(scale);
+                        //renderer.setClearColor(0x000000,0);
+
+                        // Parameters: Field of view (vertical), aspect ratio, near plane, far plane
+                        const camera = new PerspectiveCamera(45, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
+                        camera.position.set(5, 0, 5);
+                        camera.lookAt(0, 0, 0);
+
+                        const scene = new Scene();
+                        //scene.fog = new Fog(sceneColor, 1, 1000);
+
+                        const ambientLight = new AmbientLight(0x101010);
+                        scene.add(ambientLight);
+
+                        const pointLight = new PointLight(0xffffff, 2, 1000, 1);
+                        pointLight.position.set(0, 200, 200);
+                        scene.add(pointLight);
+
+                        const spotLight = new SpotLight(0xffffff, 0.5);
+                        spotLight.position.set(0, 500, 100);
+                        spotLight.lookAt(scene.position);
+                        scene.add(spotLight);
+
+                        // currently ignoring pointLight & spotLight
+
+                        //var object = null;
+
+                        const model = {
+                            'moon.obj': require('../../../../assets/moon.obj'),
+                            'map.jpg': require('../../../../assets/map.jpg'),
+                        };
+
+                        // Load model
+                        await ExpoTHREE.loadAsync(
+                            model['moon.obj'],
+                            null,
+                            name => model[name],
+                        ).then((obj) => {
+
+                            // // Update size and position
+                            // ExpoTHREE.utils.scaleLongestSideToSize(obj, 5);
+                            // ExpoTHREE.utils.alignMesh(obj, { y: 1});
+                            // // Smooth mesh
+                            // ExpoTHREE.utils.computeMeshNormals(obj.children[0]);
+
+                            // Add the mesh to the scene
+                            scene.add(obj.children[0]);
+                        }).catch((error) => {
+                            console.log("ERROR IN LOADING MODEL:" + error);
+                        });
+
+                        // check - this is just function update() in original
+                        const update = () => {
+                            if (scene.children.length == 4) {
+                                scene.children[3].rotateY(0.03);
+                            }
+                        }
+
+                        // Setup an animation loop
+                        const render = () => {
+                            update();
+                            renderer.render(scene, camera);
+                            gl.endFrameEXP();
+                        };
+                        render();
+
+                        // idk
+                        // const render = () => {
+                        //     this.timeout = requestAnimationFrame(render);
+                        //     stopLocationUpdatesAsync();
+
+                        // }
+
+                        //renderer.render(scene, camera);
+                    }}
+                />
+            </View>
+        );
+    }
+
+    // const renderModel = () => {
+    //     return (
+    //         <GLView
+    //             style={{ width: 300, height: 300 }}
+    //             onContextCreate={onContextCreate}
+    //         />
+    //     );
+    // }
+
+    // const onContextCreate = (gl) => {
+    //     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    //     gl.clearColor(0, 1, 1, 1);
+
+    //     // Create vertex shader (shape & position)
+    //     const vert = gl.createShader(gl.VERTEX_SHADER);
+    //     gl.shaderSource(
+    //         vert,
+    //         `
+    //         void main(void) {
+    //             gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+    //             gl_PointSize = 150.0;
+    //         }
+    //         `
+    //     );
+
+    //     gl.compileShader(vert);
+
+    //     // Create fragment shader (color)
+    //     const frag = gl.createShader(gl.FRAGMENT_SHADER);
+    //     gl.shaderSource(
+    //         frag,
+    //         `
+    //         void main(void) {
+    //             gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    //         }
+    //         `
+    //     );
+    //     gl.compileShader(frag);
+
+    //     // Link together into a program
+    //     const program = gl.CreateProgram();
+    //     gl.attachShader(program, vert);
+    //     gl.attachShader(program, frag);
+    //     gl.linkProgram(program);
+    //     gl.useProgram(program);
+
+    //     gl.clear(gl.COLOR_BUFFER_BIT);
+    //     gl.drawArrays(gl.POINTS, 0, 1);
+
+    //     gl.flush();
+    //     gl.endFrameEXP();
+    // }
+
+    // const renderModelView = () => {
+    //     return (
+    //         <ModelView
+    //             model={{
+    //                 uri: 'moon.obj',
+    //             }}
+    //             texture={{
+    //                 uri: 'map.jpg',
+    //             }}
+
+    //             scale={0.01}
+    //             translateZ={-2}
+    //             rotateZ={270}
+    //             style={{flex:1}}
+
+    //         />
+    //     );
+    // }
 
     const renderButtons = () => {
         return (
@@ -196,11 +408,13 @@ const CatalogFilter = ({ navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {renderUpperNavigation()}
 
+                {renderModel()}
+
                 <View style={styles.carouselsContainer}>
                     {renderSubheader('What type of cap does your mushroom have?')}
                     {renderCapOptions(Options.cap)}
                 </View>
-            
+
                 <View style={styles.carouselsContainer}>
                     {renderSubheader('What type of spore-bearing surface (hymenium) does your mushroom have?')}
                     {renderHymeniumOptions(Options.hymenium)}
