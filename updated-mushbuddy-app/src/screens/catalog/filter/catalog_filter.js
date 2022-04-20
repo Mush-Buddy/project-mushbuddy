@@ -15,20 +15,16 @@ import ExpoTHREE from 'expo-three';
 import * as THREE from 'three';
 import {
     AmbientLight,
-    BoxBufferGeometry,
     Fog,
-    Mesh,
-    MeshStandardMaterial,
+    GridHelper,
     PerspectiveCamera,
     PointLight,
     Scene,
     SpotLight,
 } from 'three';
-//import { stopLocationUpdatesAsync } from 'expo-location';
 import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-
-//import ModelView from 'react-native-gl-model-view';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 
 const CatalogFilter = ({ navigation }) => {
     const [cap, setCap] = useState('');
@@ -41,28 +37,11 @@ const CatalogFilter = ({ navigation }) => {
     const clearGillType = useRef(null);
     const clearVeil = useRef(null);
 
-    // All assets require a local URI to be loaded.
-    // Resolving local URI with expo-asset.
-    // const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
-    // await asset.downloadAsync();
-    // // OBJLoader
-    // const loader = new OBJLoader();
-    // loader.load(asset.localUri, group => {
-    //     // Model loaded...
-    // });
+   let timeout;
 
-    // //const uri = asset.localUri;
-
-    // // Loading in the texture.
-    // const texture = new TextureLoader().load(require('../../../../assets/map.jpg'));
-
-    // --------------------
-
-    // const [show, setShow] = useState(false);
-    // const delay = 5;
-    // useEffect(() => {
-    //     let timer1 = setTimeout(() => setShow(true), delay * 1000);
-    // })
+   useEffect(() => {
+       return () => clearTimeout(timeout);
+   }, []);
 
     const resetSelections = () => {
 
@@ -127,25 +106,20 @@ const CatalogFilter = ({ navigation }) => {
                 <GLView
                     style={{ width: 200, height: 200, borderColor: 'red', borderWidth: 1 }}
                     onContextCreate={async (gl) => {
-                        // const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-                        //const sceneColor = '#111111';
-                        //const scale = PixelRatio.get();
+                        const sceneColor = 0x6ad6f0;
 
-                        // Create a WebGLRenderer without a DOM element
+                        // Create a WebGLRenderer
                         const renderer = new Renderer({ gl });
                         renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
-                        // renderer.capabilities.maxVertexUniforms = 52502;
-                        // renderer.setSize(width/scale, height/scale);
-                        //renderer.setPixelRatio(scale);
-                        //renderer.setClearColor(0x000000,0);
+                        renderer.setClearColor(sceneColor);
 
                         // Parameters: Field of view (vertical), aspect ratio, near plane, far plane
                         const camera = new PerspectiveCamera(45, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
                         camera.position.set(5, 0, 5);
-                        camera.lookAt(0, 0, 0);
 
                         const scene = new Scene();
-                        //scene.fog = new Fog(sceneColor, 1, 1000);
+                        scene.fog = new Fog(sceneColor, 1, 1000);
+                        scene.add(new GridHelper(10, 10));
 
                         const ambientLight = new AmbientLight(0x101010);
                         scene.add(ambientLight);
@@ -159,57 +133,43 @@ const CatalogFilter = ({ navigation }) => {
                         spotLight.lookAt(scene.position);
                         scene.add(spotLight);
 
-                        // currently ignoring pointLight & spotLight
+                        //const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
+                        const asset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.obj'));
+                        await asset.downloadAsync();
 
-                        //var object = null;
+                        const materialAsset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.mtl'));
+                        await materialAsset.downloadAsync();
 
-                        const model = {
-                            'moon.obj': require('../../../../assets/moon.obj'),
-                            'map.jpg': require('../../../../assets/map.jpg'),
-                        };
+                        const objectLoader = new OBJLoader();
+                        const materialLoader = new MTLLoader();
 
-                        // Load model
-                        await ExpoTHREE.loadAsync(
-                            model['moon.obj'],
-                            null,
-                            name => model[name],
-                        ).then((obj) => {
+                        const mush_material = await materialLoader.loadAsync(materialAsset.uri);
+                        mush_material.preload();
+                        //objectLoader.setMaterials(material);
 
-                            // // Update size and position
-                            // ExpoTHREE.utils.scaleLongestSideToSize(obj, 5);
-                            // ExpoTHREE.utils.alignMesh(obj, { y: 1});
-                            // // Smooth mesh
-                            // ExpoTHREE.utils.computeMeshNormals(obj.children[0]);
-
-                            // Add the mesh to the scene
-                            scene.add(obj.children[0]);
-                        }).catch((error) => {
-                            console.log("ERROR IN LOADING MODEL:" + error);
-                        });
-
-                        // check - this is just function update() in original
-                        const update = () => {
-                            if (scene.children.length == 4) {
-                                scene.children[3].rotateY(0.03);
+                        const object = await objectLoader.loadAsync(asset.uri);
+                        object.traverse((obj) => {
+                            if (obj.isMesh) {
+                                //obj.material = mush_material;
+                                obj.material.color.setHex(0xD04122);
                             }
-                        }
+                        })
+                        // object.traverse = (child) => {
+                        //     if (child instanceof THREE.Mesh) {
+                        //         child.material.color.setHex(0xD04122);
+                        //     }
+                        // };
+                        //object.material = mush_material;
+                        //object.scale.set(0.025, 0.025, 0.025);
+                        scene.add(object);
+                        camera.lookAt(object.position);
 
-                        // Setup an animation loop
                         const render = () => {
-                            update();
+                            timeout = requestAnimationFrame(render);
                             renderer.render(scene, camera);
                             gl.endFrameEXP();
                         };
                         render();
-
-                        // idk
-                        // const render = () => {
-                        //     this.timeout = requestAnimationFrame(render);
-                        //     stopLocationUpdatesAsync();
-
-                        // }
-
-                        //renderer.render(scene, camera);
                     }}
                 />
             </View>
