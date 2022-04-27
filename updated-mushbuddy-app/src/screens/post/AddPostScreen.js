@@ -29,6 +29,9 @@ const AddPostScreen = (props) => {
 
     const dispatch = useDispatch();
 
+    // console.log("inside addpostscreen");
+    // console.log(route.params.selectedItem);
+
     const clearForm = () => {
         //setTitle('');
         setMushroom('');
@@ -76,6 +79,7 @@ const AddPostScreen = (props) => {
         return true;
     }
 
+    // function for actually creating a post
     const createPost = async () => {
         setIsLoading(true);
         if (validatePost()) {
@@ -87,7 +91,7 @@ const AddPostScreen = (props) => {
                 let postData = { title, mushroom, content };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
-                props.navigation.navigate('Catalog');
+                props.navigation.navigate('Map');
                 showMessage({
                     message: "Your post was successfully created.",
                     type: "success",
@@ -111,6 +115,7 @@ const AddPostScreen = (props) => {
         props.navigation.push('MushroomCatalog', { isSelecting: true });
     }
 
+    // for the select mushroom button at the top
     const renderSelectButton = () => {
         return (
             <TouchableOpacity
@@ -221,7 +226,10 @@ const AddPostScreen = (props) => {
         );
     }
 
+    // rendering
     return (
+        // <Text>Hello, world!</Text>
+        
         <ScrollView showsVerticalScrollIndicator={false}>
 
             {route.params && <RenderCatalogEntry
@@ -236,8 +244,8 @@ const AddPostScreen = (props) => {
 
                 <View style={styles.container}>
                     {renderSelectButton()}
-                    {/* {renderTitleInputField()}
-                    {renderContentInputField()} */}
+                    {/* {renderTitleInputField()} */}
+                    {/* {renderContentInputField()} */}
                     {renderLatitudeInputField()}
                     {renderLongitudeInputField()}
 

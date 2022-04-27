@@ -22,6 +22,7 @@ const Map = ( { navigation } ) => {
   function getRandomNumberBetween(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
   }
+
   // random range for current region:
   //   "latitude": 43.706926586852234,
   //   "longitude": -72.29416723076919,
@@ -29,6 +30,7 @@ const Map = ( { navigation } ) => {
   //   "latitude": 43.69475372084176,
   //   "longitude": -72.28457748717949,
 
+  // render markers
   useEffect(() => {
     console.log('fetching')
     const get_data = async () => {
@@ -73,10 +75,14 @@ const Map = ( { navigation } ) => {
     setMarkers([...testMarkers, newMarker])
   }
 
+  // move to the new post screen
   const moveToNewPost = () => {
-    navigation.navigate('Post', {});
+    console.log("moving to new post UI");
+    console.log(navigation);
+    navigation.navigate('CreatePost', {navigation});
   }
 
+  // renders the red plus button.
   const renderAddPostButton = () => {
     return (
       <TouchableOpacity onPress={() => { moveToNewPost(); }}>
@@ -96,7 +102,6 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
-        // onPress={e => console.log()}
       >
 
       {/* next, render all markers */}
@@ -104,11 +109,11 @@ const Map = ( { navigation } ) => {
       <Markers markers={testMarkers} />
       </MapView>}
         
-      {/*
+      {/* add button*/}
       <Callout style={styles.buttonCallout}>
         {renderAddPostButton()}
       </Callout>
-      */}
+     
 
       {/* some past lines that worked */}
       {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}

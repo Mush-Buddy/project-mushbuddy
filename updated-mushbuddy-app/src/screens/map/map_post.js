@@ -3,41 +3,29 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Pressa
 import { SearchBar } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDataAPI } from '../../utils/fetchData';
 
-const MapPost = ({ navigation }) => {
-    const { auth } = useSelector(state => state);
+// this is probably where the old UI is contained
 
+const MapPost = ({navigation}, props) => {
+    // idk lol
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
     const [mushrooms, setMushrooms] = useState([]);
-
     // dropdown setup
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([]);
-
     // not sure if these will be compatible --
     const [limit, setLimit] = useState(9);
     const [page, setPage] = useState(1);
-
     // input field setup
     const [nameText, setNameText] = useState('');
 
-    useEffect(async () => {
-        const res = await getDataAPI(`catalog/?page=${page}&limit=${limit}`, auth.token);
-        const newData = res.data.catalog;
-        if (newData.length > 0) {
-            setData(newData);
-            setPage(page + 1);
-
-            setItems(loadDataIntoItems(newData));
-        }
-    }, []);
-
+    // go back to map menu (probably gonna want to create a post here somehow)
     const returnToMap = () => {
         navigation.navigate('MapMain');
     }
@@ -158,9 +146,9 @@ const MapPost = ({ navigation }) => {
                 </Text>
             </View>
 
-            {/* <View style={styles.footerContainer}>
+            <View style={styles.footerContainer}>
                 {renderUploadButton()}
-            </View> */}
+            </View>
         </View>
     );
 }
