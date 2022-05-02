@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDataAPI } from '../../utils/fetchData';
 
-// this is probably where the old UI is contained
+// unused old UI
 
 const MapPost = ({navigation}, props) => {
-    // idk lol
+    // not sure what these are for
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
     const [mushrooms, setMushrooms] = useState([]);

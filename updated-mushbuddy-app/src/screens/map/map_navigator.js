@@ -3,14 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { COLORS } from '../../components/stylesheets/colors';
 import { Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 import Map from './map.js';
-import MapPost from './map_post.js';
 
 // borrowed from other navigator
 import AddPostScreen, { screenOptions as addPostScreenOptions } from '../post/AddPostScreen';
-import FindPeopleScreen from '../user/FindPeopleScreen';
 import MushroomCatalog from '../catalog/catalog_main';
 import CatalogFilter from '../catalog/filter/catalog_filter';
 import CatalogEntry from '../catalog/catalog_entry';
@@ -88,9 +85,7 @@ const MapNavigator = () => {
             />
         </Stack.Navigator>
 
-
-
-
+        // original navigator
         // <Stack.Navigator
         //     screenOptions={{ headerShown: false }}
         // >
@@ -114,7 +109,6 @@ const MapNavigator = () => {
         //             },
         //         }}
         //     />
-            
         // </Stack.Navigator>
     );
 };

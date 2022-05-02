@@ -77,12 +77,11 @@ const Map = ( { navigation } ) => {
 
   // move to the new post screen
   const moveToNewPost = () => {
-    console.log("moving to new post UI");
-    console.log(navigation);
-    navigation.navigate('CreatePost', {navigation});
+    // no params to pass in here
+    navigation.navigate('CreatePost');
   }
 
-  // renders the red plus button.
+  // renders the red plus add post button.
   const renderAddPostButton = () => {
     return (
       <TouchableOpacity onPress={() => { moveToNewPost(); }}>

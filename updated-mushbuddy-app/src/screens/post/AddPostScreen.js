@@ -16,6 +16,7 @@ import { COLORS } from '../../components/stylesheets/colors';
 import { showMessage } from "react-native-flash-message";
 import RenderCatalogEntry from '../catalog/render_catalog_entry';
 
+// props is just all the default properties sent through navigator
 const AddPostScreen = (props) => {
     const { route } = props;
     const { auth } = useSelector(state => state);
@@ -28,9 +29,6 @@ const AddPostScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
-
-    // console.log("inside addpostscreen");
-    // console.log(route.params.selectedItem);
 
     const clearForm = () => {
         //setTitle('');
@@ -79,7 +77,7 @@ const AddPostScreen = (props) => {
         return true;
     }
 
-    // function for actually creating a post
+    // this function creates a post.
     const createPost = async () => {
         setIsLoading(true);
         if (validatePost()) {
@@ -91,13 +89,14 @@ const AddPostScreen = (props) => {
                 let postData = { title, mushroom, content };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
-                props.navigation.navigate('Map');
                 showMessage({
                     message: "Your post was successfully created.",
                     type: "success",
                     duration: 3000,
                     icon: { icon: "success", position: 'left' }
                 });
+                // return to map screen
+                props.navigation.navigate('MapMain');
             } catch (error) {
                 showMessage({
                     message: error.message,
@@ -228,8 +227,6 @@ const AddPostScreen = (props) => {
 
     // rendering
     return (
-        // <Text>Hello, world!</Text>
-        
         <ScrollView showsVerticalScrollIndicator={false}>
 
             {route.params && <RenderCatalogEntry
