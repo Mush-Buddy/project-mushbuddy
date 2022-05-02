@@ -20,9 +20,11 @@ export const fetchPosts = ({id,auth}) => async (dispatch) => {
 
 export const createPost = ({postData, auth}) => async (dispatch) => {
     try {
-        const { title, content, mushroom } = postData;
-        const res = await postDataAPI('posts', { title, content, mushroom }, auth.token);
-        console.log(res);
+        console.log("post data");
+        console.log(postData);
+        const { title, content, mushroom, coordinate } = postData;
+        const res = await postDataAPI('posts', { title, content, mushroom, coordinate }, auth.token);
+        // console.log(res);
         dispatch({ 
             type: CREATE_POST,
             payload: {...res.data.newPost, user: auth.user},
