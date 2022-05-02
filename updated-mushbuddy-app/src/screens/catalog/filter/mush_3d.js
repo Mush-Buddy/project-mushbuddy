@@ -39,15 +39,15 @@ const Mush3D = () => {
         renderer.setClearColor(sceneColor);
 
         // Parameters: Field of view (vertical), aspect ratio, near plane, far plane
-        const camera = new PerspectiveCamera(40, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
-        camera.position.set(5, 0, 3);
+        const camera = new PerspectiveCamera(42.5, gl.drawingBufferWidth / gl.drawingBufferHeight, 1, 1000);
+        camera.position.set(0, 0, 5);
 
         setCamera(camera);
 
         const scene = new Scene();
         scene.fog = new Fog(sceneColor, 1, 1000);
 
-        scene.add(new GridHelper(10, 100));
+        scene.add(new GridHelper(10, 20));
 
         const ambientLight = new AmbientLight(0x101010);
         scene.add(ambientLight);
