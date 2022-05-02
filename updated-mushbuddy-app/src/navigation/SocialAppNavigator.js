@@ -53,62 +53,6 @@ const FindPeopleNavigator = () => {
     );
 };
 
-const CreatePostStackNavigator = createStackNavigator();
-
-const CreatePostNavigator = () => {
-    return (
-        <CreatePostStackNavigator.Navigator
-            screenOptions={defaultNavOptions}
-        >
-            <CreatePostStackNavigator.Screen
-                name="CreatePost"
-                component={AddPostScreen}
-                options={addPostScreenOptions}
-            />
-            <CreatePostStackNavigator.Screen
-                name="MushroomCatalog"
-                component={MushroomCatalog}
-                options={{
-                    title: 'Catalog',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
-                }}
-            />
-            <CreatePostStackNavigator.Screen
-                name="Filter"
-                component={CatalogFilter}
-                options={{
-                    title: 'Catalog: Filter',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
-                }}
-            />
-            <CreatePostStackNavigator.Screen
-                name="Detail"
-                component={CatalogEntry}
-                options={{
-                    title: 'Catalog: Entry details',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
-                }}
-            />
-            <CreatePostStackNavigator.Screen
-                name="filteredPage"
-                component={MushroomCatalogFiltered}
-                options={{
-                    title: 'Catalog: Filtered',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
-                }}
-            />
-        </CreatePostStackNavigator.Navigator>
-    );
-};
-
 const UserStackNavigator = createStackNavigator();
 
 const UserNavigator = () => {
@@ -187,6 +131,7 @@ const CatalogNavigator = () => {
 };
 
 
+// the navbar at the bottom of the screen.
 const BottomTabNavigator = createBottomTabNavigator();
 
 export const BottomNavigator = () => {
@@ -250,21 +195,6 @@ export const BottomNavigator = () => {
                     tabBarIcon: (props) => (
                         <Ionicons
                             name={Platform.OS === 'android' ? 'md-people' : 'ios-people'}
-                            size={24}
-                            color={props.color}
-                        />
-                    )
-                }}
-            />
-             <BottomTabNavigator.Screen
-                name="Post"
-                component={CreatePostNavigator}
-                options={{
-                    tabBarLabel: 'Post',
-                    headerShown: false,
-                    tabBarIcon: (props) => (
-                        <Ionicons
-                            name={'duplicate-outline'}
                             size={24}
                             color={props.color}
                         />

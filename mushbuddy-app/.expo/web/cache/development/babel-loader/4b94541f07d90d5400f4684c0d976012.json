@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var BASE_URL = \"http://localhost:5000\";","map":{"version":3,"sources":["/Users/jchen/CSProjects/project-mushbuddy/mushbuddy-app/utils/config.js"],"names":["BASE_URL"],"mappings":"AAAA,OAAO,IAAMA,QAAQ,GAAG,uBAAjB","sourcesContent":["export const BASE_URL = \"http://localhost:5000\""]},"metadata":{},"sourceType":"module"}

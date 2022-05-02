@@ -16,6 +16,7 @@ import { COLORS } from '../../components/stylesheets/colors';
 import { showMessage } from "react-native-flash-message";
 import RenderCatalogEntry from '../catalog/render_catalog_entry';
 
+// props is just all the default properties sent through navigator
 const AddPostScreen = (props) => {
     const { route } = props;
     const { auth } = useSelector(state => state);
@@ -76,6 +77,7 @@ const AddPostScreen = (props) => {
         return true;
     }
 
+    // this function creates a post.
     const createPost = async () => {
         setIsLoading(true);
         if (validatePost()) {
@@ -87,13 +89,14 @@ const AddPostScreen = (props) => {
                 let postData = { title, mushroom, content };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
-                props.navigation.navigate('Catalog');
                 showMessage({
                     message: "Your post was successfully created.",
                     type: "success",
                     duration: 3000,
                     icon: { icon: "success", position: 'left' }
                 });
+                // return to map screen
+                props.navigation.navigate('MapMain');
             } catch (error) {
                 showMessage({
                     message: error.message,
@@ -111,6 +114,7 @@ const AddPostScreen = (props) => {
         props.navigation.push('MushroomCatalog', { isSelecting: true });
     }
 
+    // for the select mushroom button at the top
     const renderSelectButton = () => {
         return (
             <TouchableOpacity
@@ -221,6 +225,7 @@ const AddPostScreen = (props) => {
         );
     }
 
+    // rendering
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -236,8 +241,8 @@ const AddPostScreen = (props) => {
 
                 <View style={styles.container}>
                     {renderSelectButton()}
-                    {/* {renderTitleInputField()}
-                    {renderContentInputField()} */}
+                    {/* {renderTitleInputField()} */}
+                    {/* {renderContentInputField()} */}
                     {renderLatitudeInputField()}
                     {renderLongitudeInputField()}
 
