@@ -89,12 +89,10 @@ const AddPostScreen = (props) => {
                 let mushroom = route.params.selectedItem._id;
                 let title = route.params.selectedItem.nameCommon;
                 let content = route.params.selectedItem.nameScientific;
+                // just selecting a random coordinate in the area of choice for now
                 let coordinate = {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000};
                 console.log("trying to add a post with this coordinate");
                 console.log(coordinate);
-                // try this first
-                // "latitude": 43.69989787086445,
-                // "longitude": -72.29395419180989,
 
                 let postData = { title, mushroom, content, coordinate };
                 await dispatch(postActions.createPost({ postData, auth }));

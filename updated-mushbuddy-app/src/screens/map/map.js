@@ -34,9 +34,7 @@ const Map = ( { navigation } ) => {
     const get_data = async () => {
         const res = await getDataAPI(`posts/${auth.user._id}?page=${page}&limit=${limit}`, auth.token)
         const newData = res.data.posts;
-        // console.log(newData[0].desc);
-        // putting markers in random locations within the region (for now)
-        console.log(res.data.posts[5].coordinate);
+        // render markers as stored in the backend
         const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate}});
 
         setPosts(markers);
