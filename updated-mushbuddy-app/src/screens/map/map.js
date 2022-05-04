@@ -17,11 +17,7 @@ const Map = ( { navigation } ) => {
   const { posts } = useSelector(state => state)
   const [shouldFetch, setShouldFetch] = useState(true);
 
-  const defaultCoords = {latitude: 43.703, longitude: -72.293}
-
-  function getRandomNumberBetween(min, max){
-    return Math.floor(Math.random()*(max-min+1)+min);
-  }
+  // const defaultCoords = {latitude: 43.703, longitude: -72.293}
 
   // random range for current region:
   //   "latitude": 43.706926586852234,
@@ -36,44 +32,45 @@ const Map = ( { navigation } ) => {
     const get_data = async () => {
         const res = await getDataAPI(`posts/${auth.user._id}?page=${page}&limit=${limit}`, auth.token)
         const newData = res.data.posts;
-        // putting markers in random locations within the region (for now)
-        const markers = newData.map(data => {return {title:data.title,description:data.content,coordinate: {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000}}})
+
+        // render markers as stored in the backend
+        const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate}});
+
         setPosts(markers);
         setPage(page);
-        console.log(newData,markers)
     }
     get_data()
 }, [page,shouldFetch,posts]);
 
   // testing markers we use for testing purposes. This will be a backend call at some point
-  const [testMarkers, setMarkers] = useState([
-    {
-      title: "Enoki",
-      description: "A Enoki was found here",
-      coordinate: {latitude: 43.700859, longitude: -72.289398},
-    },
-    {
-      title: "Chanterelle",
-      description: "A Chanterelle was found here",
-      coordinate: {latitude: 43.703, longitude: -72.286},
-    },
-    {
-      title: "Porcini",
-      description: "A Porcini was found here",
-      coordinate: {latitude: 43.704, longitude: -72.293},
-    },
-  ])
+  // const [testMarkers, setMarkers] = useState([
+  //   {
+  //     title: "Enoki",
+  //     description: "A Enoki was found here",
+  //     coordinate: {latitude: 43.700859, longitude: -72.289398},
+  //   },
+  //   {
+  //     title: "Chanterelle",
+  //     description: "A Chanterelle was found here",
+  //     coordinate: {latitude: 43.703, longitude: -72.286},
+  //   },
+  //   {
+  //     title: "Porcini",
+  //     description: "A Porcini was found here",
+  //     coordinate: {latitude: 43.704, longitude: -72.293},
+  //   },
+  // ])
 
   // Add a marker to the map.
   // currently offers no input fields, add those later.
   // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
   // TODO: coordinate is from location services, title and description must be linked up to input fields.
-  const addMarker = (coordinate, title, description) => {
-    console.log("new marker to be placed at:")
-    console.log(coordinate)
-    const newMarker = {title: title, description: description, coordinate: event.coordinate}
-    setMarkers([...testMarkers, newMarker])
-  }
+  // const addMarker = (coordinate, title, description) => {
+  //   console.log("new marker to be placed at:")
+  //   console.log(coordinate)
+  //   const newMarker = {title: title, description: description, coordinate: event.coordinate}
+  //   setMarkers([...testMarkers, newMarker])
+  // }
 
   // move to the new post screen
   const moveToNewPost = () => {
@@ -90,6 +87,14 @@ const Map = ( { navigation } ) => {
     );
   }
 
+  // currently brings up the index (and by extension, marker) you dragged.
+  // not sure how to update.
+  const updateMarker = (param) => {
+    console.log("dragged");
+    console.log(param);
+    console.log(post[param]);
+  }
+
   return (
     <View style={styles.container}>
     {<MapView
@@ -101,11 +106,11 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
+        // onPress={e => console.log(e.nativeEvent.coordinate)}
       >
 
-      {/* next, render all markers */}
-      <Markers markers={post} />
-      <Markers markers={testMarkers} />
+      {/* next, render all markers, uses Markers component. */}
+      <Markers markers={post} onDragEndEvent={updateMarker} />
       </MapView>}
         
       {/* add button*/}

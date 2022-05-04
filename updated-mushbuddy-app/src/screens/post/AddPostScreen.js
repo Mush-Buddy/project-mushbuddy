@@ -77,16 +77,24 @@ const AddPostScreen = (props) => {
         return true;
     }
 
+    function getRandomNumberBetween(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
     // this function creates a post.
     const createPost = async () => {
         setIsLoading(true);
         if (validatePost()) {
-            //console.log("VALID POST");
             try {
                 let mushroom = route.params.selectedItem._id;
                 let title = route.params.selectedItem.nameCommon;
                 let content = route.params.selectedItem.nameScientific;
-                let postData = { title, mushroom, content };
+                // just selecting a random coordinate in the area of choice for now
+                let coordinate = {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000};
+                console.log("trying to add a post with this coordinate");
+                console.log(coordinate);
+
+                let postData = { title, mushroom, content, coordinate };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
                 showMessage({
