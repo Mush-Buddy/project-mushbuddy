@@ -26,14 +26,13 @@ const Map = ( { navigation } ) => {
   //   "latitude": 43.69475372084176,
   //   "longitude": -72.28457748717949,
 
-  
-
   // render markers
   useEffect(() => {
     console.log('fetching')
     const get_data = async () => {
         const res = await getDataAPI(`posts/${auth.user._id}?page=${page}&limit=${limit}`, auth.token)
         const newData = res.data.posts;
+
         // render markers as stored in the backend
         const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate}});
 
@@ -88,6 +87,14 @@ const Map = ( { navigation } ) => {
     );
   }
 
+  // currently brings up the index (and by extension, marker) you dragged.
+  // not sure how to update.
+  const updateMarker = (param) => {
+    console.log("dragged");
+    console.log(param);
+    console.log(post[param]);
+  }
+
   return (
     <View style={styles.container}>
     {<MapView
@@ -99,11 +106,11 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
-        onPress={e => console.log(e.nativeEvent.coordinate)}
+        // onPress={e => console.log(e.nativeEvent.coordinate)}
       >
 
-      {/* next, render all markers */}
-      <Markers markers={post} />
+      {/* next, render all markers, uses Markers component. */}
+      <Markers markers={post} onDragEndEvent={updateMarker} />
       </MapView>}
         
       {/* add button*/}

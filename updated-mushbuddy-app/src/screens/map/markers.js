@@ -2,7 +2,8 @@ import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 
 // a collection of markers
-const Markers = ( {markers} ) => {
+// add a param for a function i think
+const Markers = ( {markers, onDragEndEvent} ) => {
     return (
         <>
             {/* renders an array of markers sequentially. */}
@@ -12,6 +13,8 @@ const Markers = ( {markers} ) => {
                     title={markers.title}
                     description={markers.description}
                     coordinate={markers.coordinate}
+                    draggable={true}
+                    onDragEnd={() => onDragEndEvent(index)}
                 /> 
             ))}
         </>
