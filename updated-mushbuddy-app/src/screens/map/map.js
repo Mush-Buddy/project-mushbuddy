@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { Callout } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
 import Markers from './markers.js';
+
+import * as postActions from '../../store/actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { showMessage } from "react-native-flash-message";
 
 // sample custom markers
 //import SampleMarkerIcon from '../../assets/favicon.png';
@@ -16,6 +19,8 @@ const Map = ( { navigation } ) => {
   const { auth } = useSelector(state => state)
   const { posts } = useSelector(state => state)
   const [shouldFetch, setShouldFetch] = useState(true);
+
+  const dispatch = useDispatch();
 
   // const defaultCoords = {latitude: 43.703, longitude: -72.293}
 
@@ -34,7 +39,7 @@ const Map = ( { navigation } ) => {
         const newData = res.data.posts;
 
         // render markers as stored in the backend
-        const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate}});
+        const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate, id:data._id, mushroom:data.mushroom}});
 
         setPosts(markers);
         setPage(page);
@@ -87,12 +92,33 @@ const Map = ( { navigation } ) => {
     );
   }
 
-  // currently brings up the index (and by extension, marker) you dragged.
-  // not sure how to update.
-  const updateMarker = (param) => {
-    console.log("dragged");
-    console.log(param);
-    console.log(post[param]);
+  // currently brings up the index and the new coordinate where the marker was dropped.
+  const updateMarker = async (index, newCoordinate) => {
+    // console.log("dragged.");
+    // console.log("index: " + index);
+    // console.log("original coord:");
+    // console.log(post[index].coordinate);
+    // console.log("new coordinate: ", newCoordinate);
+    // console.log("post id: " + post[index].id);
+
+    let id = post[index].id;
+    let title = post[index].title;
+    let mushroom = post[index].mushroom;
+    let content = post[index].description;
+    let coordinate = newCoordinate;
+    let postData = { title, mushroom, content, coordinate };
+
+    try {
+      await dispatch(postActions.updatePost({ id, postData, auth }));
+    } catch (error) {
+        showMessage({
+            message: error.message,
+            type: "danger",
+            duration: 3000,
+            icon: { icon: "danger", position: 'left' }
+        });
+        console.log("ERROR ", error.message);
+    }
   }
 
   return (
@@ -109,7 +135,7 @@ const Map = ( { navigation } ) => {
         // onPress={e => console.log(e.nativeEvent.coordinate)}
       >
 
-      {/* next, render all markers, uses Markers component. */}
+      {/* next, render all markers, using Markers component and fetched data */}
       <Markers markers={post} onDragEndEvent={updateMarker} />
       </MapView>}
         

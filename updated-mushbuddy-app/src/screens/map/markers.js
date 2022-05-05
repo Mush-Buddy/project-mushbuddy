@@ -9,12 +9,14 @@ const Markers = ( {markers, onDragEndEvent} ) => {
             {/* renders an array of markers sequentially. */}
             {markers.map((markers, index) => (
                 <Marker 
+                    id={markers.id}
                     key={index}
                     title={markers.title}
                     description={markers.description}
+                    mushroom={markers.mushroom}
                     coordinate={markers.coordinate}
                     draggable={true}
-                    onDragEnd={() => onDragEndEvent(index)}
+                    onDragEnd={(e) => onDragEndEvent(index, e.nativeEvent.coordinate)}
                 /> 
             ))}
         </>
