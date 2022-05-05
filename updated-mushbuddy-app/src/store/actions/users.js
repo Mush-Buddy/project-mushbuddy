@@ -76,27 +76,26 @@ export const unfollowUser = ({user,auth}) => async (dispatch) => {
 }
 
 export const updateProfile = ({userData, auth}) => async (dispatch) => {
-    console.log("did updateProfile");
-    // try {
-    //     const res = await patchDataAPI("users/update", {
-    //         ...userData,
-    //     }, auth.token);
-    //     dispatch({
-    //         type: UPDATE_PROFILE,
-    //         payload: {
-    //             ...auth,
-    //             user: {
-    //                 ...auth.user, ...userData,
-    //             },
-    //         },
-    //     });
-    // } catch (err) {
-    //     console.log(err.response.data);
-    //     dispatch({
-    //         type: ALERT, 
-    //         payload: {error: err.response.data.msg},
-    //     });
-    // }
+    try {
+        const res = await patchDataAPI("users/update", {
+            ...userData,
+        }, auth.token);
+        dispatch({
+            type: UPDATE_PROFILE,
+            payload: {
+                ...auth,
+                user: {
+                    ...auth.user, ...userData,
+                },
+            },
+        });
+    } catch (err) {
+        console.log(err.response.data);
+        dispatch({
+            type: ALERT, 
+            payload: {error: err.response.data.msg},
+        });
+    }
 }
 
 export const fetchFindPeopleUsers = ({search, auth}) => async (dispatch) => {
