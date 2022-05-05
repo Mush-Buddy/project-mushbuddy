@@ -22,15 +22,6 @@ const Map = ( { navigation } ) => {
 
   const dispatch = useDispatch();
 
-  // const defaultCoords = {latitude: 43.703, longitude: -72.293}
-
-  // random range for current region:
-  //   "latitude": 43.706926586852234,
-  //   "longitude": -72.29416723076919,
-  // and
-  //   "latitude": 43.69475372084176,
-  //   "longitude": -72.28457748717949,
-
   // render markers
   useEffect(() => {
     console.log('fetching')
@@ -45,45 +36,15 @@ const Map = ( { navigation } ) => {
         setPage(page);
     }
     get_data()
-}, [page,shouldFetch,posts]);
+}, [page, shouldFetch, posts]);
 
-  // testing markers we use for testing purposes. This will be a backend call at some point
-  // const [testMarkers, setMarkers] = useState([
-  //   {
-  //     title: "Enoki",
-  //     description: "A Enoki was found here",
-  //     coordinate: {latitude: 43.700859, longitude: -72.289398},
-  //   },
-  //   {
-  //     title: "Chanterelle",
-  //     description: "A Chanterelle was found here",
-  //     coordinate: {latitude: 43.703, longitude: -72.286},
-  //   },
-  //   {
-  //     title: "Porcini",
-  //     description: "A Porcini was found here",
-  //     coordinate: {latitude: 43.704, longitude: -72.293},
-  //   },
-  // ])
-
-  // Add a marker to the map.
-  // currently offers no input fields, add those later.
-  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
-  // TODO: coordinate is from location services, title and description must be linked up to input fields.
-  // const addMarker = (coordinate, title, description) => {
-  //   console.log("new marker to be placed at:")
-  //   console.log(coordinate)
-  //   const newMarker = {title: title, description: description, coordinate: event.coordinate}
-  //   setMarkers([...testMarkers, newMarker])
-  // }
-
-  // move to the new post screen
+  // move to the create new post screen
   const moveToNewPost = () => {
     // no params to pass in here
     navigation.navigate('CreatePost');
   }
 
-  // renders the red plus add post button.
+  // renders the red add post button over the map.
   const renderAddPostButton = () => {
     return (
       <TouchableOpacity onPress={() => { moveToNewPost(); }}>
@@ -132,9 +93,9 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
+        // umcomment this if you need to see coordinates on tap/click
         // onPress={e => console.log(e.nativeEvent.coordinate)}
       >
-
       {/* next, render all markers, using Markers component and fetched data */}
       <Markers markers={post} onDragEndEvent={updateMarker} />
       </MapView>}
@@ -143,22 +104,42 @@ const Map = ( { navigation } ) => {
       <Callout style={styles.buttonCallout}>
         {renderAddPostButton()}
       </Callout>
-     
-
-      {/* some past lines that worked */}
-      {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
-      {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
-      {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
-      {/* <Marker
-          title={"Mushroom name"}
-          description={"Mushroom description"}
-          image={SampleMarkerIcon}
-          coordinate={{ latitude: 42.03, longitude: -93.58 }}
-      /> */}
-
     </View>
   );
 }
+
+// --- old functions ---
+  // Add a marker to the map.
+  // currently offers no input fields, add those later.
+  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
+  // TODO: coordinate is from location services, title and description must be linked up to input fields.
+  // const addMarker = (coordinate, title, description) => {
+  //   console.log("new marker to be placed at:")
+  //   console.log(coordinate)
+  //   const newMarker = {title: title, description: description, coordinate: event.coordinate}
+  //   setMarkers([...testMarkers, newMarker])
+  // }
+
+  // const defaultCoords = {latitude: 43.703, longitude: -72.293}
+
+  // random range for current region:
+  //   "latitude": 43.706926586852234,
+  //   "longitude": -72.29416723076919,
+  // and
+  //   "latitude": 43.69475372084176,
+  //   "longitude": -72.28457748717949,
+
+  // in render
+  //   {/* some past lines that worked */}
+  // {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
+  // {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
+  // {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
+  // {/* <Marker
+  //     title={"Mushroom name"}
+  //     description={"Mushroom description"}
+  //     image={SampleMarkerIcon}
+  //     coordinate={{ latitude: 42.03, longitude: -93.58 }}
+  // /> */}
 
 // map stylesheet
 const styles = StyleSheet.create({
