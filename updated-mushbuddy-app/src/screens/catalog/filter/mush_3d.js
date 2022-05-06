@@ -56,9 +56,11 @@ const Mush3D = ({ capShape }) => {
             scene.add(capObject);
             setCap(capObject);
         }
+        
         if (capShape !== '') {
             loadCap().catch(console.error);
         }
+        // capShape == none?
     }, [capShape]);
 
     const onContextCreate = async (gl) => {
@@ -132,21 +134,18 @@ const Mush3D = ({ capShape }) => {
     return (
         <OrbitControlsView
             style={{
-                //flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'red',
-                //borderRadius: 12,
-                //width: 275,
-                marginLeft: 34,
-                marginRight: 34,
+                // borderWidth: 1,
+                // borderColor: 'red',
+                width: '95%',
+                height: '95%',
             }}
             camera={camera}
         >
             <GLView
-                style={{ width: 275, height: 275, borderColor: 'transparent', borderWidth: 1 }}
+                style={{ width: '100%', height: '100%', borderColor: 'transparent', borderWidth: 1 }}
                 onContextCreate={onContextCreate}
             />
         </OrbitControlsView>

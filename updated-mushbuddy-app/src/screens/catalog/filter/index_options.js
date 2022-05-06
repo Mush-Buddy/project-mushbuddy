@@ -3,9 +3,6 @@
 
 const options = {
     cap: [
-        // {
-        //     label: 'none',
-        // }, 
         {
             label: 'campanulate',
         }, {
@@ -26,6 +23,8 @@ const options = {
             label: 'umbilicate',
         }, {
             label: 'umbonate',
+        }, {
+            label: 'none',
         },
     ],
     hymenium: [

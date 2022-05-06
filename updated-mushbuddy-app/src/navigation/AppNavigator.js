@@ -6,10 +6,10 @@ import { NavigationContainer } from '@react-navigation/native';
 const AppNavigator = (props) => {
     const isAuth = useSelector(state => !!state.auth.token);
     
-    return(
+    return (
         <NavigationContainer>
             { isAuth && <BottomNavigator/> }
-            { !isAuth && <AuthNavigator/>}
+            { !isAuth && <AuthNavigator/> }
         </NavigationContainer>
     );
 }
