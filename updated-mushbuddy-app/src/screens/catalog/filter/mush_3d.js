@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GLView } from 'expo-gl';
-import { Renderer  } from 'expo-three';
+import { Renderer } from 'expo-three';
 import * as THREE from 'three';
 import {
     AmbientLight,
@@ -15,13 +15,13 @@ import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import OrbitControlsView from 'expo-three-orbit-controls';
 
-// import { ExpoWebGLRenderingContext } from 'expo-gl';
-// import { TextureLoader } from 'expo-three';
-// import ExpoTHREE from 'expo-three';
-// import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-
-const Mush3D = () => {
+const Mush3D = ({ capShape }) => {
     const [camera, setCamera] = useState(null);
+    const [cap, setCap] = useState(null);
+
+    const [scene] = useState(new Scene());
+
+    const objectLoader = new OBJLoader();
 
     let timeout;
 
@@ -29,6 +29,37 @@ const Mush3D = () => {
     useEffect(() => {
         return () => clearTimeout(timeout);
     }, []);
+
+    // Sync capShape prop to state
+    // Listening for changes to state in catalog_filter.js (parent component)
+    useEffect(() => {
+        const loadCap = async () => {
+            const capAsset = Asset.fromModule(capModels[capShape + '_r']);
+            await capAsset.downloadAsync();
+
+            const capObject = await objectLoader.loadAsync(capAsset.uri);
+            capObject.traverse((obj) => {
+                if (obj.isMesh) {
+                    obj.material = new THREE.MeshNormalMaterial();
+                }
+            });
+
+            // Rescale
+            capObject.scale.set(0.15, 0.15, 0.15);
+
+            // Remove previous cap, if any
+            if (cap != null) {
+                scene.remove(cap);
+            }
+
+            // Add new cap
+            scene.add(capObject);
+            setCap(capObject);
+        }
+        if (capShape !== '') {
+            loadCap().catch(console.error);
+        }
+    }, [capShape]);
 
     const onContextCreate = async (gl) => {
         const sceneColor = 0x6ad6f0;
@@ -43,12 +74,14 @@ const Mush3D = () => {
         camera.position.set(0, 0, 5);
 
         setCamera(camera);
-
-        const scene = new Scene();
+        
+        // Add fog
         scene.fog = new Fog(sceneColor, 1, 1000);
 
+        // Add grid
         scene.add(new GridHelper(10, 20));
 
+        // Add lights
         const ambientLight = new AmbientLight(0x101010);
         scene.add(ambientLight);
 
@@ -61,30 +94,31 @@ const Mush3D = () => {
         spotLight.lookAt(scene.position);
         scene.add(spotLight);
 
-        //const asset = Asset.fromModule(require('../../../../assets/moon.obj'));
-        const asset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.obj'));
-        await asset.downloadAsync();
+        // Add stem
 
-        // const materialAsset = Asset.fromModule(require('../../../../assets/mushroom/Pilz.mtl'));
-        // await materialAsset.downloadAsync();
+        // Load in asset
+        const stemAsset = Asset.fromModule(require('../../../../assets/mushroom/stem.obj'));
+        await stemAsset.downloadAsync();
 
-        const objectLoader = new OBJLoader();
+        // Load in object
 
-        // const materialLoader = new MTLLoader();
-        // const mush_material = await materialLoader.loadAsync(materialAsset.uri);
-        // mush_material.preload();
+        const stemObject = await objectLoader.loadAsync(stemAsset.uri);
 
-        const object = await objectLoader.loadAsync(asset.uri);
-        object.traverse((obj) => {
+        // Default material assignment
+        stemObject.traverse((obj) => {
             if (obj.isMesh) {
                 //obj.material.color.setHex(0xD04122);
                 obj.material = new THREE.MeshNormalMaterial();
             }
         });
 
-        //object.scale.set(0.025, 0.025, 0.025);
-        scene.add(object);
-        camera.lookAt(object.position);
+        // Rescale
+        stemObject.scale.set(0.15, 0.15, 0.15);
+
+        // Add to scene
+        scene.add(stemObject);
+
+        //camera.lookAt(object.position);
 
         const render = () => {
             timeout = requestAnimationFrame(render);
@@ -97,15 +131,39 @@ const Mush3D = () => {
 
     return (
         <OrbitControlsView
-            style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+            style={{
+                //flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 1,
+                borderColor: 'red',
+                //borderRadius: 12,
+                //width: 275,
+                marginLeft: 34,
+                marginRight: 34,
+            }}
             camera={camera}
         >
             <GLView
-                style={{ width: 200, height: 200, borderColor: 'transparent', borderWidth: 1 }}
+                style={{ width: 275, height: 275, borderColor: 'transparent', borderWidth: 1 }}
                 onContextCreate={onContextCreate}
             />
         </OrbitControlsView>
     );
 }
+
+const capModels = {
+    'convex_r': require('../../../../assets/mushroom/caps/convex_ridges.obj'),
+    'flat_r': require('../../../../assets/mushroom/caps/flat_ridges.obj'),
+    'umbonate_r': require('../../../../assets/mushroom/caps/umbonate_ridges.obj'),
+    'ovate_r': require('../../../../assets/mushroom/caps/ovate_ridges.obj'),
+    'campanulate_r': require('../../../../assets/mushroom/caps/campanulate_ridges.obj'),
+    'umbilicate_r': require('../../../../assets/mushroom/caps/umbilicate_ridges.obj'),
+    'conical_r': require('../../../../assets/mushroom/caps/conical_ridges.obj'),
+    'depressed_r': require('../../../../assets/mushroom/caps/depressed_ridges.obj'),
+    'offset_r': require('../../../../assets/mushroom/caps/offset_ridges.obj'),
+    'infundibuliform_r': require('../../../../assets/mushroom/caps/infundibuliform_ridges.obj'),
+};
 
 export default Mush3D;
