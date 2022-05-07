@@ -13,6 +13,7 @@ const images = {
         umbonate: require('../../../../assets/catalog/cap_shapes/umbonate.png'),
     },
     hymenium: {
+        none: require('../../../../assets/catalog/null.png'),
         gills: require('../../../../assets/catalog/hymenium_types/gills.png'),
         pores: require('../../../../assets/catalog/hymenium_types/pores.png'),
         ridges: require('../../../../assets/catalog/hymenium_types/ridges.png'),

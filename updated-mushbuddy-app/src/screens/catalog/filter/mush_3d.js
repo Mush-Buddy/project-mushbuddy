@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { LogBox } from 'react-native';
 import { GLView } from 'expo-gl';
 import { Renderer } from 'expo-three';
 import * as THREE from 'three';
@@ -15,9 +16,14 @@ import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import OrbitControlsView from 'expo-three-orbit-controls';
 
-const Mush3D = ({ capShape }) => {
+const Mush3D = ({ capShape, gillsType }) => {
+
+    // Ignoring an annoying warning that hasn't been fixed by source pkg.
+    LogBox.ignoreLogs(['THREE.Quaternion: .inverse() has been renamed to invert().']);
+
     const [camera, setCamera] = useState(null);
     const [cap, setCap] = useState(null);
+    const [gills, setGills] = useState(null);
 
     const [scene] = useState(new Scene());
 
@@ -32,36 +38,85 @@ const Mush3D = ({ capShape }) => {
 
     // Sync capShape prop to state
     // Listening for changes to state in catalog_filter.js (parent component)
+    // TODO: Preserve gillsType if prev. specified
     useEffect(() => {
         const loadCap = async () => {
-            const capAsset = Asset.fromModule(capModels[capShape + '_r']);
-            await capAsset.downloadAsync();
 
-            const capObject = await objectLoader.loadAsync(capAsset.uri);
-            capObject.traverse((obj) => {
+            // Always remove the previous cap, upon selection - if any.
+            if (cap != null) {
+                scene.remove(cap);
+            }
+
+            if (gills != null) {
+                scene.remove(gills);
+            }
+
+            if (capShape != 'none') {
+            
+                const capAsset = Asset.fromModule(capModels[capShape + '_' + ((gillsType === '' || gillsType === 'none') ? 'r' : gillsType.charAt(0))]);
+                await capAsset.downloadAsync();
+
+                const capObject = await objectLoader.loadAsync(capAsset.uri);
+
+                // Assign default material
+                capObject.traverse((obj) => {
+                    if (obj.isMesh) {
+                        obj.material = new THREE.MeshNormalMaterial();
+                    }
+                });
+
+                // Rescale
+                capObject.scale.set(0.15, 0.15, 0.15);
+
+                // Add new cap
+                scene.add(capObject);
+                setCap(capObject);
+            }
+        }
+        if (capShape !== '') {
+            loadCap().catch(console.error);
+        }
+    }, [capShape]);
+
+    // Same cap diff. gills
+    // Option 1: User selects gills before selecting cap --> popup "please select a cap first"
+    // Or rather don't let the user do that altogether.
+    // So mandate the existence of a selected cap
+    useEffect(() => {
+        const loadGills = async () => {
+
+            // Always remove the previous cap, with the outdated gills, upon selection - if any.
+            if (cap != null) {
+                scene.remove(cap);
+            }
+
+            if (gills != null) {
+                scene.remove(gills);
+            }
+
+            const gillsAsset = Asset.fromModule(capModels[capShape + '_' + (gillsType === 'none' ? 'r' : gillsType.charAt(0))]);
+            await gillsAsset.downloadAsync();
+
+            const gillsObject = await objectLoader.loadAsync(gillsAsset.uri);
+
+            // Assign default material
+            gillsObject.traverse((obj) => {
                 if (obj.isMesh) {
                     obj.material = new THREE.MeshNormalMaterial();
                 }
             });
 
             // Rescale
-            capObject.scale.set(0.15, 0.15, 0.15);
+            gillsObject.scale.set(0.15, 0.15, 0.15);
 
-            // Remove previous cap, if any
-            if (cap != null) {
-                scene.remove(cap);
-            }
-
-            // Add new cap
-            scene.add(capObject);
-            setCap(capObject);
+            // Add new cap (with this specified type of gills)
+            scene.add(gillsObject);
+            setGills(gillsObject);
         }
-        
-        if (capShape !== '') {
-            loadCap().catch(console.error);
+        if (gillsType !== '') {
+            loadGills().catch(console.error);
         }
-        // capShape == none?
-    }, [capShape]);
+    }, [gillsType]);
 
     const onContextCreate = async (gl) => {
         const sceneColor = 0x6ad6f0;
@@ -76,7 +131,7 @@ const Mush3D = ({ capShape }) => {
         camera.position.set(0, 0, 5);
 
         setCamera(camera);
-        
+
         // Add fog
         scene.fog = new Fog(sceneColor, 1, 1000);
 
@@ -153,16 +208,39 @@ const Mush3D = ({ capShape }) => {
 }
 
 const capModels = {
-    'convex_r': require('../../../../assets/mushroom/caps/convex_ridges.obj'),
-    'flat_r': require('../../../../assets/mushroom/caps/flat_ridges.obj'),
-    'umbonate_r': require('../../../../assets/mushroom/caps/umbonate_ridges.obj'),
-    'ovate_r': require('../../../../assets/mushroom/caps/ovate_ridges.obj'),
-    'campanulate_r': require('../../../../assets/mushroom/caps/campanulate_ridges.obj'),
-    'umbilicate_r': require('../../../../assets/mushroom/caps/umbilicate_ridges.obj'),
-    'conical_r': require('../../../../assets/mushroom/caps/conical_ridges.obj'),
-    'depressed_r': require('../../../../assets/mushroom/caps/depressed_ridges.obj'),
-    'offset_r': require('../../../../assets/mushroom/caps/offset_ridges.obj'),
-    'infundibuliform_r': require('../../../../assets/mushroom/caps/infundibuliform_ridges.obj'),
+    // ridges
+    'convex_r': require('../../../../assets/mushroom/caps/ridges/convex_ridges.obj'),
+    'flat_r': require('../../../../assets/mushroom/caps/ridges/flat_ridges.obj'),
+    'umbonate_r': require('../../../../assets/mushroom/caps/ridges/umbonate_ridges.obj'),
+    'ovate_r': require('../../../../assets/mushroom/caps/ridges/ovate_ridges.obj'),
+    'campanulate_r': require('../../../../assets/mushroom/caps/ridges/campanulate_ridges.obj'),
+    'umbilicate_r': require('../../../../assets/mushroom/caps/ridges/umbilicate_ridges.obj'),
+    'conical_r': require('../../../../assets/mushroom/caps/ridges/conical_ridges.obj'),
+    'depressed_r': require('../../../../assets/mushroom/caps/ridges/depressed_ridges.obj'),
+    'offset_r': require('../../../../assets/mushroom/caps/ridges/offset_ridges.obj'),
+    'infundibuliform_r': require('../../../../assets/mushroom/caps/ridges/infundibuliform_ridges.obj'),
+    // pores
+    'convex_p': require('../../../../assets/mushroom/caps/pores/convex_pores.obj'),
+    'flat_p': require('../../../../assets/mushroom/caps/pores/flat_pores.obj'),
+    'umbonate_p': require('../../../../assets/mushroom/caps/pores/umbonate_pores.obj'),
+    'ovate_p': require('../../../../assets/mushroom/caps/pores/ovate_pores.obj'),
+    'campanulate_p': require('../../../../assets/mushroom/caps/pores/campanulate_pores.obj'),
+    'umbilicate_p': require('../../../../assets/mushroom/caps/pores/umbilicate_pores.obj'),
+    'conical_p': require('../../../../assets/mushroom/caps/pores/conical_pores.obj'),
+    'depressed_p': require('../../../../assets/mushroom/caps/pores/depressed_pores.obj'),
+    'offset_p': require('../../../../assets/mushroom/caps/pores/offset_pores.obj'),
+    'infundibuliform_p': require('../../../../assets/mushroom/caps/pores/infundibuliform_pores.obj'),
+    // tooth
+    'convex_t': require('../../../../assets/mushroom/caps/tooth/convex_tooth.obj'),
+    'flat_t': require('../../../../assets/mushroom/caps/tooth/flat_tooth.obj'),
+    'umbonate_t': require('../../../../assets/mushroom/caps/tooth/umbonate_tooth.obj'),
+    'ovate_t': require('../../../../assets/mushroom/caps/tooth/ovate_tooth.obj'),
+    'campanulate_t': require('../../../../assets/mushroom/caps/tooth/campanulate_tooth.obj'),
+    'umbilicate_t': require('../../../../assets/mushroom/caps/tooth/umbilicate_tooth.obj'),
+    'conical_t': require('../../../../assets/mushroom/caps/tooth/conical_tooth.obj'),
+    'depressed_t': require('../../../../assets/mushroom/caps/tooth/depressed_tooth.obj'),
+    'offset_t': require('../../../../assets/mushroom/caps/tooth/offset_tooth.obj'),
+    'infundibuliform_t': require('../../../../assets/mushroom/caps/tooth/infundibuliform_tooth.obj'),
 };
 
 export default Mush3D;

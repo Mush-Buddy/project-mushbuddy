@@ -38,6 +38,8 @@ const options = {
             label: 'ridges',
         }, {
             label: 'tooth',
+        }, {
+            label: 'none',
         },
     ],
     gillAttachment: [
