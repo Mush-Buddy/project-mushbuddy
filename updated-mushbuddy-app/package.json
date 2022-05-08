@@ -43,6 +43,7 @@
     "react-native-gl-model-view": "^1.6.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-maps": "0.29.4",
+    "react-native-modal": "^13.0.1",
     "react-native-pager-view": "5.4.9",
     "react-native-paper": "^4.11.2",
     "react-native-popup-menu": "^0.15.12",

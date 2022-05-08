@@ -1,18 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { Text, View, Modal, TouchableOpacity, TouchableHighlight, ScrollView, Image } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableHighlight, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
 import { ButtonGroup } from 'react-native-elements';
-
 import { FlatGrid } from 'react-native-super-grid';
+import Modal from 'react-native-modal';
 
 import styles from '../../../components/stylesheets/catalog_styles/filter_style';
-import Carousel from './carousel';
 
+import Mush3D from './mush_3d';
 import Images from './index_images';
 import Options from './index_options';
 
-import Mush3D from './mush_3d';
+import Image1 from '../../../../assets/diagrams/mushroom_diagram.png';
 
 const CatalogFilterNew = ({ navigation }) => {
 
@@ -20,6 +20,8 @@ const CatalogFilterNew = ({ navigation }) => {
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [selectedModalTabIndex, setSelectedModalTabIndex] = useState(0);
+    const modalTabs = ['About', 'ID Basics', 'Viewport', 'Filter'];
 
     const [cap, setCap] = useState('');
     const [hymenium, setHymenium] = useState('');
@@ -215,10 +217,12 @@ const CatalogFilterNew = ({ navigation }) => {
         );
     }
 
+    // MODAL: Instructional popup
+
     const renderInfoButton = () => {
         return (
-            <TouchableOpacity onPress={() => { 
-                console.log("pressed");
+            <TouchableOpacity onPress={() => {
+                // console.log("pressed");
                 setModalVisible(true);
             }}>
                 <Icon name='help-circle' size={20} color='rgba(0,0,0,0.6)' />
@@ -226,50 +230,241 @@ const CatalogFilterNew = ({ navigation }) => {
         );
     }
 
-    // const renderInfoPopup = () => {
-    //     <View style={{
-    //         flex: 1,
-    //         justifyContent: 'center',
-    //         alignItems: 'center',
-    //         marginTop: 50,
-    //     }}>
-    //         <Modal
-    //             //animationType='slide'
-    //             presentationStyle={overFullScreen}
-    //             transparent={true}
-    //             visible={modalVisible}
-    //             // onRequestClose={() => {
-    //             //     setModalVisible(!modalVisible);
-    //             // }}
-    //         >
-    //             <View style={{
-    //                 flex: 1,
-    //                 justifyContent: 'center',
-    //                 alignItems: 'center',
-    //                 //padding: 10,
-    //             }}>
-    //                 <View style={{
-    //                     backgroundColor: 'rgb(255,255,255)',
-    //                     borderRadius: 20,
-    //                     padding: 35,
-    //                     alignItems: 'center',
-    //                     shadowColor: '#000',
-    //                     shadowOffset: {
-    //                         width: 0,
-    //                         height: 2,
-    //                     },
-    //                     shadowOpacity: 0.25,
-    //                     shadowRadius: 4,
-    //                     elevation: 5,
-    //                 }}>
-    //                     <Text>
-    //                         Hello
-    //                     </Text>
-    //                 </View>
-    //             </View>
-    //         </Modal>
-    //     </View>
-    // }
+    const renderModalTabs = (tabOptions) => {
+        return (
+            <ButtonGroup
+                onPress={(value) => {
+                    setSelectedModalTabIndex(value);
+                }}
+                selectedIndex={selectedModalTabIndex}
+                buttons={tabOptions}
+                containerStyle={styles.modalTabs}
+                buttonStyle={styles.modalTabItem}
+                textStyle={styles.modalTabItemText}
+                selectedButtonStyle={{
+                    // shadowColor: '#808080',
+                    // shadowOffset: {
+                    //     width: 2.5,
+                    //     height: 2.5,
+                    // },
+                    // shadowOpacity: 0.5,
+                    // shadowRadius: 3,
+                    backgroundColor: '#FFC65C',
+                    marginTop: 0,
+                }}
+                selectedTextStyle={{
+                    color: 'black'
+                }}
+                innerBorderStyle={{ color: 'transparent' }}
+            />
+        );
+    }
+
+    const renderNextButton = () => {
+        return (
+            <TouchableOpacity
+                style={styles.modalBottomBar}
+                onPress={() => { setSelectedModalTabIndex(selectedModalTabIndex+1); }}
+            >
+                    <Text style={styles.modalBottomBarText}>Next: {modalTabs[selectedModalTabIndex+1]}</Text>
+                    <Icon name='chevron-forward-outline' size={15} color='#4B463E' style={{marginLeft:3}}/>
+            </TouchableOpacity>
+        );
+    }
+
+    const renderFinishedButton = () => {
+        return (
+            <TouchableOpacity
+                style={styles.modalBottomBar}
+                onPress={() => {
+                    setModalVisible(false);
+                    setSelectedModalTabIndex(0); // reset
+                }}
+            >
+                <Text style={styles.modalBottomBarText}>Got it</Text>
+                <Icon name='checkmark-outline' size={20} color='#4B463E' style={{marginLeft:3}}/>
+            </TouchableOpacity>
+        )
+    }
+
+    const renderTab0 = () => {
+        return (
+            <View style={styles.modalContentContainer}>
+                <Text style={styles.modalSubHeaderText}>
+                    About the Catalog Filter
+                </Text>
+
+                <View style={{ width: '100%' }}>
+                    <Text style={styles.modalBodyText}>
+                        The MushBuddy catalog serves many purposes. Helping users identify mushrooms is one of them.
+                    </Text>
+                </View>
+
+                {renderNextButton()}
+            </View>
+        );
+    }
+
+    const renderTab1 = () => {
+        return (
+            <View style={styles.modalContentContainer}>
+
+                <Text style={styles.modalSubHeaderText}>
+                    Basics of identification
+                </Text>
+
+                <View style={{ width: '100%' }}>
+                    <Text style={styles.modalBodyText}>
+                        Mushrooms have complex anatomies that can be simplified into four major physical characteristics:
+                        the cap, the gills, the veil, and the stem.
+                    </Text>
+
+                    <View style={styles.diagramImageContainer}>
+                        <Image
+                            source={Image1}
+                            style={styles.diagramImage}
+                            resizeMode='center'
+                        />
+                    </View>
+
+                    <Text style={styles.modalBodyText}>
+                        Identifying the presence or absence of these parts — and, if present, the forms these parts take on —
+                        often leads us closer to identifying the mushroom itself.
+                    </Text>
+                </View>
+                {renderNextButton()}
+            </View>
+        );
+    }
+
+    const renderTab2 = () => {
+        return (
+            <View style={styles.modalContentContainer}>
+
+                <Text style={styles.modalSubHeaderText}>
+                    Using the 3D Mushroom Viewport
+                </Text>
+
+                <View style={{
+                    width: '100%',
+                }}>
+                    <Text style={styles.modalBodyText}>
+                        You can use the viewport to build a mushroom with similar, if not identical, parts,
+                        to the one you're trying to identify.
+                    </Text>
+
+                    <Text style={styles.modalBodyText}>
+                        For each part, there are multiple options below the viewport. These are the different appearances, or forms, these parts can take on.
+                        Try selecting the option that most resembles what you see in your mushroom.
+                    </Text>
+
+                    <Text style={styles.modalBodyText}>
+                        If none of the options seem familiar to you, you can leave that part alone.
+                    </Text>
+                </View>
+                {renderNextButton()}
+            </View>
+        );
+    }
+
+    const renderTab3 = () => {
+        return (
+            <View style={styles.modalContentContainer}>
+
+                <Text style={styles.modalSubHeaderText}>
+                    Filtering with Physical Criteria
+                </Text>
+
+                <View style={{
+                    width: '100%',
+                }}>
+                    <Text style={styles.modalBodyText}>
+                        Once you've built a mushroom in the viewport that resembles the one you'd like to identify,
+                        tap Filter at the top-right corner of your screen.
+                    </Text>
+
+                    <Text style={styles.modalBodyText}>
+                        You will then be able to view a filtered catalog, containing only the mushrooms that match your chosen set of criteria.
+                    </Text>
+
+                    <Text style={styles.modalBodyText}>
+                        You don't need to round out your set of criteria with every part. Instead, stick to the parts that you're
+                        confident about identifying.
+                    </Text>
+
+                    <Text style={styles.modalBodyText}>
+                        If the filtered catalog yields no promising results, you can return to the viewport and try filtering with other options.
+                    </Text>
+                </View>
+                {renderFinishedButton()}
+            </View>
+        );
+    }
+
+    const renderModalContent = (idx) => {
+        if (idx === 0) {
+            return renderTab0();
+        } else if (idx === 1) {
+            return renderTab1();
+        } else if (idx === 2) {
+            return renderTab2();
+        } else {
+            return renderTab3();
+        }
+    }
+
+    const renderInfoPopup = () => {
+        return (
+            <View>
+                <Modal
+                    isVisible={modalVisible}
+                    backdropColor='black'
+                    backdropOpacity={0.70}
+                    coverScreen={true}
+                    onBackdropPress={() => {
+                        setModalVisible(false);
+                        setSelectedModalTabIndex(0); // reset
+                    }}
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingVertical: 200,
+                    }}
+                >
+                    <View style={{
+                        flexDirection: 'column',
+                    }}>
+
+                        {/* tabs */}
+                        <View
+                            style={{
+                                marginLeft: 40,
+                            }}
+                        >
+                            {renderModalTabs(modalTabs)}
+                        </View>
+                        <ScrollView style={styles.modalContainer}>
+                            <TouchableOpacity
+                                style={{
+                                    alignSelf: 'flex-start',
+                                    // borderWidth: 1,
+                                    // borderColor: 'red',
+                                }}
+                                onPress={() => {
+                                    setModalVisible(false);
+                                    setSelectedModalTabIndex(0); // reset
+                                }}>
+                                <Icon name='close-outline' size={25} color='black' />
+                            </TouchableOpacity>
+                            {renderModalContent(selectedModalTabIndex)}
+                        </ScrollView>
+
+                    </View>
+
+                </Modal>
+            </View>
+        );
+    }
 
     const renderCriteriaPopup = () => {
         return (
@@ -317,7 +512,7 @@ const CatalogFilterNew = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
-            {/* {renderInfoPopup()} */}
+            {renderInfoPopup()}
 
             {renderUpperNavigation()}
 
