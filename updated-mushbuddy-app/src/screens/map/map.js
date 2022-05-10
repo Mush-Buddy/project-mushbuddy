@@ -55,17 +55,11 @@ const Map = ( { navigation } ) => {
 
   // currently brings up the index and the new coordinate where the marker was dropped.
   const updateMarker = async (index, newCoordinate) => {
-    // console.log("dragged.");
-    // console.log("index: " + index);
-    // console.log("original coord:");
-    // console.log(post[index].coordinate);
-    // console.log("new coordinate: ", newCoordinate);
-    // console.log("post id: " + post[index].id);
-
     let id = post[index].id;
     let title = post[index].title;
     let mushroom = post[index].mushroom;
     let content = post[index].description;
+    // new coordinate is given to this variable
     let coordinate = newCoordinate;
     let postData = { title, mushroom, content, coordinate };
 

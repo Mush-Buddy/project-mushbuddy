@@ -1,8 +1,8 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 
-// a collection of markers
-// add a param for a function i think
+// a collection of markers.
+// takes in a function to be invoked after dragging a marker.
 const Markers = ( {markers, onDragEndEvent} ) => {
     return (
         <>
