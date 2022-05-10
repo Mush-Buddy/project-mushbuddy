@@ -55,11 +55,17 @@ const CatalogFilterNew = ({ navigation }) => {
 
         var criteria = {};
 
+        if (cap === 'none') {
+            console.log("cap is none!!!!!");
+        }
+
         if (cap !== '' || cap !== 'none') {
+            console.log("CAP in processCriteria: " + cap);
             criteria['capShape'] = cap;
         }
 
-        if (hymenium !== '' || cap !== 'none') {
+        if (hymenium != "" || hymenium != "none") {
+            //console.log("setting gillsType: " + hymenium);
             criteria['gillsType'] = hymenium;
         }
 
@@ -71,6 +77,9 @@ const CatalogFilterNew = ({ navigation }) => {
         // if (veil !== '') {
         //     criteria['veilType'] = veil;
         // }
+
+        console.log("CRITERIA:");
+        console.log(criteria);
 
         return criteria;
     }
@@ -242,13 +251,6 @@ const CatalogFilterNew = ({ navigation }) => {
                 buttonStyle={styles.modalTabItem}
                 textStyle={styles.modalTabItemText}
                 selectedButtonStyle={{
-                    // shadowColor: '#808080',
-                    // shadowOffset: {
-                    //     width: 2.5,
-                    //     height: 2.5,
-                    // },
-                    // shadowOpacity: 0.5,
-                    // shadowRadius: 3,
                     backgroundColor: '#FFC65C',
                     marginTop: 0,
                 }}
@@ -384,12 +386,12 @@ const CatalogFilterNew = ({ navigation }) => {
                     </Text>
 
                     <Text style={styles.modalBodyText}>
-                        You will then be able to view a filtered catalog, containing only the mushrooms that match your chosen set of criteria.
+                        You'll then be taken to a filtered catalog, containing only the mushrooms that match your chosen set of criteria.
                     </Text>
 
                     <Text style={styles.modalBodyText}>
                         You don't need to round out your set of criteria with every part. Instead, stick to the parts that you're
-                        confident about identifying.
+                        confident about identifying. The catalog will only be filtered by the criteria you specify.
                     </Text>
 
                     <Text style={styles.modalBodyText}>
