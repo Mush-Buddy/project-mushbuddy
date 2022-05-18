@@ -54,7 +54,7 @@ const UserStatsScreen = (props) => {
         />
     );
 
-    return(
+    return (
         <TabView
             style={{ backgroundColor: '#fff' }}
             navigationState={{ index , routes }}

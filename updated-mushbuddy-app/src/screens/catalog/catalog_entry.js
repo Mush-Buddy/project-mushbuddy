@@ -7,10 +7,10 @@ import styles from '../../components/stylesheets/catalog_styles/catalog_entry_st
 // Platform-specific import:
 // ReadMore module isn't compatible with Expo's web simulator, so only import (and use) it
 // if platform is iOS/Android.
-// let ReadMore;
-// if (Platform.OS !== 'web') {
-//     ReadMore = require('@fawazahmed/react-native-read-more').default;
-// }
+let ReadMore;
+if (Platform.OS !== 'web') {
+    ReadMore = require('@fawazahmed/react-native-read-more').default;
+}
 
 const CatalogEntry = ({ route, navigation }) => {
     const currentEntry = route.params.item;
@@ -27,7 +27,7 @@ const CatalogEntry = ({ route, navigation }) => {
                     // style={styles.roundedButton}
                     onPress={() => navigation.goBack() }
                 >
-                    <Icon name='arrow-back' size={30} color='black' />
+                    <Icon name='arrow-back' size={20} color='black' />
                 </TouchableOpacity>
             </View>
         );
@@ -48,24 +48,24 @@ const CatalogEntry = ({ route, navigation }) => {
 
     // read more
     const renderDescription = (description) => {
-        // if (Platform.OS !== 'web') {
-        //     return (
-        //         <View style={styles.descriptionContainer}>
-        //             <ReadMore
-        //                 numberOfLines={3}
-        //                 style={styles.bodyText}
-        //                 seeMoreText={'Expand description'}
-        //                 seeLessText={'Collapse description'}
-        //                 seeMoreStyle={styles.readMoreText}
-        //                 seeLessStyle={styles.readMoreText}
-        //                 animate={true}
-        //                 ellipsis={' '}
-        //             >
-        //                 {description}
-        //             </ReadMore>
-        //         </View>
-        //     );
-        // } else {
+        if (Platform.OS !== 'web') {
+            return (
+                <View style={styles.descriptionContainer}>
+                    <ReadMore
+                        numberOfLines={3}
+                        style={styles.bodyText}
+                        seeMoreText={'Expand description'}
+                        seeLessText={'Collapse description'}
+                        seeMoreStyle={styles.readMoreText}
+                        seeLessStyle={styles.readMoreText}
+                        animate={true}
+                        ellipsis={' '}
+                    >
+                        {description}
+                    </ReadMore>
+                </View>
+            );
+        } else {
             return (
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.bodyText}>
@@ -73,7 +73,7 @@ const CatalogEntry = ({ route, navigation }) => {
                     </Text>
                 </View>
             );
-        // }
+        }
     }
 
     const renderHeader = (commonName, scientificName) => {
@@ -146,19 +146,19 @@ const CatalogEntry = ({ route, navigation }) => {
     const renderOtherInfo = (entry) => {
         return (
             <View style={styles.otherInfoContainer}>
-                {renderInfoLine("Bruising", entry.bruising)}
+                {/* {renderInfoLine("Bruising", entry.bruising)} */}
 
                 {renderInfoLine("Cap shape", entry.capShape)}
                 {renderInfoLine("Cap colors", entry.capColors)}
 
                 {renderInfoLine("Has gills?", parseYesOrNo(entry.hasGills))}
-                {renderInfoLine("Gills attached?", parseYesOrNo(entry.gillsAttachment))}
+                {/* {renderInfoLine("Gills attached?", parseYesOrNo(entry.gillsAttachment))} */}
                 {renderInfoLine("Type of gills", entry.gillsType)}
 
-                {renderInfoLine("Has veil?", parseYesOrNo(entry.hasVeil))}
+                {/* {renderInfoLine("Has veil?", parseYesOrNo(entry.hasVeil))} */}
                 {renderInfoLine("Veil type", entry.veilType)}
 
-                {renderInfoLine("Spore print", entry.sporePrint)}
+                {/* {renderInfoLine("Spore print", entry.sporePrint)} */}
 
                 {renderInfoLine("Stem colors", entry.stemColors)}
 

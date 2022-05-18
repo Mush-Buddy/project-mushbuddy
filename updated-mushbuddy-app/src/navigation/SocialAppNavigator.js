@@ -15,7 +15,7 @@ import EditProfileScreen, { screenOptions as editProfileScreenOptions } from '..
 import AddPostScreen, { screenOptions as addPostScreenOptions } from '../screens/post/AddPostScreen';
 import FindPeopleScreen from '../screens/user/FindPeopleScreen';
 import MushroomCatalog from '../screens/catalog/catalog_main';
-import CatalogFilter from '../screens/catalog/filter/catalog_filter';
+import CatalogFilterNew from '../screens/catalog/filter/catalog_filter_new';
 import CatalogEntry from '../screens/catalog/catalog_entry';
 import MushroomCatalogFiltered from '../screens/catalog/catalog_filterpage';
 import MapNavigator from '../screens/map/map_navigator';
@@ -98,7 +98,7 @@ const CatalogNavigator = () => {
             />
             <Stack.Screen
                 name="Filter"
-                component={CatalogFilter}
+                component={CatalogFilterNew}
                 options={{
                     title: 'Catalog: Filter',
                     headerStyle: {
@@ -153,7 +153,7 @@ export const BottomNavigator = () => {
                             size={24}
                             color={props.color}
                         />
-                    )
+                    ),
                 }}
             />
             <BottomTabNavigator.Screen
@@ -168,7 +168,7 @@ export const BottomNavigator = () => {
                             size={24}
                             color={props.color}
                         />
-                    )
+                    ),
                 }}
             />
             <BottomTabNavigator.Screen
@@ -183,7 +183,7 @@ export const BottomNavigator = () => {
                             size={24}
                             color={props.color}
                         />
-                    )
+                    ),
                 }}
             />
             <BottomTabNavigator.Screen
@@ -198,7 +198,7 @@ export const BottomNavigator = () => {
                             size={24}
                             color={props.color}
                         />
-                    )
+                    ),
                 }}
             />
         </BottomTabNavigator.Navigator>

@@ -6,9 +6,9 @@ export default StyleSheet.create({
         flexDirection: 'column',
     },
     upperBar: {
-        marginTop: 25,
+        marginTop: 45,
         marginBottom: 0,
-        marginLeft: 10,
+        marginLeft: 15,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',

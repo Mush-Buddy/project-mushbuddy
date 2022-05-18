@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native-modal": "^13.0.1",
+    "react-native-super-grid": "^4.4.0"
+  }
+}

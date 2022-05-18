@@ -9,6 +9,19 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.BG,
     },
+    upperBar: {
+        marginLeft: 15,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    centeredTitleText: {
+        marginLeft: 120,
+        fontSize: 15,
+        color: '#222222',
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+    },
     loadingContainer: {
         flex: 1,
         margin: 10,
@@ -22,7 +35,6 @@ export default StyleSheet.create({
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        //marginTop: 5,
         paddingLeft: 20,
     },
     imageContainer: {
