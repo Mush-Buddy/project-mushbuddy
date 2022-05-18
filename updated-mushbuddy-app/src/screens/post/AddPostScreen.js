@@ -16,6 +16,7 @@ import { COLORS } from '../../components/stylesheets/colors';
 import { showMessage } from "react-native-flash-message";
 import RenderCatalogEntry from '../catalog/render_catalog_entry';
 
+// props is just all the default properties sent through navigator
 const AddPostScreen = (props) => {
     const { route } = props;
     const { auth } = useSelector(state => state);
@@ -76,24 +77,34 @@ const AddPostScreen = (props) => {
         return true;
     }
 
+    function getRandomNumberBetween(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
+    // Create a post.
     const createPost = async () => {
         setIsLoading(true);
         if (validatePost()) {
-            //console.log("VALID POST");
             try {
                 let mushroom = route.params.selectedItem._id;
                 let title = route.params.selectedItem.nameCommon;
                 let content = route.params.selectedItem.nameScientific;
-                let postData = { title, mushroom, content };
+                // Currently, we just selecting a random coordinate in the area of choice. (Hanover, NH)
+                let coordinate = {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000};
+                console.log("trying to add a post with this coordinate");
+                console.log(coordinate);
+
+                let postData = { title, mushroom, content, coordinate };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
-                props.navigation.navigate('Catalog');
                 showMessage({
                     message: "Your post was successfully created.",
                     type: "success",
                     duration: 3000,
                     icon: { icon: "success", position: 'left' }
                 });
+                // return to map screen
+                props.navigation.navigate('MapMain');
             } catch (error) {
                 showMessage({
                     message: error.message,
@@ -111,6 +122,7 @@ const AddPostScreen = (props) => {
         props.navigation.push('MushroomCatalog', { isSelecting: true });
     }
 
+    // for the select mushroom button at the top
     const renderSelectButton = () => {
         return (
             <TouchableOpacity
@@ -166,6 +178,8 @@ const AddPostScreen = (props) => {
     //     );
     // }
 
+    // leaving these out for now. 
+    // coordinates will not be entered manually by the user, will be taken care of by the app
     const renderLatitudeInputField = () => {
         return (
             <View style={styles.inputField} >
@@ -221,6 +235,7 @@ const AddPostScreen = (props) => {
         );
     }
 
+    // rendering
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -236,10 +251,10 @@ const AddPostScreen = (props) => {
 
                 <View style={styles.container}>
                     {renderSelectButton()}
-                    {/* {renderTitleInputField()}
-                    {renderContentInputField()} */}
-                    {renderLatitudeInputField()}
-                    {renderLongitudeInputField()}
+                    {/* {renderTitleInputField()} */}
+                    {/* {renderContentInputField()} */}
+                    {/* {renderLatitudeInputField()} */}
+                    {/* {renderLongitudeInputField()} */}
 
                     {renderPostButton()}
                 </View>

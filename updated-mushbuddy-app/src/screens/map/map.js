@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { Callout } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
 import Markers from './markers.js';
+
+import * as postActions from '../../store/actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { showMessage } from "react-native-flash-message";
 
 // sample custom markers
 //import SampleMarkerIcon from '../../assets/favicon.png';
@@ -17,72 +20,60 @@ const Map = ( { navigation } ) => {
   const { posts } = useSelector(state => state)
   const [shouldFetch, setShouldFetch] = useState(true);
 
-  const defaultCoords = {latitude: 43.703, longitude: -72.293}
+  const dispatch = useDispatch();
 
-  function getRandomNumberBetween(min, max){
-    return Math.floor(Math.random()*(max-min+1)+min);
-  }
-  // random range for current region:
-  //   "latitude": 43.706926586852234,
-  //   "longitude": -72.29416723076919,
-  // and
-  //   "latitude": 43.69475372084176,
-  //   "longitude": -72.28457748717949,
-
+  // render markers
   useEffect(() => {
     console.log('fetching')
     const get_data = async () => {
         const res = await getDataAPI(`posts/${auth.user._id}?page=${page}&limit=${limit}`, auth.token)
         const newData = res.data.posts;
-        // putting markers in random locations within the region (for now)
-        const markers = newData.map(data => {return {title:data.title,description:data.content,coordinate: {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000}}})
+
+        // render markers as stored in the backend
+        const markers = newData.map(data => {return {title:data.title, description:data.content, coordinate:data.coordinate, id:data._id, mushroom:data.mushroom}});
+
         setPosts(markers);
         setPage(page);
-        console.log(newData,markers)
     }
     get_data()
-}, [page,shouldFetch,posts]);
+}, [page, shouldFetch, posts]);
 
-  // testing markers we use for testing purposes. This will be a backend call at some point
-  const [testMarkers, setMarkers] = useState([
-    {
-      title: "Enoki",
-      description: "A Enoki was found here",
-      coordinate: {latitude: 43.700859, longitude: -72.289398},
-    },
-    {
-      title: "Chanterelle",
-      description: "A Chanterelle was found here",
-      coordinate: {latitude: 43.703, longitude: -72.286},
-    },
-    {
-      title: "Porcini",
-      description: "A Porcini was found here",
-      coordinate: {latitude: 43.704, longitude: -72.293},
-    },
-  ])
-
-  // Add a marker to the map.
-  // currently offers no input fields, add those later.
-  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
-  // TODO: coordinate is from location services, title and description must be linked up to input fields.
-  const addMarker = (coordinate, title, description) => {
-    console.log("new marker to be placed at:")
-    console.log(coordinate)
-    const newMarker = {title: title, description: description, coordinate: event.coordinate}
-    setMarkers([...testMarkers, newMarker])
-  }
-
+  // move to the create new post screen
   const moveToNewPost = () => {
-    navigation.navigate('Post', {});
+    // no params to pass in here
+    navigation.navigate('CreatePost');
   }
 
+  // renders the red add post button over the map.
   const renderAddPostButton = () => {
     return (
       <TouchableOpacity onPress={() => { moveToNewPost(); }}>
         <Icon name='add-circle' size={45} color='#D85000' />
       </TouchableOpacity>
     );
+  }
+
+  // currently brings up the index and the new coordinate where the marker was dropped.
+  const updateMarker = async (index, newCoordinate) => {
+    let id = post[index].id;
+    let title = post[index].title;
+    let mushroom = post[index].mushroom;
+    let content = post[index].description;
+    // new coordinate is given to this variable
+    let coordinate = newCoordinate;
+    let postData = { title, mushroom, content, coordinate };
+
+    try {
+      await dispatch(postActions.updatePost({ id, postData, auth }));
+    } catch (error) {
+        showMessage({
+            message: error.message,
+            type: "danger",
+            duration: 3000,
+            icon: { icon: "danger", position: 'left' }
+        });
+        console.log("ERROR ", error.message);
+    }
   }
 
   return (
@@ -96,34 +87,53 @@ const Map = ( { navigation } ) => {
           longitudeDelta: 0.01
         }}
         showsUserLocation={true}
-        // onPress={e => console.log()}
+        // umcomment this if you need to see coordinates on tap/click
+        // onPress={e => console.log(e.nativeEvent.coordinate)}
       >
-
-      {/* next, render all markers */}
-      <Markers markers={post} />
-      <Markers markers={testMarkers} />
+      {/* next, render all markers, using Markers component and fetched data */}
+      <Markers markers={post} onDragEndEvent={updateMarker} />
       </MapView>}
         
-      {/*
+      {/* add button*/}
       <Callout style={styles.buttonCallout}>
         {renderAddPostButton()}
       </Callout>
-      */}
-
-      {/* some past lines that worked */}
-      {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
-      {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
-      {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
-      {/* <Marker
-          title={"Mushroom name"}
-          description={"Mushroom description"}
-          image={SampleMarkerIcon}
-          coordinate={{ latitude: 42.03, longitude: -93.58 }}
-      /> */}
-
     </View>
   );
 }
+
+// --- old functions ---
+  // Add a marker to the map.
+  // currently offers no input fields, add those later.
+  // note that the coordinate information is passed in as "event" parameter. This is fed in as e.nativeEvent in the MapView properties in render()
+  // TODO: coordinate is from location services, title and description must be linked up to input fields.
+  // const addMarker = (coordinate, title, description) => {
+  //   console.log("new marker to be placed at:")
+  //   console.log(coordinate)
+  //   const newMarker = {title: title, description: description, coordinate: event.coordinate}
+  //   setMarkers([...testMarkers, newMarker])
+  // }
+
+  // const defaultCoords = {latitude: 43.703, longitude: -72.293}
+
+  // random range for current region:
+  //   "latitude": 43.706926586852234,
+  //   "longitude": -72.29416723076919,
+  // and
+  //   "latitude": 43.69475372084176,
+  //   "longitude": -72.28457748717949,
+
+  // in render
+  //   {/* some past lines that worked */}
+  // {/* <Marker title = {testMarkers[0].title} description = {testMarkers[0].description} coordinate={testMarkers[0].coordinate}></Marker> */}
+  // {/* <Marker title = {"chicago mushroom"} description = {"mushroom description"} coordinate={{latitude: 42.03, longitude: -93.58}}></Marker>
+  // {/* <Marker title = {"dartmouth mushroom"} description = {"mushroom description"} coordinate={{latitude: 43.700859, longitude: -72.289398}}></Marker> */}
+  // {/* <Marker
+  //     title={"Mushroom name"}
+  //     description={"Mushroom description"}
+  //     image={SampleMarkerIcon}
+  //     coordinate={{ latitude: 42.03, longitude: -93.58 }}
+  // /> */}
 
 // map stylesheet
 const styles = StyleSheet.create({

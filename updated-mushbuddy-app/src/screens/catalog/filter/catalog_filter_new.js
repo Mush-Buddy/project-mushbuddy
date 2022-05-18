@@ -26,7 +26,7 @@ const CatalogFilterNew = ({ navigation }) => {
     const [cap, setCap] = useState('');
     const [hymenium, setHymenium] = useState('');
     // const [gillType, setGillType] = useState('');
-    // const [veil, setVeil] = useState('');
+    const [veil, setVeil] = useState('');
 
     // const clearCap = useRef(null);
     // const clearHymenium = useRef(null);
@@ -55,31 +55,26 @@ const CatalogFilterNew = ({ navigation }) => {
 
         var criteria = {};
 
-        if (cap === 'none') {
-            console.log("cap is none!!!!!");
-        }
-
-        if (cap !== '' || cap !== 'none') {
-            console.log("CAP in processCriteria: " + cap);
+        if (cap === 'none' || cap === '') {
+            // Do nothing.
+            // console.log("Cap is none");
+        } else {
             criteria['capShape'] = cap;
         }
 
-        if (hymenium != "" || hymenium != "none") {
-            //console.log("setting gillsType: " + hymenium);
+        if (hymenium === 'none' || hymenium === '') {
+            // Do nothing.
+            // console.log("Hymenium is none");
+        } else {
             criteria['gillsType'] = hymenium;
         }
 
-        // // Needs reworking; temporary solution for now.
-        // if (gillType !== '') {
-        //     criteria['gillsAttachment'] = 'Yes'; // TEMP
-        // }
-
-        // if (veil !== '') {
-        //     criteria['veilType'] = veil;
-        // }
-
-        console.log("CRITERIA:");
-        console.log(criteria);
+        if (veil === 'none' || veil === '') {
+            // Do nothing.
+            // console.log("Veil is none");
+        } else {
+            criteria['veilType'] = veil;
+        }
 
         return criteria;
     }
@@ -114,6 +109,7 @@ const CatalogFilterNew = ({ navigation }) => {
             <Mush3D
                 capShape={cap}
                 gillsType={hymenium}
+                veilType={veil}
             />
         );
     }
@@ -185,13 +181,15 @@ const CatalogFilterNew = ({ navigation }) => {
                                 setCap(item.label);
                             } else if (currentTabName === "hymenium") {
                                 setHymenium(item.label);
+                            } else if (currentTabName === "veil") {
+                                setVeil(item.label);
                             }
                         }}
                         underlayColor='transparent'
                     >
                         <View style={{
                             ...styles.optionContainer,
-                            shadowOpacity: item.label === cap || item.label === hymenium ? 0.8 : 0,
+                            shadowOpacity: item.label === cap || item.label === hymenium || item.label === veil ? 0.8 : 0,
                             shadowColor: '#808080',
                             shadowOffset: {
                                 width: 2.5,
@@ -502,7 +500,7 @@ const CatalogFilterNew = ({ navigation }) => {
                         </Text>
 
                         <Text style={styles.popupText2}>
-                            none
+                            {veil === '' ? 'none' : veil}
                         </Text>
                     </View>
 

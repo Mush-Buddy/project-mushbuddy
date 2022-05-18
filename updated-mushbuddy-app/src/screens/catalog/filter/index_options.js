@@ -65,9 +65,6 @@ const options = {
         },
     ],
     veil: [
-        // {
-        //     label: 'none',
-        // },
         {
             label: 'bare',
         }, {
@@ -78,6 +75,8 @@ const options = {
             label: 'ring_and_volva',
         }, {
             label: 'cortina',
+        }, {
+            label: 'none',
         },
     ],
 };

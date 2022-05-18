@@ -54,6 +54,7 @@
     "react-native-super-grid": "^4.4.0",
     "react-native-svg": "12.1.1",
     "react-native-tab-view": "^3.1.1",
+    "react-native-tags": "^2.2.1",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
     "react-native-zip-archive": "^6.0.8",

@@ -7133,6 +7133,11 @@
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz"
   "version" "3.1.1"
 
+"react-native-tags@^2.2.1":
+  "integrity" "sha512-a8ICis9+2c0ttg/Vaq48+AUOqpKQlkvQgz0JXFdUWIIsBr/cWoDWzh4F3Ib4+uT39s1bLhwiNjeZVt/ATDlaIg=="
+  "resolved" "https://registry.npmjs.org/react-native-tags/-/react-native-tags-2.2.1.tgz"
+  "version" "2.2.1"
+
 "react-native-vector-icons@*", "react-native-vector-icons@^9.0.0", "react-native-vector-icons@>7.0.0":
   "integrity" "sha512-qKX5d5/TafHmI4B7UOSZCL3BAGh7ZfF30iLwRgxBkKfZl2lKSuHp8Ottj9OyWh9b5fFtlg+LtyvZrns3g2kh+w=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.0.0.tgz"
@@ -7170,7 +7175,7 @@
   "resolved" "https://registry.npmjs.org/react-native-zip-archive/-/react-native-zip-archive-6.0.8.tgz"
   "version" "6.0.8"
 
-"react-native@*", "react-native@^*", "react-native@^0.0.0-0 || 0.60 - 0.67 || 1000.0.0", "react-native@^0.64.3", "react-native@>= 0.30.0", "react-native@>= 0.51", "react-native@>=0.41", "react-native@>=0.42.0", "react-native@>=0.44", "react-native@>=0.47", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59.0", "react-native@>=0.60.0", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@>=0.65.0", "react-native@~0.61", "react-native@0.64.3":
+"react-native@*", "react-native@^*", "react-native@^0.0.0-0 || 0.60 - 0.67 || 1000.0.0", "react-native@^0.64.3", "react-native@>= 0.30.0", "react-native@>= 0.51", "react-native@>=0.41", "react-native@>=0.42.0", "react-native@>=0.44", "react-native@>=0.47", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.59.0", "react-native@>=0.60.0", "react-native@>=0.61", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@>=0.65.0", "react-native@~0.61", "react-native@0.64.3":
   "integrity" "sha512-2OEU74U0Ek1/WeBzPbg6XDsCfjF/9fhrNX/5TFgEiBKd5mNc9LOZ/OlMmkb7iues/ZZ/oc51SbEfLRQdcW0fVw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.64.3.tgz"
   "version" "0.64.3"
@@ -7241,7 +7246,7 @@
   dependencies:
     "history" "^5.2.0"
 
-"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^16.8.3 || ^17", "react@^17.0.0", "react@^17.0.1", "react@>= 15.2.1", "react@>= 16.0 || < 18.0", "react@>=16.0", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.8.6", "react@>=17.0.1", "react@~16.9.0", "react@17.0.1":
+"react@*", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^16.8.3 || ^17", "react@^17.0.0", "react@^17.0.1", "react@>= 15.2.1", "react@>= 16.0 || < 18.0", "react@>=16.0", "react@>=16.13", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.8.6", "react@>=17.0.1", "react@~16.9.0", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

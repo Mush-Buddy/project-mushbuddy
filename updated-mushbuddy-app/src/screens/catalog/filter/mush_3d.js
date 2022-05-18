@@ -16,7 +16,7 @@ import { Asset } from 'expo-asset';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import OrbitControlsView from 'expo-three-orbit-controls';
 
-const Mush3D = ({ capShape, gillsType }) => {
+const Mush3D = ({ capShape, gillsType, veilType }) => {
 
     // Ignoring an annoying warning that hasn't been fixed by source pkg.
     LogBox.ignoreLogs(['THREE.Quaternion: .inverse() has been renamed to invert().']);
@@ -24,6 +24,7 @@ const Mush3D = ({ capShape, gillsType }) => {
     const [camera, setCamera] = useState(null);
     const [cap, setCap] = useState(null);
     const [gills, setGills] = useState(null);
+    const [veil, setVeil] = useState(null);
 
     const [scene] = useState(new Scene());
 
@@ -67,6 +68,7 @@ const Mush3D = ({ capShape, gillsType }) => {
 
                 // Rescale
                 capObject.scale.set(0.15, 0.15, 0.15);
+                //capObject.position.y += 1;
 
                 // Add new cap
                 scene.add(capObject);
@@ -117,6 +119,39 @@ const Mush3D = ({ capShape, gillsType }) => {
             loadGills().catch(console.error);
         }
     }, [gillsType]);
+
+    useEffect(() => {
+        const loadVeil = async () => {
+
+            if (veil != null) {
+                scene.remove(veil);
+            }
+
+            if (veilType != 'bare' && veilType != 'none') {
+                const veilAsset = Asset.fromModule(veilModels[veilType]);
+                await veilAsset.downloadAsync();
+
+                const veilObject = await objectLoader.loadAsync(veilAsset.uri);
+
+                // Assign default material
+                veilObject.traverse((obj) => {
+                    if (obj.isMesh) {
+                        obj.material = new THREE.MeshNormalMaterial();
+                    }
+                });
+
+                // Rescale
+                veilObject.scale.set(0.15, 0.15, 0.15);
+
+                // Add veil to scene
+                scene.add(veilObject);
+                setVeil(veilObject);
+            }
+        }
+        if (veilType !== '') {
+            loadVeil().catch(console.error);
+        }
+    }, [veilType]);
 
     const onContextCreate = async (gl) => {
         const sceneColor = 0x6ad6f0;
@@ -241,6 +276,35 @@ const capModels = {
     'depressed_t': require('../../../../assets/mushroom/caps/tooth/depressed_tooth.obj'),
     'offset_t': require('../../../../assets/mushroom/caps/tooth/offset_tooth.obj'),
     'infundibuliform_t': require('../../../../assets/mushroom/caps/tooth/infundibuliform_tooth.obj'),
+    // smooth
+    'convex_s': require('../../../../assets/mushroom/caps/smooth/convex_s.obj'),
+    'flat_s': require('../../../../assets/mushroom/caps/smooth/flat_s.obj'),
+    'umbonate_s': require('../../../../assets/mushroom/caps/smooth/umbonate_s.obj'),
+    'ovate_s': require('../../../../assets/mushroom/caps/smooth/ovate_s.obj'),
+    'campanulate_s': require('../../../../assets/mushroom/caps/smooth/campanulate_s.obj'),
+    'umbilicate_s': require('../../../../assets/mushroom/caps/smooth/umbilicate_s.obj'),
+    'conical_s': require('../../../../assets/mushroom/caps/smooth/conical_s.obj'),
+    'depressed_s': require('../../../../assets/mushroom/caps/smooth/depressed_s.obj'),
+    'offset_s': require('../../../../assets/mushroom/caps/smooth/offset_s.obj'),
+    'infundibuliform_s': require('../../../../assets/mushroom/caps/smooth/infundibuliform_s.obj'),
+    // gills - using ridges for now
+    'convex_g': require('../../../../assets/mushroom/caps/ridges/convex_ridges.obj'),
+    'flat_g': require('../../../../assets/mushroom/caps/ridges/flat_ridges.obj'),
+    'umbonate_g': require('../../../../assets/mushroom/caps/ridges/umbonate_ridges.obj'),
+    'ovate_g': require('../../../../assets/mushroom/caps/ridges/ovate_ridges.obj'),
+    'campanulate_g': require('../../../../assets/mushroom/caps/ridges/campanulate_ridges.obj'),
+    'umbilicate_g': require('../../../../assets/mushroom/caps/ridges/umbilicate_ridges.obj'),
+    'conical_g': require('../../../../assets/mushroom/caps/ridges/conical_ridges.obj'),
+    'depressed_g': require('../../../../assets/mushroom/caps/ridges/depressed_ridges.obj'),
+    'offset_g': require('../../../../assets/mushroom/caps/ridges/offset_ridges.obj'),
+    'infundibuliform_g': require('../../../../assets/mushroom/caps/ridges/infundibuliform_ridges.obj'),
+};
+
+const veilModels = {
+    'cortina': require('../../../../assets/mushroom/veils/cortina.obj'),
+    'ring_and_volva': require('../../../../assets/mushroom/veils/ring_and_volva.obj'),
+    'ring': require('../../../../assets/mushroom/veils/ring.obj'),
+    'volva': require('../../../../assets/mushroom/veils/volva.obj'),
 };
 
 export default Mush3D;
