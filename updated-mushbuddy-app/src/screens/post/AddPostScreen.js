@@ -29,8 +29,8 @@ const AddPostScreen = (props) => {
     // const [longitude, setLongitude] = useState('');
 
     const [desc, setDesc] = useState('No description entered.');
-
-
+    const [postDateTime, setPostDateTime] = useState('');
+    const [firstLoad, setFirstLoad] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +47,11 @@ const AddPostScreen = (props) => {
     }
 
     useEffect(() => {
+        if (!firstLoad) {
+            setFirstLoad(true);
+            setPostDateTime(new Date().toLocaleString());
+            console.log(postDateTime);
+        }
         const unsubscribe = props.navigation.addListener('focus', clearForm);
         return () => {
             unsubscribe();
@@ -101,11 +106,10 @@ const AddPostScreen = (props) => {
                 let description = desc;
                 // Currently, we just selecting a random coordinate in the area of choice. (Hanover, NH)
                 let coordinate = {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000};
-                
-                // console.log("trying to add a post with this coordinate");
-                // console.log(coordinate);
+                let date = postDateTime;
 
-                let postData = { title, mushroom, content, coordinate, description };
+
+                let postData = { title, mushroom, content, coordinate, description, date };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
                 showMessage({
@@ -201,16 +205,19 @@ const AddPostScreen = (props) => {
                 style={styles.screen}
                 behavior="padding"
             >
-
+                
                 <View style={styles.container}>
+                    <Text>
+                        {postDateTime}
+                    </Text>
                     {renderSelectButton()}
+                    {renderDescriptionInputField()}
+                    {renderPostButton()}
+
                     {/* {renderTitleInputField()} */}
                     {/* {renderContentInputField()} */}
-                    {renderDescriptionInputField()}
                     {/* {renderLatitudeInputField()} */}
                     {/* {renderLongitudeInputField()} */}
-
-                    {renderPostButton()}
                 </View>
             </KeyboardAvoidingView>
         </ScrollView>
@@ -218,7 +225,7 @@ const AddPostScreen = (props) => {
 };
 
 export const screenOptions = {
-    headerTitle: 'Create Post',
+    headerTitle: 'Log your mushroom find',
 }
 
 const styles = StyleSheet.create({

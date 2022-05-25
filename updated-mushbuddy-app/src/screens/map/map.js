@@ -30,7 +30,8 @@ const Map = ( { navigation } ) => {
         const newData = res.data.posts;
 
         // render markers as stored in the backend
-        const markers = newData.map(data => {return {title:data.title, content:data.content, coordinate:data.coordinate, id:data._id, mushroom:data.mushroom, description:data.description}});
+        const markers = newData.map(data => {return {title:data.title, content:data.content, coordinate:data.coordinate, 
+          id:data._id, mushroom:data.mushroom, description:data.description, date:data.date, images:data.images}});
 
         setPosts(markers);
         setPage(page);
@@ -44,10 +45,10 @@ const Map = ( { navigation } ) => {
     navigation.navigate('CreatePost');
   }
 
-  const goToDetailedPost = (title, description) => {
+  const goToDetailedPost = (title, description, date, image) => {
     // navigation.navigate('DetailedPost', {postTitle: title, postDesc: description});
     navigation.navigate('DetailedPost', {
-      postTitle: title, postDesc: description
+      postTitle: title, postDesc: description, postDate: date, postImage: image
     });
   }
 
@@ -96,10 +97,18 @@ const Map = ( { navigation } ) => {
         }}
         showsUserLocation={true}
         // umcomment this if you need to see coordinates on tap/click
-        // onPress={e => console.log(e.nativeEvent.coordinate)}
+        // onPress={e => 
+        // {
+        //   console.log(e.nativeEvent.coordinate);
+        // }}
+
       >
       {/* next, render all markers, using Markers component and fetched data */}
-      <Markers markers={post} onDragEndEvent={updateMarker} onCalloutTapEvent={() => goToDetailedPost()}/>
+      <Markers
+        markers={post}
+        onDragEndEvent={updateMarker}
+        onCalloutTapEvent={goToDetailedPost}
+      />
       </MapView>}
         
       {/* add button*/}

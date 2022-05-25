@@ -19,13 +19,15 @@ const Markers = ({ markers, onDragEndEvent, onCalloutTapEvent }) => {
                     description={markers.description}
                     mushroom={markers.mushroom}
                     coordinate={markers.coordinate}
+                    images={markers.images}
+                    date={markers.date}
                     draggable={true}
                     onDragEnd={(e) => onDragEndEvent(index, e.nativeEvent.coordinate)}
                 >
                     <Callout
                         onPress={() => {
                             console.log("callout pressed");
-                            onCalloutTapEvent("default title", "default description");
+                            onCalloutTapEvent(markers.title, markers.description, markers.date, markers.images);
                         }}>
                         <View style={{
                             flexDirection: 'column',

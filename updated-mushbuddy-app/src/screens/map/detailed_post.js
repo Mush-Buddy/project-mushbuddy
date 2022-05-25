@@ -10,9 +10,8 @@ import { getDataAPI } from '../../utils/fetchData';
 
 // unused old UI
 
-const DetailedPost = ({route, navigation}) => {
-    const {postTitle, postDesc} = route.params;
-    
+const DetailedPost = ({ route, navigation }) => {
+    const { postTitle, postDesc, postDate, postImage } = route.params;
 
     // not sure what these are for
     const [data, setData] = useState([]);
@@ -28,42 +27,38 @@ const DetailedPost = ({route, navigation}) => {
     // input field setup
     const [nameText, setNameText] = useState('');
 
-    console.log(postTitle);
-    console.log(postDesc);
-
     // go back to map menu (probably gonna want to create a post here somehow)
     const returnToMap = () => {
         navigation.navigate('MapMain');
     }
-
-    // may need to wrap all this in KeyboardAvoidingView later
+    
     return (
         <View style={styles.container}>
 
             <View style={styles.headerContainer}>
-                {/* {renderUpperNavigation()} */}
                 <Text style={styles.headerText}>
-                    Record your findings
+                    {postTitle}
                 </Text>
             </View>
 
             <View style={styles.inputFieldIndividual}>
                 <Text style={styles.subheaderText}>
-                    Mushroom name
+                    Details
                 </Text>
-                {/* {renderInputField()} */}
-                {/* {renderCatalogDropdown()} */}
+                <Text style={styles.bodyText}>
+                    Mushroom found on: {postDate}
+                </Text> 
             </View>
 
             <View style={styles.inputFieldIndividual}>
                 <Text style={styles.subheaderText}>
-                    Location found
+                    Description
                 </Text>
+                <Text style={styles.bodyText}>
+                    {postDesc}
+                </Text> 
             </View>
 
-            <View style={styles.footerContainer}>
-                {/* {renderUploadButton()} */}
-            </View>
         </View>
     );
 }
@@ -82,8 +77,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 30,
         //marginLeft: 10,
-        borderWidth: 1,
-        borderColor: 'blue',
     },
     footerContainer: {
         flex: 1,
@@ -96,9 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        borderWidth: 1,
-        borderColor: 'green',
+        alignItems: 'flex-start'
     },
     headerText: {
         fontSize: 25,
@@ -114,7 +105,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
     },
     bodyText: {
-        fontSize: 12,
+        fontSize: 16,
         color: '#222222',
     },
     inputText: {
@@ -145,11 +136,6 @@ const styles = StyleSheet.create({
     },
     dropDownView: {
         backgroundColor: 'transparent',
-    },
-    dropDownContainer: {
-        borderWidth: 1,
-        borderColor: 'red',
-
     },
     dropDownText: {
         fontSize: 12,
