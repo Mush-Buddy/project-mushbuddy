@@ -6,25 +6,16 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 
 // a collection of markers.
 // takes in a function to be invoked after dragging a marker.
-const Markers = ({ markers, onDragEndEvent }) => {
+const Markers = ({ markers, onDragEndEvent, onCalloutTapEvent }) => {
     return (
         <>
             {/* renders an array of markers sequentially. */}
             {markers.map((markers, index) => (
-                // <Marker 
-                //     id={markers.id}
-                //     key={index}
-                //     title={markers.title}
-                //     description={markers.description}
-                //     mushroom={markers.mushroom}
-                //     coordinate={markers.coordinate}
-                //     draggable={true}
-                //     onDragEnd={(e) => onDragEndEvent(index, e.nativeEvent.coordinate)}
-                // /> 
                 <Marker
                     id={markers.id}
                     key={index}
                     title={markers.title}
+                    content={markers.content}
                     description={markers.description}
                     mushroom={markers.mushroom}
                     coordinate={markers.coordinate}
@@ -34,6 +25,7 @@ const Markers = ({ markers, onDragEndEvent }) => {
                     <Callout
                         onPress={() => {
                             console.log("callout pressed");
+                            onCalloutTapEvent("default title", "default description");
                         }}>
                         <View style={{
                             flexDirection: 'column',
@@ -51,7 +43,7 @@ const Markers = ({ markers, onDragEndEvent }) => {
                                 fontSize: 10,
                                 fontStyle: 'italic',
                             }}>
-                                {markers.description}
+                                {markers.content}
                             </Text>
                             {/* <Text>
                                     {Object.values(markers.mushroom)}

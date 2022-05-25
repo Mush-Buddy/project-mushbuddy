@@ -20,11 +20,17 @@ import RenderCatalogEntry from '../catalog/render_catalog_entry';
 const AddPostScreen = (props) => {
     const { route } = props;
     const { auth } = useSelector(state => state);
-    //const [title, setTitle] = useState('');
     const [mushroom, setMushroom] = useState('');
+
+    // unused
+    // const [title, setTitle] = useState('');
     //const [content, setContent] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
+    // const [latitude, setLatitude] = useState('');
+    // const [longitude, setLongitude] = useState('');
+
+    const [desc, setDesc] = useState('No description entered.');
+
+
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -34,8 +40,9 @@ const AddPostScreen = (props) => {
         //setTitle('');
         setMushroom('');
         //setContent('');
-        setLatitude('');
-        setLongitude('');
+        setDesc('');
+        // setLatitude('');
+        // setLongitude('');
         setIsLoading(false);
     }
 
@@ -81,6 +88,7 @@ const AddPostScreen = (props) => {
         return Math.floor(Math.random()*(max-min+1)+min);
       }
 
+    // post creation
     // Create a post.
     const createPost = async () => {
         setIsLoading(true);
@@ -88,13 +96,16 @@ const AddPostScreen = (props) => {
             try {
                 let mushroom = route.params.selectedItem._id;
                 let title = route.params.selectedItem.nameCommon;
+                // basically just scientific name
                 let content = route.params.selectedItem.nameScientific;
+                let description = desc;
                 // Currently, we just selecting a random coordinate in the area of choice. (Hanover, NH)
                 let coordinate = {latitude: getRandomNumberBetween(4369475372084176, 4370692658685223,) / 100000000000000, longitude: getRandomNumberBetween(7229416723076919, 7228457748717949) / -100000000000000};
-                console.log("trying to add a post with this coordinate");
-                console.log(coordinate);
+                
+                // console.log("trying to add a post with this coordinate");
+                // console.log(coordinate);
 
-                let postData = { title, mushroom, content, coordinate };
+                let postData = { title, mushroom, content, coordinate, description };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
                 showMessage({
@@ -122,6 +133,7 @@ const AddPostScreen = (props) => {
         props.navigation.push('MushroomCatalog', { isSelecting: true });
     }
 
+    // input fields
     // for the select mushroom button at the top
     const renderSelectButton = () => {
         return (
@@ -140,83 +152,24 @@ const AddPostScreen = (props) => {
         );
     }
 
-    // const renderTitleInputField = () => {
-    //     return (
-    //         <View style={styles.inputField}>
-    //             <Text style={styles.textLabel}>
-    //                 Title
-    //             </Text>
-    //             <View style={styles.inputContainer}>
-    //                 <TextInput
-    //                     style={styles.inputs}
-    //                     placeholder="Title"
-    //                     underlineColorAndroid='transparent'
-    //                     value={title}
-    //                     onChangeText={(text) => setTitle(text)}
-    //                 />
-    //             </View>
-    //         </View>
-    //     );
-    // }
-
-    // const renderContentInputField = () => {
-    //     return (
-    //         <View style={styles.inputField}>
-    //             <Text style={styles.textLabel}>
-    //                 Content
-    //             </Text>
-    //             <View
-    //                 style={styles.inputContainer}>
-    //                 <TextInput style={styles.inputs}
-    //                     placeholder="Content"
-    //                     underlineColorAndroid='transparent'
-    //                     value={content}
-    //                     onChangeText={(text) => setContent(text)}
-    //                 />
-    //             </View>
-    //         </View>
-    //     );
-    // }
-
-    // leaving these out for now. 
-    // coordinates will not be entered manually by the user, will be taken care of by the app
-    const renderLatitudeInputField = () => {
-        return (
-            <View style={styles.inputField} >
-                <Text style={styles.textLabel}>
-                    Latitude
-                </Text>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.inputs}
-                        placeholder="Latitude"
-                        underlineColorAndroid='transparent'
-                        value={latitude}
-                        onChangeText={(text) => setLatitude(text)}
-                    />
+    const renderDescriptionInputField = () => {
+            return (
+                <View style={styles.inputField}>
+                    <Text style={styles.textLabel}>
+                        Description
+                    </Text>
+                    <View
+                        style={styles.inputContainerDesc}>
+                        <TextInput style={styles.inputs}
+                            placeholder="Describe your find"
+                            underlineColorAndroid='transparent'
+                            value={desc}
+                            onChangeText={(text) => setDesc(text)}
+                        />
+                    </View>
                 </View>
-            </View>
-        );
-    }
-
-    const renderLongitudeInputField = () => {
-        return (
-            <View style={styles.inputField}>
-                <Text style={styles.textLabel}>
-                    Longitude
-                </Text>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.inputs}
-                        placeholder='Longitude'
-                        underlineColorAndroid='transparent'
-                        value={longitude}
-                        onChangeText={(text) => setLongitude(text)}
-                    />
-                </View>
-            </View>
-        );
-    }
+            );
+        }
 
     const renderPostButton = () => {
         return (
@@ -253,6 +206,7 @@ const AddPostScreen = (props) => {
                     {renderSelectButton()}
                     {/* {renderTitleInputField()} */}
                     {/* {renderContentInputField()} */}
+                    {renderDescriptionInputField()}
                     {/* {renderLatitudeInputField()} */}
                     {/* {renderLongitudeInputField()} */}
 
@@ -332,6 +286,23 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+    inputContainerDesc: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 30,
+        width: 300,
+        height: 45,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        shadowColor: "#808080",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
     inputs: {
         height: 45,
         marginLeft: 16,
@@ -364,5 +335,83 @@ const styles = StyleSheet.create({
         color: 'white',
     },
 })
+
+    // old code
+    // const renderTitleInputField = () => {
+    //     return (
+    //         <View style={styles.inputField}>
+    //             <Text style={styles.textLabel}>
+    //                 Title
+    //             </Text>
+    //             <View style={styles.inputContainer}>
+    //                 <TextInput
+    //                     style={styles.inputs}
+    //                     placeholder="Title"
+    //                     underlineColorAndroid='transparent'
+    //                     value={title}
+    //                     onChangeText={(text) => setTitle(text)}
+    //                 />
+    //             </View>
+    //         </View>
+    //     );
+    // }
+
+    // const renderContentInputField = () => {
+    //     return (
+    //         <View style={styles.inputField}>
+    //             <Text style={styles.textLabel}>
+    //                 Content
+    //             </Text>
+    //             <View
+    //                 style={styles.inputContainer}>
+    //                 <TextInput style={styles.inputs}
+    //                     placeholder="Content"
+    //                     underlineColorAndroid='transparent'
+    //                     value={content}
+    //                     onChangeText={(text) => setContent(text)}
+    //                 />
+    //             </View>
+    //         </View>
+    //     );
+    // }
+        // // leaving these out for now. 
+    // // coordinates will not be entered manually by the user, will be taken care of by the app
+    // const renderLatitudeInputField = () => {
+    //     return (
+    //         <View style={styles.inputField} >
+    //             <Text style={styles.textLabel}>
+    //                 Latitude
+    //             </Text>
+    //             <View style={styles.inputContainer}>
+    //                 <TextInput
+    //                     style={styles.inputs}
+    //                     placeholder="Latitude"
+    //                     underlineColorAndroid='transparent'
+    //                     value={latitude}
+    //                     onChangeText={(text) => setLatitude(text)}
+    //                 />
+    //             </View>
+    //         </View>
+    //     );
+    // }
+
+    // const renderLongitudeInputField = () => {
+    //     return (
+    //         <View style={styles.inputField}>
+    //             <Text style={styles.textLabel}>
+    //                 Longitude
+    //             </Text>
+    //             <View style={styles.inputContainer}>
+    //                 <TextInput
+    //                     style={styles.inputs}
+    //                     placeholder='Longitude'
+    //                     underlineColorAndroid='transparent'
+    //                     value={longitude}
+    //                     onChangeText={(text) => setLongitude(text)}
+    //                 />
+    //             </View>
+    //         </View>
+    //     );
+    // }
 
 export default AddPostScreen;
