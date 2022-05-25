@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -39,6 +39,11 @@ const DetailedPost = ({ route, navigation }) => {
                 <Text style={styles.headerText}>
                     {postTitle}
                 </Text>
+            </View>
+
+            <View style={styles.inputFieldIndividual}>
+                <Image source={{uri: postImage}}
+                style={{width: 150, height: 150}} />
             </View>
 
             <View style={styles.inputFieldIndividual}>
