@@ -5,7 +5,7 @@ import { postDataAPI } from '../../utils/fetchData';
 
 export const signin = (data) => async (dispatch) => {
     try {
-        const res = await postDataAPI('auth/login', data);
+        const res = await postDataAPI('auth/login', data)
         dispatch({ 
             type: AUTHENTICATE,
             payload: {
@@ -15,9 +15,10 @@ export const signin = (data) => async (dispatch) => {
         });
         return res.data.user;
     } catch (err) {
-        //console.log(err.response.data.msg);
-        dispatch({
-            type: ALERT,
+        console.log(err.response)
+        console.log(err.response.data.msg)
+        dispatch({ 
+            type: ALERT, 
             payload: {
                 error: err.response.data.msg,
             },
