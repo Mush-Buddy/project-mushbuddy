@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ActivityIndicator, View, Text, SafeAreaView, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Tags from 'react-native-tags';
 
 import { useSelector } from 'react-redux';
-import { getDataAPI, postDataAPI } from '../../utils/fetchData';
+import { postDataAPI } from '../../utils/fetchData';
 
 import RenderCatalogEntry from './render_catalog_entry';
 
@@ -13,8 +14,9 @@ import Colors from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
 const MushroomCatalogFiltered = (props) => {
-    const filterparams = props.route.params;
+    const filterParams = props.route.params;
     //console.log(filterparams)
+    //const [filterParams, setFilterParams] = props.route.params;
     const navigation = useNavigation();
     const { auth } = useSelector(state => state);
     const [catalog, setCatalog] = useState([]);
@@ -22,15 +24,14 @@ const MushroomCatalogFiltered = (props) => {
     const [page, setPage] = useState(1);
     const [shouldFetch, setShouldFetch] = useState(true);
 
-    const [search, setSearch] = useState('');
+    //const [search, setSearch] = useState('');
 
-    console.log(filterparams);
     useEffect(() => {
         if (!shouldFetch) {
             return;
         }
         const get_data = async () => {
-            const res = await postDataAPI(`catalog/?page=${page}&limit=${limit}`, filterparams, auth.token);
+            const res = await postDataAPI(`catalog/?page=${page}&limit=${limit}`, filterParams, auth.token);
             // console.log('called', page)
             // console.log(res.data)
             const newData = res.data.catalog;
@@ -45,19 +46,8 @@ const MushroomCatalogFiltered = (props) => {
 
     // TODO: Fill this out
     // Reference search.js (users) & map_post (catalog search but w/ dropdownpicker)
-    const handleSearch = async (e) => {
-        console.log("handle search");
-    }
-
-    // HEADER
-
-    // const renderHeader = () => {
-    //     return (
-    //         <View style={styles.headerContainer}>
-    //             {renderSearchBar()}
-    //             {renderFilterButton()}
-    //         </View>
-    //     );
+    // const handleSearch = async (e) => {
+    //     console.log("handle search");
     // }
 
     const loadingIndicator = () => {
@@ -114,23 +104,91 @@ const MushroomCatalogFiltered = (props) => {
 
     const renderUpperNavigation = () => {
         return (
-            <View style={styles.headerContainer}>
+            <View style={styles.upperBar}>
                 <TouchableOpacity
                     onPress={() => { navigation.goBack() }}
                     style={styles.backButton}
                 >
-                    <Icon name='arrow-back' size={30} color='black' />
+                    <Icon name='arrow-back' size={20} color='black' />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>
-                    Filter
+                <Text style={styles.centeredTitleText}>
+                    Filtering by...
                 </Text>
             </View>
         );
     }
 
+    // filterParams as tags
+    const renderFilterCriteria = () => {
+
+        const criteriaTags = [];
+
+        for (const [key, value] of Object.entries(filterParams)) {
+            if (key === 'capShape') {
+                criteriaTags.push("cap: " + `${value}`);
+            } else if (key === 'gillsType') {
+                criteriaTags.push("gills: " + `${value}`);
+            } else {
+                criteriaTags.push("veil: " + `${value}`);
+            }
+        }
+
+        if (criteriaTags.length === 0) {
+            return (
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <Text>
+                        none
+                    </Text>
+                </View>
+            );
+        } else {
+            return (
+                <Tags
+                    initialTags={criteriaTags}
+                    maxNumberOfTags={Object.keys(filterParams).length}
+                    onTagPress={(index, tagLabel, e, deleted) => {
+                        console.log(index, tagLabel, e, deleted ? "deleted" : "not deleted");
+                    }}
+                    containerStyle={{
+                        width: '100%',
+                        justifyContent: "center",
+                        paddingHorizontal: 50,
+                        marginTop: 5,
+                    }}
+                    deleteTagOnPress={false}
+                    readonly={true}
+                    renderTag={({ tag, index, onPress }) => (
+                        <View
+                            key={`${tag}-${index}`}
+                            //onPress={onPress}
+                            style={{
+                                marginLeft: 10,
+                                borderWidth: 1,
+                                borderColor: 'transparent',
+                                borderRadius: 12,
+                                backgroundColor: 'gray',
+                                paddingHorizontal: 5,
+                                paddingVertical: 2
+                            }}
+                        >
+                            <Text style={{color: 'white'}}>
+                                {tag}
+                            </Text>
+                        </View>
+                    )}
+                />
+            );
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             {renderUpperNavigation()}
+            {renderFilterCriteria()}
             <FlatList
                 data={catalog}
                 onEndReached={handleLoadMore}

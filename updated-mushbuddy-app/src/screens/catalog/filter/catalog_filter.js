@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,6 +7,8 @@ import styles from '../../../components/stylesheets/catalog_styles/filter_style'
 import Carousel from './carousel';
 
 import Options from './index_options';
+
+import Mush3D from './mush_3d';
 
 const CatalogFilter = ({ navigation }) => {
     const [cap, setCap] = useState('');
@@ -104,7 +106,6 @@ const CatalogFilter = ({ navigation }) => {
 
     // TODO: Handle submit
     const renderSubmitButton = () => {
-        //processCriteria();
         return (
             <LinearGradient
                 colors={['#5cc76d', '#60af85']}
@@ -191,16 +192,27 @@ const CatalogFilter = ({ navigation }) => {
         );
     }
 
+    const render3DViewport = () => {
+        return (
+            <Mush3D
+                capShape={cap}
+            />
+        );
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {renderUpperNavigation()}
 
+                {/* <Mush3D/> */}
+                {render3DViewport()}
+
                 <View style={styles.carouselsContainer}>
                     {renderSubheader('What type of cap does your mushroom have?')}
                     {renderCapOptions(Options.cap)}
                 </View>
-            
+
                 <View style={styles.carouselsContainer}>
                     {renderSubheader('What type of spore-bearing surface (hymenium) does your mushroom have?')}
                     {renderHymeniumOptions(Options.hymenium)}

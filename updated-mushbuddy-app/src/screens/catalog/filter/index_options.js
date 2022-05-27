@@ -3,9 +3,6 @@
 
 const options = {
     cap: [
-        // {
-        //     label: 'none',
-        // }, 
         {
             label: 'campanulate',
         }, {
@@ -26,6 +23,8 @@ const options = {
             label: 'umbilicate',
         }, {
             label: 'umbonate',
+        }, {
+            label: 'none',
         },
     ],
     hymenium: [
@@ -39,6 +38,8 @@ const options = {
             label: 'ridges',
         }, {
             label: 'tooth',
+        }, {
+            label: 'none',
         },
     ],
     gillAttachment: [
@@ -64,9 +65,6 @@ const options = {
         },
     ],
     veil: [
-        // {
-        //     label: 'none',
-        // },
         {
             label: 'bare',
         }, {
@@ -77,6 +75,8 @@ const options = {
             label: 'ring_and_volva',
         }, {
             label: 'cortina',
+        }, {
+            label: 'none',
         },
     ],
 };

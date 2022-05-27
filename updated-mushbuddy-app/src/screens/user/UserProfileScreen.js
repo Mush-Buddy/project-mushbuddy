@@ -22,6 +22,9 @@ const UserProfileScreen = (props) => {
     const dispatch = useDispatch();
     const [id, setId] = useState(auth.user._id);
 
+    const buttons = ['Badges', 'History'];
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
     // For scrolling
     // const [previous, setPrevious] = useState(0);
     // const [hidden, setHidden] = useState(false);
@@ -37,7 +40,7 @@ const UserProfileScreen = (props) => {
     // }
 
     useEffect(() => {
-        console.log(route.params);
+        //console.log(route.params);
         if (route.params) {
             setId(route.params.userId);
         }
@@ -48,9 +51,6 @@ const UserProfileScreen = (props) => {
             dispatch(usersActions.fetchUsers({ id: id, auth: auth }));
         }
     }, [id, auth, dispatch, users.allUsers]);
-
-    const buttons = ['Badges', 'History'];
-    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const renderButtonGroup = (buttonOptions) => {
         return (
