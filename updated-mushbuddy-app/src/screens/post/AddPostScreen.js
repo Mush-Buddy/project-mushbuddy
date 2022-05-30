@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
+        paddingTop: 50,
         backgroundColor: COLORS.BG,
     },
     container: {
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     },
     msgIcon: {
         width: 30,
-        height: 30,
+        height: 40,
         justifyContent: 'center',
     },
     labelContainer: {
@@ -275,6 +275,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         padding: 5,
         color: COLORS.accent,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 5,
+
     },
     inputContainer: {
         backgroundColor: '#FFFFFF',
@@ -295,12 +299,13 @@ const styles = StyleSheet.create({
     },
     inputContainerDesc: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 30,
+        borderRadius: 25,
         width: 300,
-        height: 45,
-        marginBottom: 20,
+        height: 200,
+        marginTop: 10,
+        marginBottom: 30,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         shadowColor: "#808080",
         shadowOffset: {
             width: 0,
@@ -323,6 +328,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
+        marginTop: 20,
         width: 300,
         borderRadius: 30,
         backgroundColor: 'transparent'
@@ -340,6 +346,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
+        fontWeight: '600'
     },
 })
 
