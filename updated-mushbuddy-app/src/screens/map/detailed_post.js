@@ -41,7 +41,7 @@ const DetailedPost = ({ route, navigation }) => {
                 </Text>
             </View>
 
-            <View style={styles.inputFieldIndividual}>
+            <View style={styles.imageInputFieldIndividual}>
                 <Image source={{uri: postImage}}
                 style={{width: 150, height: 150}} />
             </View>
@@ -68,6 +68,10 @@ const DetailedPost = ({ route, navigation }) => {
     );
 }
 
+export const screenOptions = {
+    headerTitle: 'Details',
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -90,11 +94,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 20,
     },
+    imageInputFieldIndividual: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
     inputFieldIndividual: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
     },
     headerText: {
         fontSize: 25,
@@ -149,5 +159,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
 });
+
+
 
 export default DetailedPost;

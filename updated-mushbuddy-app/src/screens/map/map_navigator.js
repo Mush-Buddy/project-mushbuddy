@@ -5,7 +5,7 @@ import { COLORS } from '../../components/stylesheets/colors';
 import { Platform } from 'react-native';
 
 import Map from './map.js';
-import DetailedPost from './detailed_post.js';
+import DetailedPost, { screenOptions as addDetailScreenOptions } from './detailed_post.js';
 
 // borrowed from other navigator
 import AddPostScreen, { screenOptions as addPostScreenOptions } from '../post/AddPostScreen';
@@ -47,7 +47,7 @@ const MapNavigator = () => {
             <Stack.Screen
                 name="DetailedPost"
                 component={DetailedPost}
-                // options={addPostScreenOptions}
+                options={addDetailScreenOptions}
             />
             <Stack.Screen
                 name="MushroomCatalog"
